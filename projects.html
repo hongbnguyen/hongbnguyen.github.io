@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - Hong B. Nguyen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Dark Mode Toggle -->
+  <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="publications.html">Publications</a>
+      <a href="projects.html">Projects</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <!-- Layout -->
+  <div class="main-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <img src="img/profile/HN1.png" alt="Profile Picture of Hong B. Nguyen" class="profile-pic">
+        <h3>Hong B. Nguyen</h3>
+        <p>PhD Candidate, Psychology & Perception</p>
+        <p><strong>Email:</strong> <a href="mailto:nguyh376@newschool.edu">nguyh376@newschool.edu</a></p>
+        <div class="links">
+          <h4>More Sites</h4>
+          <a href="#">ResearchGate</a><br>
+          <a href="#">Google Scholar</a><br>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Project Cards -->
+      <div class="projects-row">
+        <div class="project-card" data-project="project1">
+          <img src="img/projects/icon_force2.png" alt="Project 1 Image" class="project-image">
+          <h3>Prioritization of Speed Changes Opposite Gravity</h3>
+          <p class="project-short-description">Better detection of acceleration in upwardly moving objects.</p>
+        </div>
+        <div class="project-card" data-project="project2">
+          <img src="img/projects/wheel.jpg" alt="Project 2 Image" class="project-image">
+          <h3>Friction & Attention</h3>
+          <p class="project-short-description">An implicit model of friction drives spatial orienting!</p>
+        </div>
+        <div class="project-card" data-project="project3">
+          <img src="img/projects/project3.jpg" alt="Project 3 Image" class="project-image">
+          <h3>Project 3</h3>
+          <p class="project-short-description">Description for Project 3 goes here.</p>
+        </div>
+      </div>
+
+      <!-- Project 1-->
+      <!-- Project Descriptions -->
+      <div id="project1" class="project-details hidden">
+        <div class="close-button" onclick="closeDescription()">&larr; Close</div>
+        <h1>May the Force be against you: Better sensitivity to speed changes opposite gravity</h1>
+        <p class="intro">Below are some demonstrations of the various phenomena and manipulations discussed in the following paper:</p>
+        <p class="publication">
+          Nguyen, H. B., and van Buren, B. (2023). <strong>May the Force be against you: Better visual sensitivity to speed changes opposite gravity.</strong> <em>Journal of Experimental Psychology: Human Perception and Performance, 49, 1016-1030.</em> 
+          <a href="#" target="_blank">PDF</a>
+        </p>
+        <p class="description">
+          Beyond seemingly lower-level features such as color and motion, 
+          visual perception also recovers properties more commonly associated with higher-level 
+          thought, as when an upwardly accelerating object is seen not just as moving, 
+          but moreover as self-propelled, and resisting the force of gravity. Given past 
+          research demonstrating the prioritization of living things in attention and memory, 
+          here we hypothesized that observers would be more sensitive to an object's 
+          speed changes if those speed changes were opposite to natural gravitational 
+          acceleration. Across six experiments, we found that observers were more sensitive 
+          to objects' accelerations when they moved upward (when those accelerations were opposite 
+          to gravity) and less sensitive to their accelerations when they moved downward 
+          (when those accelerations were consistent with gravity). Moreover, 
+          observers were more sensitive to objects' decelerations when they moved downward 
+          (when those decelerations appeared as 'braking' against gravity), and less sensitive 
+          to their decelerations when they moved upward (when those decelerations were consistent 
+          with gravity). This greater visual sensitivity to speed changes opposite to gravity is 
+          consistent with previous results suggesting that we naturally monitor the world for cues 
+          to animacy.
+        </p>
+
+        <!-- Demonstrations Section -->
+        <section class="demonstrations">
+          <h2>Demonstrations</h2>
+          <h3>Experiment 1 — Acceleration Detection (Upward vs. Downward)</h3>
+          <p>
+            In an initial experiment, observers viewed animations featuring single moving objects. 
+            After each animation, they reported whether the object accelerated, 
+            or remained at a constant speed. We predicted that observers would be more sensitive 
+            to the acceleration of upward-moving objects (i.e. when the speed change was opposite 
+            to gravity) compared to downward-moving objects (i.e. when the speed change was 
+            consistent with gravity).
+          </p>
+
+          <p>Observers were better at detecting acceleration for Upward-moving objects than 
+            for Downward-moving objects. These results indicate that we are more sensitive 
+            to an object's acceleration when it is opposite to the force of gravity, 
+            compared to the same acceleration when it is consistent with the force of gravity.</p>
+        
+          <h3>Experiment 2 — Acceleration Detection (Upward vs. Horizontal)</h3>
+          <p>
+            The results of the previous experiment suggest that we are more sensitive 
+            to acceleration when it is opposite to normal gravitational acceleration. 
+            However, there is an alternate interpretation of these results, which is 
+            that they do not reflect greater sensitivity detecting upward acceleration, 
+            but rather lower sensitivity to downward acceleration. To determine whether 
+            the previous effect was driven by an advantage for seeing acceleration opposite 
+            to gravity, and not just by worse performance detecting acceleration consistent 
+            with gravity, in Experiment 2 we compared Upward acceleration detection to a new 
+            baseline: Horizontal acceleration detection.
+          </p>
+
+          <p>
+            Observers were better at detecting acceleration for Upward-moving objects than 
+            for Horizontally-moving objects. These results indicate that the results of 
+            Experiment 1 (greater sensitivity to Upward vs. Downward acceleration) are driven, 
+            at least in part, by an advantage for detecting speed changes opposite to typical 
+            gravitational speed changes.
+          </p>
+
+          <h3>Experiment 3 — Acceleration Detection (Downward vs. Horizontal)</h3>
+          <p>
+            Just out of curiosity, we next tested whether another part of the effect 
+            in Experiment 1 might have been driven by a disadvantage for gravity-consistent 
+            acceleration, by comparing detection of Downward acceleration to detection of 
+            Horizontal acceleration.
+          </p>
+
+          <p>
+            Observers were worse at detecting acceleration for Downward-moving objects 
+            than for Horizontally-moving objects. These results indicate that the results 
+            of Experiment 1 (greater sensitivity to Upward vs. Downward acceleration) are 
+            not driven by a disadvantage for gravity-consistent acceleration.
+          </p>
+
+          <h3>Experiment 4 — Deceleration Detection (Upward vs. Downward)</h3>
+          <p>
+            The hypothesis that observers are more sensitive to speed changes that 
+            oppose gravity makes the reverse prediction for the detection of deceleration. 
+            If an upward-moving object decelerates, then this deceleration is attributable 
+            to the force of gravity, and observers should be relatively insensitive to this. 
+            By contrast, if a downward-moving object decelerates, then this deceleration may 
+            be attributed to a 'braking' force resisting gravity, in which case observers 
+            should be more sensitive to this. To test this prediction, we next ran a 
+            deceleration detection experiment, which was analogous to Experiment 1, 
+            except that now observers detected decelerations instead of accelerations.
+          </p>
+
+          <p>
+            Observers were better at detecting decelerations for Downward-moving objects 
+            than for Upward-moving objects. These results indicate that the results of Experiment 1 
+            (greater sensitivity to Upward vs. Downward acceleration) were also driven partly by 
+            a disadvantage for gravity-consistent acceleration.
+          </p>
+
+          <h3>Experiment 5 — Deceleration Detection (Downward vs. Horizontal)</h3>
+          <p>
+            To determine whether the previous effect was in part driven by an advantage 
+            for seeing deceleration opposite to gravity, in Experiment 5 we compared 
+            deceleration detection in a Downward moving condition (which was identical to 
+            the Downward moving condition in the previous experiment) to deceleration detection 
+            in a new Horizontal baseline condition.
+          </p>
+          
+          <p>
+            Observers were better at detecting deceleration for Downward-moving objects 
+            than for Horizontally-moving objects. These results indicate that the results 
+            of Experiment 4 (greater sensitivity to Downward vs. Upward deceleration) are driven, 
+            at least in part, by an advantage for detecting speed changes that are opposite 
+            to typical gravitational speed changes.
+          </p>
+
+          <h3>Experiment 6 — Deceleration Detection (Upward vs. Horizontal)</h3>
+          <p>
+            Just out of curiosity, we next tested whether another part of the effect in 
+            Experiment 4 might have been driven by a disadvantage for gravity-consistent 
+            deceleration, by comparing detection of Upward deceleration to detection of Horizontal 
+            deceleration.
+          </p>
+
+          <p>
+            Observers were worse at detecting deceleration for Upward-moving objects than for 
+            Horizontally-moving objects. These results indicate that the results of Experiment 4 
+            (greater sensitivity to Downward vs. Upward deceleration) are not driven by a 
+            disadvantage for gravity-consistent deceleration.
+          </p>
+
+        </div>
+
+      <!-- Project 2-->
+      <!-- Project Descriptions -->
+      <div id="project2" class="project-details hidden">
+        <div class="close-button" onclick="closeDescription()">&larr; Close</div>
+        <h1>Rotating objects cue spatial attention via the perception of frictive surface contact</h1>
+        <p class="publication">
+          Nguyen, H. B., and van Buren, B. (2024). <strong>Rotating objects cue spatial attention via the perception of frictive surface contact.</strong><em> Cognition, 242, 105655.</em> 
+          <a href="#" target="_blank">PDF</a>
+        </p>
+        <p class="description">
+          We report a new attentional cueing effect, which shows how 
+          attention models the physical force of friction. Most objects we see are in frictive 
+          contact with a 'floor', such that clockwise rotation causes rightward movement and 
+          counterclockwise rotation leftward movement. Is this regularity encoded in spatial 
+          orienting responses? In Experiment 1, seeing a clockwise-rotating 'wheel' produced 
+          faster responses to subsequent targets appearing on the right vs. left (and vice versa 
+          for counterclockwise rotation). Thus, when viewing a lone rotating wheel, we orient 
+          attention toward where we predict it will move next, assuming frictive floor contact. 
+          But what happens if the rotating wheel is seen touching another visible surface? 
+          In Experiment 2, rotational cueing was stronger for wheels touching a visible floor, 
+          was abolished for wheels near but not touching another surface, and reversed for wheels 
+          touching a ceiling. We conclude that the visual system makes an assumption of frictive 
+          floor contact, and rapidly analyzes visual cues to frictive contact with other surfaces, 
+          in order to orient attention toward where objects are likely to move next.
+        </p>
+
+        <!-- Demonstrations Section -->
+        <section class="demonstrations">
+          <h2>Demonstrations</h2>
+          <h3>Experiment 1 — Rotating objects cue spatial attention</h3>
+          <p>
+            When we see an object, it is usually sitting on a surface beneath it, and it is 
+            usually in frictive contact with that surface. If these physical regularities are wired 
+            into the operation of visual attention, then viewing an isolated rotating stimulus 
+            might automatically cue spatial attention in the direction the object would move if 
+            in frictive contact with a 'floor'. To test this, we asked subjects to complete a 
+            speeded letter identification task. We predicted that a preceding clockwise-rotating 
+            wheel might produce faster responses to targets appearing on the right (vs. left), 
+            and that a counterclockwise-rotating wheel might produce faster responses to targets 
+            appearing on the left (vs. right).
+          </p>
+          <p>
+            As you can see, Clockwise rotation produced faster response times to targets appearing 
+            on the right vs. left, and Counterclockwise rotation produced faster response times 
+            to targets on the left vs. right. Thus, a lone stationary rotating object orients 
+            spatial attention toward where it would normally move assuming contact with a <em>frictive 
+              floor</em>.
+          </p>
+
+          <h3>Experiment 2 — Reversal of the cueing effect by contact with a 'ceiling'</h3>
+          <p>
+            In Experiment 1, the rotating wheel was always presented alone, without any other 
+            surfaces visible. It nevertheless produced a strong spatial orienting effect, 
+            in the direction the wheel would move if it were in frictive contact with a floor 
+            beneath it. One possibility is that rotating objects always orient spatial attention 
+            in a way which assumes frictive contact with a floor. (After all, this assumption is 
+            consistent with the vast majority of objects that we see.) But another possibility is 
+            that, when we see a rotating object make visible contact with another surface, 
+            that this might modulate how the rotating object orients attention, in a way which 
+            is consistent with how the wheel *should* move, given frictive contact with that 
+            surface. In Experiment 2, we investigated how the rotation cueing effect (computed as 
+            [RT for letters on the side of the wheel incongruent with terrestrial-rolling] - 
+            [RT for letters on the side of the wheel congruent with terrestrial-rolling] - 
+            [RT for letters on the side of the wheel congruent with terrestrial-rolling]) is 
+            influenced by seeing the wheel touch another visible surface (a horizontal line). 
+            If the visual system assumes that contact between visible surfaces is frictive, 
+            then a wheel touching a visible surface might produce a stronger cueing effect than 
+            a wheel slightly separated from that surface. Moreover, the cueing effect might <em>reverse</em> 
+            for a rotating wheel seen touching a 'ceiling' (imagine painting your ceiling with 
+            a paint roller; here, clockwise rotation is associated with <em>leftward</em> movement).
+          </p>
+
+          <p>
+            As you can see, in the Floor-Touching condition, subjects again responded faster 
+            to letters located congruently with the direction the wheel would move if in frictive 
+            contact with a floor vs. located incongruently. In contrast, in the Floor-Not Touching 
+            condition, the cueing effect was abolished, with equally fast RTs for letters located 
+            congruently with the direction the wheel would move if in frictive contact with a floor 
+            vs. located incongruently. Strikingly, on Ceiling-Touching trials, the cueing pattern 
+            reversed! Now subjects responded faster to targets that were incongruent with 
+            terrestrial rolling vs. congruent. On Ceiling-Not Touching trials, there was no 
+            reliable cueing effect. From these results, we conclude that, when other surfaces are 
+            visible rotating objects orient attention in a way that integrates information about 
+            whether objects appear to be in contact with those surfaces.
+          </p>
+
+      </div>
+
+      <!-- Project 2-->
+      <!-- Project Descriptions -->
+      <div id="project3" class="project-details hidden">
+        <div class="close-button" onclick="closeDescription()">&larr; Close</div>
+        <h1>Project 3 Title</h1>
+        <p class="intro">[Detailed content for Project 3 goes here.]</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Hong B. Nguyen. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+  <script src="dark-mode.js"></script></script>
+</body>
+</html>
