@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Dark Mode Toggle -->
-  <div class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</div>
 
   <!-- Header -->
   <header class="main-header">
@@ -106,7 +104,12 @@
           <p>Observers were better at detecting acceleration for Upward-moving objects than 
             for Downward-moving objects. These results indicate that we are more sensitive 
             to an object's acceleration when it is opposite to the force of gravity, 
-            compared to the same acceleration when it is consistent with the force of gravity.</p>
+            compared to the same acceleration when it is consistent with the force of gravity.
+          </p>
+
+          <div class="chart-container">
+            <div id="chart1a" class="chart"></div>
+          </div>
         
           <h3>Experiment 2 — Acceleration Detection (Upward vs. Horizontal)</h3>
           <p>
@@ -129,6 +132,10 @@
             gravitational speed changes.
           </p>
 
+          <div class="chart-container">
+            <div id="chart2a" class="chart"></div>
+          </div>
+
           <h3>Experiment 3 — Acceleration Detection (Downward vs. Horizontal)</h3>
           <p>
             Just out of curiosity, we next tested whether another part of the effect 
@@ -143,6 +150,10 @@
             of Experiment 1 (greater sensitivity to Upward vs. Downward acceleration) are 
             not driven by a disadvantage for gravity-consistent acceleration.
           </p>
+
+          <div class="chart-container">
+            <div id="chart3a" class="chart"></div>
+          </div>
 
           <h3>Experiment 4 — Deceleration Detection (Upward vs. Downward)</h3>
           <p>
@@ -164,6 +175,10 @@
             a disadvantage for gravity-consistent acceleration.
           </p>
 
+          <div class="chart-container">
+            <div id="chart4a" class="chart"></div>
+          </div>
+
           <h3>Experiment 5 — Deceleration Detection (Downward vs. Horizontal)</h3>
           <p>
             To determine whether the previous effect was in part driven by an advantage 
@@ -181,6 +196,10 @@
             to typical gravitational speed changes.
           </p>
 
+          <div class="chart-container">
+            <div id="chart5a" class="chart"></div>
+          </div>
+
           <h3>Experiment 6 — Deceleration Detection (Upward vs. Horizontal)</h3>
           <p>
             Just out of curiosity, we next tested whether another part of the effect in 
@@ -196,7 +215,25 @@
             disadvantage for gravity-consistent deceleration.
           </p>
 
-        </div>
+          <div class="chart-container">
+            <div id="chart6a" class="chart"></div>
+          </div>
+
+          <!-- Video Modal -->
+          <div id="videoModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <p id="videoInstruction" class="video-instruction">Use ← and → arrow keys to navigate videos.</p> <!-- Updated Instruction -->
+                <h4 id="videoTitle"></h4>
+                <video id="modalVideo" width="480" controls autoplay>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+          </div>
+
+
+
 
       <!-- Project 2-->
       <!-- Project Descriptions -->
@@ -303,6 +340,12 @@
 
   <!-- JavaScript -->
   <script src="script.js"></script>
-  <script src="dark-mode.js"></script></script>
+
+  <!-- HighCharts -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 </body>
 </html>

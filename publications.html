@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Dark Mode Toggle -->
-  <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-    🌙
-  </div>
 
   <!-- Header -->
   <header class="main-header">
@@ -68,28 +64,35 @@
 
   <!-- JavaScript -->
   <script>
-    // Toggle Dark Mode
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("Fetching pub_data.json..."); // Debugging line to check if script runs
 
-    // Fetch and Render Publications
-    fetch('pub_data.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        renderList(data.publications, 'publications-list');
-        renderList(data.manuscripts, 'manuscripts-list');
-        renderList(data['conference presentations'], 'conference-list');
-      })
-      .catch((error) => console.error('Error fetching data:', error));
+      fetch('pub_data.json')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Data fetched successfully:", data); // Debugging line to check the fetched data
+
+          renderList(data.publications, 'publications-list');
+          renderList(data.manuscripts, 'manuscripts-list');
+          renderList(data['conference presentations'], 'conference-list');
+        })
+        .catch((error) => console.error('Error fetching data:', error));
+    });
 
     function renderList(items, elementId) {
       const listElement = document.getElementById(elementId);
+      if (!listElement) {
+        console.error(`Element with ID '${elementId}' not found.`);
+        return;
+      }
+
+      listElement.innerHTML = ''; // Clear previous data
+
       items.forEach((item) => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
@@ -101,6 +104,5 @@
       });
     }
   </script>
-  <script src="dark-mode.js"></script></script>
 </body>
 </html>

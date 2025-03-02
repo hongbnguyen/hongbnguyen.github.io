@@ -328,6 +328,54 @@ body.dark-mode button:hover {
     display: block;
 }
 
+/* Projects Section in Index */
+.projects-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.project-item {
+    text-align: center;
+    width: 200px; /* Set a fixed width to ensure uniformity */
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #000; /* Keep a clean border */
+}
+
+.project-item h3 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1rem;
+    color: #2f2b42;
+    margin-top: 10px;
+}
+
+.project-item p {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Hover effect for project images in the index page */
+.project-item a {
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-item a:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+}
+
+
+
 /* Project Cards Row */
 .projects-row {
     display: flex;
@@ -515,3 +563,75 @@ body.dark-mode button:hover {
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
+/* Chart Container */
+.chart {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Video Modal - Positioned Under Sidebar */
+#videoModal {
+    position: fixed;  /* Make it always visible in the viewport */
+    bottom: 20px; /* Set to bottom of the screen */
+    right: 20px; /* Stick to the right */
+    width: 460px; /* Adjusted width */
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure modal aligns under sidebar */
+.sidebar {
+    position: relative;
+}
+
+.sidebar #videoModal {
+    position: absolute;
+    bottom: -20px; /* Small offset */
+    left: 50%;
+    transform: translateX(-50%); /* Center inside sidebar */
+    width: 100%;
+    max-width: 450px; /* Keep it within a reasonable size */
+}
+
+/* Video Player Styling */
+#modalVideo {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Video Title */
+#videoTitle {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+/* Ensure modal is visible when user hovers over the chart */
+#videoModal:hover {
+    display: block;
+}
+
+/* Hide video when user moves completely away */
+#videoModal.hidden {
+    display: none;
+}
+
+.video-instruction {
+    font-size: 14px;
+    color: #e5e5e5 !important; /* Force white color for visibility */
+    text-align: center !important;
+    font-style: italic;
+    margin-bottom: 5px;
+    display: block; /* Ensure it takes up space */
+}
+
+
+
