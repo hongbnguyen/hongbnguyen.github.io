@@ -46,11 +46,6 @@
       </div>
 
       <div class="card">
-        <h2>Manuscripts</h2>
-        <ul id="manuscripts-list" class="publication"></ul>
-      </div>
-
-      <div class="card">
         <h2>Conference Presentations</h2>
         <ul id="conference-list" class="publication"></ul>
       </div>
@@ -65,44 +60,73 @@
   <!-- JavaScript -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      console.log("Fetching pub_data.json..."); // Debugging line to check if script runs
+      const bust = `?v=${Date.now()}`;
+      fetch("pub_data.json" + bust)
+        .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+        .then(data => {
+          // Publications: group by status ("Published", "Submitted", "In Preparation")
+          renderList(data.publications || [], "publications-list", { groupByStatus: true });
 
-      fetch('pub_data.json')
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
+          // Conference Presentations: flat list (ignore status entirely)
+          renderList(data["conference presentations"] || [], "conference-list", { groupByStatus: false });
         })
-        .then((data) => {
-          console.log("Data fetched successfully:", data); // Debugging line to check the fetched data
-
-          renderList(data.publications, 'publications-list');
-          renderList(data.manuscripts, 'manuscripts-list');
-          renderList(data['conference presentations'], 'conference-list');
-        })
-        .catch((error) => console.error('Error fetching data:', error));
+        .catch(e => console.error("Error fetching/parsing pub_data.json:", e));
     });
 
-    function renderList(items, elementId) {
+    function renderList(items, elementId, opts = { groupByStatus: true }) {
       const listElement = document.getElementById(elementId);
-      if (!listElement) {
-        console.error(`Element with ID '${elementId}' not found.`);
+      if (!listElement) return;
+
+      listElement.innerHTML = "";
+
+      if (!Array.isArray(items) || items.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "—";
+        li.style.color = "#777";
+        listElement.appendChild(li);
         return;
       }
 
-      listElement.innerHTML = ''; // Clear previous data
+      if (!opts.groupByStatus) {
+        // Flat list: ignore status completely
+        items.forEach(item => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${item.who || ""}</strong> ${item.what || ""}
+            ${item.where ? ` <em>${item.where}</em>` : ""}
+            ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
+          `;
+          listElement.appendChild(li);
+        });
+        return;
+      }
 
-      items.forEach((item) => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-          <strong>${item.who}</strong> - ${item.what}
-          ${item.where ? `<em>${item.where}</em>` : ''}
-          ${item.link ? `<a href="${item.link}" target="_blank">[Link]</a>` : ''}
-        `;
-        listElement.appendChild(listItem);
+      // Grouped list (for Publications)
+      const grouped = {};
+      items.forEach(item => {
+        const key = (item.status || "").toString().trim();
+        if (!key) return; // skip items without a status (no "Other")
+        (grouped[key] ||= []).push(item);
+      });
+
+      Object.keys(grouped).forEach(status => {
+        const headerLi = document.createElement("li");
+        headerLi.className = "section-heading";
+        headerLi.innerHTML = `<h3 style="margin:10px 0 6px 0;">${status}</h3>`;
+        listElement.appendChild(headerLi);
+
+        grouped[status].forEach(item => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${item.who || ""}</strong> ${item.what || ""}
+            ${item.where ? ` <em>${item.where}</em>` : ""}
+            ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
+          `;
+          listElement.appendChild(li);
+        });
       });
     }
   </script>
+
 </body>
 </html>

@@ -218,19 +218,9 @@
           <div class="chart-container">
             <div id="chart6a" class="chart"></div>
           </div>
+          </section>
 
-          <!-- Video Modal -->
-          <div id="videoModal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <p id="videoInstruction" class="video-instruction">Use ← and → arrow keys to navigate videos.</p> <!-- Updated Instruction -->
-                <h4 id="videoTitle"></h4>
-                <video id="modalVideo" width="480" controls autoplay>
-                    <source src="" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-          </div>
+        </div>
 
 
 
@@ -284,6 +274,10 @@
               floor</em>.
           </p>
 
+          <div class="chart-container">
+            <div id="fchart1a" class="chart"></div>
+          </div>
+
           <h3>Experiment 2 — Reversal of the cueing effect by contact with a 'ceiling'</h3>
           <p>
             In Experiment 1, the rotating wheel was always presented alone, without any other 
@@ -321,6 +315,11 @@
             whether objects appear to be in contact with those surfaces.
           </p>
 
+          <div class="chart-container">
+            <div id="fchart2a" class="chart"></div>
+          </div>
+          </section>
+
       </div>
 
       <!-- Project 2-->
@@ -330,6 +329,20 @@
         <h1>Project 3 Title</h1>
         <p class="intro">[Detailed content for Project 3 goes here.]</p>
       </div>
+
+    <!-- Global Video Modal (used by all projects) -->
+    <div id="videoModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <p id="videoInstruction" class="video-instruction">Use ← and → arrow keys to navigate videos.</p>
+        <h4 id="videoTitle"></h4>
+        <video id="modalVideo" width="480" controls autoplay>
+          <source src="" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
     </main>
   </div>
 
@@ -338,14 +351,19 @@
     <p>&copy; 2024 Hong B. Nguyen. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript -->
-  <script src="script.js"></script>
+
 
   <!-- HighCharts -->
   <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script> 
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+  <!-- Your code -->
+  <script src="script.js"></script>
+
+  
 
 </body>
 </html>

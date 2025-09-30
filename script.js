@@ -1,340 +1,299 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const projectCards = document.querySelectorAll(".project-card");
+// ---------------- Project cards: open/close ----------------
+let built = { project1: false, project2: false };
 
-  // Attach click handlers to project cards
-  projectCards.forEach((card) => {
-      card.addEventListener("click", () => {
-          const projectId = card.getAttribute("data-project");
-          showDescription(projectId);
-      });
+document.addEventListener("DOMContentLoaded", () => {
+  // card click opens a panel
+  document.querySelectorAll(".project-card").forEach(card => {
+    card.addEventListener("click", () => {
+      showDescription(card.getAttribute("data-project"));
+    });
   });
 
-  // Function to get URL parameter
-  function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-  }
-
-  // Check if a project was passed in the URL and open it
-  const projectId = getQueryParam("project");
-  if (projectId) {
-      showDescription(projectId);
-  }
+  // open from ?project=project1|project2
+  const q = new URLSearchParams(window.location.search).get("project");
+  if (q) showDescription(q);
 });
 
-// Function to show project description
 function showDescription(projectId) {
-  const allDescriptions = document.querySelectorAll(".project-details");
-  const allCards = document.querySelectorAll(".project-card");
+  // hide all, unselect all
+  document.querySelectorAll(".project-details").forEach(d => d.classList.add("hidden"));
+  document.querySelectorAll(".project-card").forEach(c => c.classList.remove("selected"));
 
-  // Hide all descriptions and remove 'selected' class
-  allDescriptions.forEach((desc) => desc.classList.add("hidden"));
-  allCards.forEach((card) => card.classList.remove("selected"));
+  // show selected
+  const panel = document.getElementById(projectId);
+  if (panel) panel.classList.remove("hidden");
+  const card = document.querySelector(`.project-card[data-project="${projectId}"]`);
+  if (card) card.classList.add("selected");
 
-  // Show the relevant description
-  const projectElement = document.getElementById(projectId);
-  if (projectElement) {
-      projectElement.classList.remove("hidden");
+  // lazily build charts once per project
+  if (projectId === "project1" && !built.project1) {
+    if (window.Highcharts) buildGravityCharts();
+    built.project1 = true;
+  }
+  if (projectId === "project2" && !built.project2) {
+    if (window.Highcharts) buildFrictionCharts();
+    built.project2 = true;
+  }
 
-      // Highlight the corresponding project card
-      const selectedCard = document.querySelector(`.project-card[data-project="${projectId}"]`);
-      if (selectedCard) {
-          selectedCard.classList.add("selected");
-      }
+  // reflow any charts inside the newly shown panel
+  if (window.Highcharts && panel) {
+    panel.querySelectorAll(".chart").forEach(container => {
+      const chart = Highcharts.charts.find(c => c && c.renderTo === container);
+      if (chart) chart.reflow();
+    });
   }
 }
 
-// Function to close project descriptions
 function closeDescription() {
-  const allDescriptions = document.querySelectorAll(".project-details");
-  const allCards = document.querySelectorAll(".project-card");
-
-  // Hide all descriptions and remove 'selected' class
-  allDescriptions.forEach((desc) => desc.classList.add("hidden"));
-  allCards.forEach((card) => card.classList.remove("selected"));
+  document.querySelectorAll(".project-details").forEach(d => d.classList.add("hidden"));
+  document.querySelectorAll(".project-card").forEach(c => c.classList.remove("selected"));
 }
 
-// --------------------------- Highcharts & Video Logic --------------------------- //
-
+// ---------------- Shared video modal ----------------
 let currentVideoIndex = 0;
 let currentVideos = [];
-let videoTimeout;
 
 function updateVideo() {
-  if (currentVideos.length === 0) return;
+  if (!currentVideos.length) return;
+  const modal = document.getElementById("videoModal");
+  const video = document.getElementById("modalVideo");
+  const title = document.getElementById("videoTitle");
+  const instr = document.getElementById("videoInstruction");
 
-  let videoElement = document.getElementById("modalVideo");
-  let titleElement = document.getElementById("videoTitle");
-  let instructionElement = document.getElementById("videoInstruction");
-  let videoModal = document.getElementById("videoModal");
+  video.src = currentVideos[currentVideoIndex].src;
+  title.textContent = currentVideos[currentVideoIndex].title || "";
+  instr.textContent = "Use ← and → arrow keys to navigate videos.";
+  modal.style.display = "block";
 
-  // Update video source, title, and instruction
-  videoElement.src = currentVideos[currentVideoIndex].src;
-  titleElement.innerText = currentVideos[currentVideoIndex].title;
-  instructionElement.innerText = "Use ← and → arrow keys to navigate videos.";
-
-  // Just display it, CSS handles position
-  videoModal.style.display = "block";
-
-  // Play video
-  videoElement.play();
-
-  // **Ensure video loops continuously**
-  videoElement.onended = function () {
-    this.currentTime = 0; // Restart from beginning
-    this.play(); // Play again
+  video.play().catch(() => {});
+  video.onended = function () {
+    this.currentTime = 0;
+    this.play().catch(() => {});
   };
 }
 
-
-// Handle keyboard navigation
-document.addEventListener("keydown", function (event) {
-  if (document.getElementById("videoModal").style.display === "block") {
-      if (event.key === "ArrowRight") {
-          // Right arrow → Go to the next video
-          currentVideoIndex = (currentVideoIndex + 1) % currentVideos.length;
-          updateVideo();
-      } else if (event.key === "ArrowLeft") {
-          // Left arrow → Go to the previous video
-          currentVideoIndex = (currentVideoIndex - 1 + currentVideos.length) % currentVideos.length;
-          updateVideo();
-      }
+document.addEventListener("keydown", (e) => {
+  const open = document.getElementById("videoModal").style.display === "block";
+  if (!open || !currentVideos.length) return;
+  if (e.key === "ArrowRight") {
+    currentVideoIndex = (currentVideoIndex + 1) % currentVideos.length;
+    updateVideo();
+  } else if (e.key === "ArrowLeft") {
+    currentVideoIndex = (currentVideoIndex - 1 + currentVideos.length) % currentVideos.length;
+    updateVideo();
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("videoModal");
+  if (!modal) return;
+  modal.addEventListener("mouseleave", () => {
+    modal.style.display = "none";
+    const v = document.getElementById("modalVideo");
+    if (v) v.pause();
+  });
+});
 
+// ---------------- Highcharts: Project 1 (Gravity) ----------------
+function buildGravityCharts() {
+  const vids = {
+    chart1a: [
+      [{ src: "videos/upward_acc.mp4", title: "Upward — Accelerating" },
+       { src: "videos/upward_contsslow.mp4", title: "Upward — Constant (Slow)" },
+       { src: "videos/upward_contsfast.mp4", title: "Upward — Constant (Fast)" }],
+      [{ src: "videos/downward_acc.mp4", title: "Downward — Accelerating" },
+       { src: "videos/downward_contsslow.mp4", title: "Downward — Constant (Slow)" },
+       { src: "videos/downward_contsfast.mp4", title: "Downward — Constant (Fast)" }]
+    ],
+    chart2a: [
+      [{ src: "videos/upward_acc.mp4", title: "Upward — Accelerating" },
+       { src: "videos/upward_contsslow.mp4", title: "Upward — Constant (Slow)" },
+       { src: "videos/upward_contsfast.mp4", title: "Upward — Constant (Fast)" }],
+      [{ src: "videos/hori_acc.mp4", title: "Horizontal — Accelerating" },
+       { src: "videos/hori_contsslow.mp4", title: "Horizontal — Constant (Slow)" },
+       { src: "videos/hori_contsfast.mp4", title: "Horizontal — Constant (Fast)" }]
+    ],
+    chart3a: [
+      [{ src: "videos/downward_acc.mp4", title: "Downward — Accelerating" },
+       { src: "videos/downward_contsslow.mp4", title: "Downward — Constant (Slow)" },
+       { src: "videos/downward_contsfast.mp4", title: "Downward — Constant (Fast)" }],
+      [{ src: "videos/hori_acc.mp4", title: "Horizontal — Accelerating" },
+       { src: "videos/hori_contsslow.mp4", title: "Horizontal — Constant (Slow)" },
+       { src: "videos/hori_contsfast.mp4", title: "Horizontal — Constant (Fast)" }]
+    ],
+    chart4a: [
+      [{ src: "videos/upward_dec.mp4", title: "Upward — Decelerating" },
+       { src: "videos/upward_contsslow.mp4", title: "Upward — Constant (Slow)" },
+       { src: "videos/upward_contsfast.mp4", title: "Upward — Constant (Fast)" }],
+      [{ src: "videos/downward_dec.mp4", title: "Downward — Decelerating" },
+       { src: "videos/downward_contsslow.mp4", title: "Downward — Constant (Slow)" },
+       { src: "videos/downward_contsfast.mp4", title: "Downward — Constant (Fast)" }]
+    ],
+    chart5a: [
+      [{ src: "videos/downward_dec.mp4", title: "Downward — Decelerating" },
+       { src: "videos/downward_contsslow.mp4", title: "Downward — Constant (Slow)" },
+       { src: "videos/downward_contsfast.mp4", title: "Downward — Constant (Fast)" }],
+      [{ src: "videos/hori_dec.mp4", title: "Horizontal — Decelerating" },
+       { src: "videos/hori_contsslow.mp4", title: "Horizontal — Constant (Slow)" },
+       { src: "videos/hori_contsfast.mp4", title: "Horizontal — Constant (Fast)" }]
+    ],
+    chart6a: [
+      [{ src: "videos/upward_dec.mp4", title: "Upward — Decelerating" },
+       { src: "videos/upward_contsslow.mp4", title: "Upward — Constant (Slow)" },
+       { src: "videos/upward_contsfast.mp4", title: "Upward — Constant (Fast)" }],
+      [{ src: "videos/hori_dec.mp4", title: "Horizontal — Decelerating" },
+       { src: "videos/hori_contsslow.mp4", title: "Horizontal — Constant (Slow)" },
+       { src: "videos/hori_contsfast.mp4", title: "Horizontal — Constant (Fast)" }]
+    ]
+  };
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Chart Data (Ensure all experiments show)
-  const chartData = [
-    { 
-        id: "chart1a", 
-        title: "Experiment 1: Upward vs. Downward Acceleration", 
-        categories: ["Upward", "Downward"], 
-        videos: [
-            [
-                { src: "videos/upward_acc.mp4", title: "Upward Accelerating Object (1 of 3)" },
-                { src: "videos/upward_contsslow.mp4", title: "Upward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/upward_contsfast.mp4", title: "Upward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/downward_acc.mp4", title: "Downward Accelerating Object (1 of 3)" },
-                { src: "videos/downward_contsslow.mp4", title: "Downward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/downward_contsfast.mp4", title: "Downward Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    },
-    { 
-        id: "chart2a", 
-        title: "Experiment 2: Upward vs. Horizontal Acceleration", 
-        categories: ["Upward", "Horizontal"], 
-        videos: [
-            [
-                { src: "videos/upward_acc.mp4", title: "Upward Accelerating Object (1 of 3)" },
-                { src: "videos/upward_contsslow.mp4", title: "Upward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/upward_contsfast.mp4", title: "Upward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/hori_acc.mp4", title: "Horizontal Accelerating Object (1 of 3)" },
-                { src: "videos/hori_contsslow.mp4", title: "Horizontal Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/hori_contsfast.mp4", title: "Horizontal Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    },
-    { 
-        id: "chart3a", 
-        title: "Experiment 3: Downward vs. Horizontal Acceleration", 
-        categories: ["Downward", "Horizontal"], 
-        videos: [
-            [
-                { src: "videos/downward_acc.mp4", title: "Downward Accelerating Object (1 of 3)" },
-                { src: "videos/downward_contsslow.mp4", title: "Downward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/downward_contsfast.mp4", title: "Downward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/hori_acc.mp4", title: "Horizontal Accelerating Object (1 of 3)" },
-                { src: "videos/hori_contsslow.mp4", title: "Horizontal Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/hori_contsfast.mp4", title: "Horizontal Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    },
-    { 
-        id: "chart4a", 
-        title: "Experiment 4: Deceleration Detection (Upward vs. Downward)", 
-        categories: ["Upward", "Downward"], 
-        videos: [
-            [
-                { src: "videos/upward_dec.mp4", title: "Upward Decelerating Object (1 of 3)" },
-                { src: "videos/upward_contsslow.mp4", title: "Upward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/upward_contsfast.mp4", title: "Upward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/downward_dec.mp4", title: "Downward Decelerating Object (1 of 3)" },
-                { src: "videos/downward_contsslow.mp4", title: "Downward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/downward_contsfast.mp4", title: "Downward Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    },
-    { 
-        id: "chart5a", 
-        title: "Experiment 5: Deceleration Detection (Downward vs. Horizontal)", 
-        categories: ["Downward", "Horizontal"], 
-        videos: [
-            [
-                { src: "videos/downward_dec.mp4", title: "Downward Decelerating Object (1 of 3)" },
-                { src: "videos/downward_contsslow.mp4", title: "Downward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/downward_contsfast.mp4", title: "Downward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/hori_dec.mp4", title: "Horizontal Decelerating Object (1 of 3)" },
-                { src: "videos/hori_contsslow.mp4", title: "Horizontal Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/hori_contsfast.mp4", title: "Horizontal Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    },
-    { 
-        id: "chart6a", 
-        title: "Experiment 6: Deceleration Detection (Upward vs. Horizontal)", 
-        categories: ["Upward", "Horizontal"], 
-        videos: [
-            [
-                { src: "videos/upward_dec.mp4", title: "Upward Decelerating Object (1 of 3)" },
-                { src: "videos/upward_contsslow.mp4", title: "Upward Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/upward_contsfast.mp4", title: "Upward Constant Moving Object (Fast) (3 of 3)" }
-            ],
-            [
-                { src: "videos/hori_dec.mp4", title: "Horizontal Decelerating Object (1 of 3)" },
-                { src: "videos/hori_contsslow.mp4", title: "Horizontal Constant Moving Object (Slow) (2 of 3)" },
-                { src: "videos/hori_contsfast.mp4", title: "Horizontal Constant Moving Object (Fast) (3 of 3)" }
-            ]
-        ]
-    }
-
+  const charts = [
+    { id: "chart1a", title: "Experiment 1: Upward vs. Downward Acceleration", categories: ["Upward", "Downward"], data: [2.27, 1.95], colors: ["#f89421", "#692d8a"] },
+    { id: "chart2a", title: "Experiment 2: Upward vs. Horizontal Acceleration", categories: ["Upward", "Horizontal"], data: [2.93, 2.44], colors: ["#f7941d", "#006738"] },
+    { id: "chart3a", title: "Experiment 3: Downward vs. Horizontal Acceleration", categories: ["Downward", "Horizontal"], data: [2.57, 2.37], colors: ["#692d8a", "#006738"] },
+    { id: "chart4a", title: "Experiment 4: Deceleration Detection (Upward vs. Downward)", categories: ["Upward", "Downward"], data: [2.30, 2.55], colors: ["#f89421", "#692d8a"] },
+    { id: "chart5a", title: "Experiment 5: Deceleration Detection (Downward vs. Horizontal)", categories: ["Downward", "Horizontal"], data: [2.96, 2.78], colors: ["#692d8a", "#006738"] },
+    { id: "chart6a", title: "Experiment 6: Deceleration Detection (Upward vs. Horizontal)", categories: ["Upward", "Horizontal"], data: [2.25, 2.95], colors: ["#f89421", "#006738"] }
   ];
 
-
-// Generate all charts
-chartData.forEach(chart => {
-  let seriesData = [];
-
-  if (chart.id === "chart1a") {
-      seriesData = [
-          {
-              data: [2.28, 1.96],  
-              colorByPoint: true, 
-              colors: ["#f89421", "#692d8a"], 
-              showInLegend: false 
-          }
-      ];
-  } 
-  else if (chart.id === "chart2a") {
-      seriesData = [
-          {
-              data: [2.93, 2.44],  
-              colorByPoint: true,
-              colors: ["#f7941d", "#006738"], 
-              showInLegend: false 
-          }
-      ];
-  } 
-  else if (chart.id === "chart3a") {
-      seriesData = [
-          {
-              data: [2.57, 2.37],  
-              colorByPoint: true,
-              colors: ["#692d8a", "#006738"], 
-              showInLegend: false 
-          }
-      ];
-  } 
-  else if (chart.id === "chart4a") {
-      seriesData = [
-          {
-              data: [2.3, 2.55],  
-              colorByPoint: true,
-              colors: ["#f89421", "#692d8a"], 
-              showInLegend: false 
-          }
-      ];
-  } 
-  else if (chart.id === "chart5a") {
-      seriesData = [
-          {
-              data: [2.96, 2.78],  
-              colorByPoint: true,
-              colors: ["#692d8a", "#006738"], 
-              showInLegend: false 
-          }
-      ];
-  } 
-  else if (chart.id === "chart6a") {
-      seriesData = [
-          {
-              data: [2.53, 3.05],  
-              colorByPoint: true,
-              colors: ["#f89421", "#006738"], 
-              showInLegend: false 
-          }
-      ];
-  }
-
-  Highcharts.chart(chart.id, {
+  charts.forEach(cfg => {
+    Highcharts.chart(cfg.id, {
       chart: { type: "column" },
-      title: { text: chart.title },
-      xAxis: { 
-          categories: chart.categories, 
-          labels: {
-              style: { fontSize: "12px" }
-          }
-      },
-      yAxis: { 
-          title: { text: "d'" }, 
-          min: 0, 
-          max: 4 
-      },
-      tooltip: {
-          formatter: function() {
-              return `d': ${this.y.toFixed(2)}`; 
-          }
-      },
-      series: seriesData,
+      title: { text: cfg.title },
+      xAxis: { categories: cfg.categories, labels: { style: { fontSize: "12px" }, y: 18 } },
+      yAxis: { title: { text: "d'" }, min: 0, max: 4 },
+      tooltip: { formatter() { return `d': ${this.y.toFixed(2)}`; } },
+      series: [{ data: cfg.data, colorByPoint: true, colors: cfg.colors, showInLegend: false }],
       plotOptions: {
-          column: {
-              pointPadding: 0.2,
-              borderWidth: 0,
-              point: {
-                  events: {
-                      mouseOver: function () {
-                          let categoryIndex = this.index; 
-                          
-                          if (chart.videos && chart.videos[categoryIndex]) {
-                              currentVideos = chart.videos[categoryIndex];
-                              currentVideoIndex = 0; 
-                          
-                              let videoModal = document.getElementById("videoModal");
-                              videoModal.style.display = "block";
-                          
-                              videoModal.style.left = document.querySelector(".sidebar").offsetLeft + "px";
-                          
-                              updateVideo(); 
-                          }
-                      }
-                  }
+        column: {
+          pointPadding: 0.2, borderWidth: 0, groupPadding: 0.1,
+          point: {
+            events: {
+              mouseOver: function () {
+                const chartId = this.series.chart.renderTo.id;
+                const idx = this.index;
+                const sets = vids[chartId] && vids[chartId][idx];
+                if (sets?.length) { currentVideos = sets; currentVideoIndex = 0; updateVideo(); }
               }
+            }
           }
+        }
       }
+    });
   });
-});
+}
 
+// ---------------- Highcharts: Project 2 (Friction & Attention) ----------------
+function buildFrictionCharts() {
+  // Exp 1: RT with icon labels + error bars
+  (function () {
+    const cats = ["clockwise_left","clockwise_right","counterclockwise_left","counterclockwise_right"];
+    const rt   = [{ y:553, className:"highcharts-color-7" }, { y:509, className:"highcharts-color-1" },
+                  { y:535, className:"highcharts-color-1" }, { y:561, className:"highcharts-color-7" }];
+    const se   = [[543,560],[499,516],[525,542],[551,568]];
 
-  // Ensure video stays visible when hovered over
-  document.getElementById("videoModal").addEventListener("mouseenter", function () {
-      clearTimeout(videoTimeout);
-  });
+    Highcharts.chart("fchart1a", {
+      chart: { type: "column", spacingBottom: 70 },
+      title: { text: "Spatial Cueing by a Rotating Object" },
+      xAxis: {
+        categories: cats,
+        labels: {
+        useHTML: true,
+        y: 40,                                      // a bit lower
+        formatter: function () {
+            const r = "img/projects/";                // make sure files exist here
+            const v = this.value;
+            if (v==="clockwise_left")        return `<img src="${r}clockwise_letterleft.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="clockwise_right")       return `<img src="${r}clockwise_letterright.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="counterclockwise_left") return `<img src="${r}counterclockwise_letterleft.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="counterclockwise_right")return `<img src="${r}counterclockwise_letterright.svg" style="width:54px;display:block;margin-top:8px" />`;
+            return "";
+        }
+        }
+    },
+      yAxis: { title: { text: "Response Time (ms)" }, min: 400, max: 700, tickAmount: 4 },
+      tooltip: { enabled: false },
+      series: [
+        { type: "column", data: rt, colorByPoint: true, showInLegend: false },
+        { type: "errorbar", data: se, whiskerLength: "10%", whiskerWidth: 2, stemWidth: 2 }
+      ],
+      plotOptions: {
+        column: {
+          pointPadding: 0.2, borderWidth: 0, groupPadding: 0.1,
+          point: { events: {
+            mouseOver: function () {
+              const i = this.index;
+              const sets = [
+                [{ src:"videos/clockwise_letterleft.mp4",        title:"Clockwise — Letter Left" }],
+                [{ src:"videos/clockwise_letterright.mp4",       title:"Clockwise — Letter Right" }],
+                [{ src:"videos/counterclockwise_letterleft.mp4", title:"Counterclockwise — Letter Left" }],
+                [{ src:"videos/counterclockwise_letterright.mp4",title:"Counterclockwise — Letter Right" }]
+              ];
+              currentVideos = sets[i] || []; currentVideoIndex = 0; updateVideo();
+            } } }
+        },
+        errorbar: { tooltip: { enabled: false } }
+      }
+    });
+  })();
 
-  // Close modal when user moves away from video
-  document.getElementById("videoModal").addEventListener("mouseleave", function () {
-      document.getElementById("videoModal").style.display = "none";
-      document.getElementById("modalVideo").pause();
-  });
-});
+  // Exp 2: Effect with icon labels + error bars
+  (function () {
+    const cats = ["floor_touching","floor_nottouching","ceiling_touching","ceiling_nottouching"];
+    const eff = [
+        { y: 48,  color: "#006738" },  // Floor-congruent (green)
+        { y: 7,   color: "#999999" },  // Floor-not touching (gray)
+        { y: -27, color: "#c0392b" },  // Ceiling-congruent (red)
+        { y: -10, color: "#999999" }   // Ceiling-not touching (gray)
+        ];
+    const se   = [[45,49],[4,9],[-30,-25],[-13,-8]];
+
+    Highcharts.chart("fchart2a", {
+      chart: { type: "column", spacingBottom: 70 },
+      title: { text: "Effect of Visible Surface Contact on Rotation Cueing" },
+      xAxis: {
+        categories: cats,
+        labels: {
+        useHTML: true,
+        y: 40,
+        formatter: function () {
+            const r = "img/projects/";
+            const v = this.value;
+            if (v==="floor_touching")      return `<img src="${r}floor_touching.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="floor_nottouching")   return `<img src="${r}floor_nottouching.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="ceiling_touching")    return `<img src="${r}ceiling_touching.svg" style="width:54px;display:block;margin-top:8px" />`;
+            if (v==="ceiling_nottouching") return `<img src="${r}ceiling_nottouching.svg" style="width:54px;display:block;margin-top:8px" />`;
+            return "";
+        }
+        }
+    },
+      yAxis: { title: { text: "Incong − Cong RT (ms)" }, min: -60, max: 60, tickAmount: 7 },
+      tooltip: { enabled: false },
+      series: [
+        { type: "column", data: eff, colorByPoint: true, showInLegend: false },
+        { type: "errorbar", data: se, whiskerLength: "10%", whiskerWidth: 2, stemWidth: 2 }
+      ],
+      plotOptions: {
+        column: {
+          pointPadding: 0.2, borderWidth: 0, groupPadding: 0.1,
+          point: { events: {
+            mouseOver: function () {
+              const i = this.index;
+              const sets = [
+                [{ src:"videos/clockwise_letterright_floor.mp4",       title:"Floor Touching — CW Right" },
+                 { src:"videos/counterclockwise_letterleft_floor.mp4", title:"Floor Touching — CCW Left" }],
+                [{ src:"videos/clockwise_letterright_floor_nottouching.mp4",       title:"Floor Not Touching — CW Right" },
+                 { src:"videos/counterclockwise_letterleft_floor_nottouching.mp4", title:"Floor Not Touching — CCW Left" }],
+                [{ src:"videos/clockwise_letterleft_ceiling.mp4",       title:"Ceiling Touching — CW Left" },
+                 { src:"videos/counterclockwise_letterright_ceiling.mp4",title:"Ceiling Touching — CCW Right" }],
+                [{ src:"videos/clockwise_letterleft_ceiling_nottouching.mp4",       title:"Ceiling Not Touching — CW Left" },
+                 { src:"videos/counterclockwise_letterright_ceiling_nottouching.mp4",title:"Ceiling Not Touching — CCW Right" }]
+              ];
+              currentVideos = sets[i] || []; currentVideoIndex = 0; updateVideo();
+            } } }
+        },
+        errorbar: { tooltip: { enabled: false } }
+      }
+    });
+  })();
+}

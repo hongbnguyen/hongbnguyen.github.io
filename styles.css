@@ -236,6 +236,25 @@ body.dark-mode .card p {
     color: #E3B23C; /* Brighter gold */
 }
 
+.publication .section-heading {
+  list-style: none;
+  margin-top: 16px;
+  font-style: italic;  /* italic instead of bold */
+  font-weight: normal; /* ensure not bold */
+}
+
+/* Make section headings italic, not bold */
+.publication .section-heading,
+.publication .section-heading h3 {
+  list-style: none;
+  margin-top: 16px;
+  font-style: italic;
+  font-weight: normal;   /* override h3 default bold */
+  margin-bottom: 6px;
+}
+
+
+
 /* Buttons */
 button {
     background-color: #2f2b42; /* Deep purple */
@@ -633,5 +652,42 @@ body.dark-mode button:hover {
     display: block; /* Ensure it takes up space */
 }
 
+/* === Friction & Attention ONLY (scoped to Project 2 container) === */
+
+/* Scope all “lab” colors and axis tweaks to the Friction charts only */
+#project2 #fchart1a .highcharts-color-7 { fill: #ad0014 !important; stroke: none !important; } /* red */
+#project2 #fchart1a .highcharts-color-1 { fill: #006087 !important; stroke: none !important; } /* blue */
+
+/* Exp 2 (effect) colors */
+#project2 #fchart2a .highcharts-point:nth-child(1) { fill: #006738 !important; } /* green */
+#project2 #fchart2a .highcharts-point:nth-child(2) { fill: #999999 !important; } /* gray */
+#project2 #fchart2a .highcharts-point:nth-child(3) { fill: #c0392b !important; } /* red */
+#project2 #fchart2a .highcharts-point:nth-child(4) { fill: #999999 !important; } /* gray */
+
+/* Axis/labels similar to lab (scoped so Gravity charts aren’t touched) */
+#project2 #fchart1a .highcharts-axis-line,
+#project2 #fchart1a .highcharts-tick,
+#project2 #fchart2a .highcharts-axis-line,
+#project2 #fchart2a .highcharts-tick {
+  stroke: #000 !important; stroke-width: 2 !important;
+}
+#project2 #fchart1a .highcharts-grid-line,
+#project2 #fchart2a .highcharts-grid-line {
+  stroke: none !important;
+}
+#project2 #fchart1a .highcharts-title,
+#project2 #fchart2a .highcharts-title {
+  font-family: Arial, sans-serif; font-weight: 600; font-size: 20px;
+}
+#project2 #fchart1a .highcharts-axis-labels text,
+#project2 #fchart2a .highcharts-axis-labels text {
+  font-family: Arial, sans-serif; font-size: 12px;
+}
+
+/* The lab hides tooltips; keep that scoped too */
+#project2 #fchart1a .highcharts-tooltip,
+#project2 #fchart2a .highcharts-tooltip {
+  display: none !important;
+}
 
 
