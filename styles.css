@@ -1,693 +1,248 @@
-/* General Styles */
+/* =========================
+   Base + Typography
+   ========================= */
 body {
-    font-family: 'Noto Sans', sans-serif;
-    margin: 0;
-    background: linear-gradient(to bottom, #fefefe, #f8f1eb);
-    color: #2C2C2C; /* Dark charcoal */
-    line-height: 1.8;
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom, #fefefe, #f8f1eb);
+  color: #2C2C2C;
+  line-height: 1.8;
 }
 
-h2 {
-    font-family: 'Nunito Sans', sans-serif; /* Headings use Nunito Sans */
-    color: #2f2b42; /* Deep purple */
+h1, h2, h3, h4 {
+  font-family: 'Nunito Sans', sans-serif;
+  color: #2f2b42;
 }
 
 a {
-    color: #CBAC1B; /* Warm gold */
-    text-decoration: none;
+  color: #CBAC1B;
+  text-decoration: none;
 }
-
 a:hover {
-    color: #2f2b42; /* Rich purple */
-    text-decoration: underline;
+  color: #2f2b42;
+  text-decoration: underline;
 }
 
-/* Header */
+/* =========================
+   Header / Nav (right-aligned)
+   ========================= */
 .main-header {
-    background-color: #2f2b42; /* Deep purple */
-    padding: 15px 20px;
-    text-align: center;
+  background-color: #2f2b42;
+  padding: 15px 0;
+  display: block;
+}
+
+.main-header nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
 }
 
 .main-header nav a {
-    font-family: 'Nunito Sans', sans-serif; /* Nav links use Nunito Sans */
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 .main-header nav a:hover {
-    color: #CBAC1B; /* Warm gold */
+  color: #CBAC1B;
 }
 
-/* Dark Mode */
-body.dark-mode {
-    background: #1E1E1E; /* Dark charcoal for background */
-    color: #EDEDED; /* Light gray for text */
-}
-
-body.dark-mode h2 {
-    color: #E3B23C; /* Warm gold for headings */
-}
-
-body.dark-mode a {
-    color: #CBAC1B; /* Gold for links */
-}
-
-body.dark-mode a:hover {
-    color: #E3B23C; /* Brighter gold for hover */
-}
-
-body.dark-mode .main-header {
-    background-color: #2f2b42; /* Deep purple */
-}
-
-body.dark-mode .main-header nav a {
-    color: #EDEDED; /* Light gray */
-}
-
-body.dark-mode .main-header nav a:hover {
-    color: #E3B23C; /* Warm gold */
-}
-
-/* Layout */
+/* =========================
+   Layout
+   ========================= */
 .main-layout {
-    display: flex;
-    flex-direction: row-reverse; /* Sidebar on the right */
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    gap: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 60px;
+  gap: 60px;
 }
 
 .main-content {
-    flex: 3; /* Main content takes up more space */
+  flex: 3;
 }
 
+/* =========================
+   Sidebar / Profile Card
+   ========================= */
 .sidebar {
-    flex: none; /* Prevent sidebar from stretching */
-    width: 300px; /* Fixed width */
-    background: #f8f1eb; /* Light background for contrast */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    align-self: flex-start; /* Align sidebar at the top */
+  flex: none;
+  width: 260px;
+  background: none;
+  padding: 10px 0 0 0;
+  border: none;
+  box-shadow: none;
+  align-self: flex-start;
+  text-align: left;
 }
 
-body.dark-mode .sidebar {
-    background: #292929; /* Slightly lighter dark gray for dark mode */
-    color: #EDEDED; /* Light gray text */
-}
-
-/* Sidebar */
 .profile-card {
-    text-align: center;
-}
-
-.profile-card h3 {
-    font-size: 1.4rem;
-    font-family: 'Nunito Sans', sans-serif; /* Name uses Nunito Sans */
-    color: #2f2b42; /* Deep purple */
-    margin-bottom: 10px;
-}
-
-body.dark-mode .profile-card h3 {
-    color: #E3B23C; /* Warm gold for the name */
-}
-
-.profile-card p {
-    margin-bottom: 10px;
-    font-family: 'Noto Sans', sans-serif; /* Text uses Noto Sans */
-    color: #2f2b42; /* Rich purple */
-}
-
-body.dark-mode .profile-card p {
-    color: #EDEDED; /* Light gray for text */
+  text-align: left;
 }
 
 .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid #CBAC1B; /* Warm gold */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid #CBAC1B;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+}
+
+.profile-card h3 {
+  font-size: 1.3rem;
+  margin: 6px 0 2px 0;
+}
+
+.profile-card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #2C2C2C;
 }
 
 .links h4 {
-    margin-top: 20px;
-    font-size: 1rem;
-    font-family: 'Nunito Sans', sans-serif; /* Subheadings use Nunito Sans */
-    color: #2f2b42; /* Rich purple */
-}
-
-body.dark-mode .links h4 {
-    color: #E3B23C; /* Warm gold for subheadings */
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #2f2b42;
+  font-weight: 600;
 }
 
 .links a {
-    display: block;
-    margin-bottom: 5px;
-    font-family: 'Noto Sans', sans-serif; /* Links use Noto Sans */
-    color: #CBAC1B; /* Warm gold */
-}
-
-body.dark-mode .links a {
-    color: #CBAC1B; /* Gold for links */
+  display: inline-block;
+  margin: 2px 10px 4px 0;
+  font-size: 0.9rem;
+  color: #CBAC1B;
 }
 
 .links a:hover {
-    color: #2f2b42; /* Deep purple */
+  color: #2f2b42;
 }
 
-body.dark-mode .links a:hover {
-    color: #E3B23C; /* Brighter gold */
-}
-
-/* Footer */
-footer {
-    background-color: #2f2b42; /* Deep purple */
-    color: white;
-    text-align: center;
-    padding: 15px;
-    font-size: 0.9rem;
-    margin-top: 30px;
-    font-family: 'Noto Sans', sans-serif; /* Footer uses Noto Sans */
-}
-
-body.dark-mode footer {
-    background-color: #2f2b42; /* Deep purple */
-    color: #EDEDED; /* Light gray for footer text */
-}
-
-/* Cards - Light Mode */
+/* =========================
+   Content Cards (About, News, etc.)
+   ========================= */
 .card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.card h2 {
-    font-family: 'Nunito Sans', sans-serif; /* Headings use Nunito Sans */
-    color: #2f2b42; /* Deep purple */
+  background: none;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  margin-bottom: 40px;
 }
 
 .card p {
-    font-family: 'Noto Sans', sans-serif; /* Paragraphs use Noto Sans */
-    color: #2C2C2C; /* Dark charcoal */
+  color: #2C2C2C;
 }
 
-/* Cards - Dark Mode */
-body.dark-mode .card {
-    background: #292929; /* Dark gray for cards */
-    color: #EDEDED; /* Light gray for text */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow for elevation */
+/* Justify text in About and News sections */
+#about p,
+#news li {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
-body.dark-mode .card h2 {
-    color: #E3B23C; /* Warm gold for headings */
-}
 
-body.dark-mode .card p {
-    color: #EDEDED; /* Light gray for paragraph text */
-}
-
+/* =========================
+   Publications
+   ========================= */
 .publication {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .publication li {
-    margin-bottom: 15px;
-    line-height: 1.6;
+  text-align: justify;
+  text-justify: inter-word;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  padding-left: 2em;
+  text-indent: -2em;
 }
 
 .publication li a {
-    color: #CBAC1B; /* Warm gold */
-    text-decoration: none;
-    font-weight: bold;
+  color: #CBAC1B;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .publication li a:hover {
-    color: #E3B23C; /* Brighter gold */
+  color: #E3B23C;
 }
 
-.publication .section-heading {
-  list-style: none;
-  margin-top: 16px;
-  font-style: italic;  /* italic instead of bold */
-  font-weight: normal; /* ensure not bold */
-}
-
-/* Make section headings italic, not bold */
 .publication .section-heading,
 .publication .section-heading h3 {
   list-style: none;
   margin-top: 16px;
   font-style: italic;
-  font-weight: normal;   /* override h3 default bold */
+  font-weight: normal;
   margin-bottom: 6px;
 }
 
-
-
-/* Buttons */
-button {
-    background-color: #2f2b42; /* Deep purple */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+/* =========================
+   News Section
+   ========================= */
+#news ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 }
 
-button:hover {
-    background-color: #CBAC1B; /* Warm gold */
-    color: white;
+#news li {
+  margin-bottom: 12px;
+  line-height: 1.6;
 }
 
-body.dark-mode button {
-    background-color: #E3B23C; /* Warm gold for buttons */
-    color: #1E1E1E; /* Dark text for contrast */
+#news .date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-left: 6px;
 }
 
-body.dark-mode button:hover {
-    background-color: #CBAC1B; /* Gold for hover */
-    color: #FFFFFF; /* White text */
+/* =========================
+   Footer
+   ========================= */
+footer {
+  background-color: #2f2b42;
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  margin-top: 30px;
 }
 
-/* Dark Mode Toggle */
-.dark-mode-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #2f2b42; /* Deep purple */
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 999;
+/* =========================
+   Optional Dark Mode
+   ========================= */
+body.dark-mode {
+  background: #1E1E1E;
+  color: #EDEDED;
 }
 
-.dark-mode-toggle:hover {
-    background: #CBAC1B; /* Warm gold */
-    color: #2f2b42; /* Deep purple */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: #E3B23C;
 }
 
-/* Tabs */
-.tabs {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
+body.dark-mode a {
+  color: #CBAC1B;
 }
 
-.tab {
-    background: #2f2b42;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+body.dark-mode a:hover {
+  color: #E3B23C;
 }
 
-.tab:hover {
-    background: #CBAC1B;
+body.dark-mode footer {
+  background-color: #2f2b42;
+  color: #EDEDED;
 }
-
-.tab.active {
-    background: #CBAC1B; /* Highlight active tab */
-}
-
-/* Tab Content */
-.tab-content {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* Projects Section in Index */
-.projects-grid {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.project-item {
-    text-align: center;
-    width: 200px; /* Set a fixed width to ensure uniformity */
-}
-
-.project-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    border: 1px solid #000; /* Keep a clean border */
-}
-
-.project-item h3 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1rem;
-    color: #2f2b42;
-    margin-top: 10px;
-}
-
-.project-item p {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 5px;
-}
-
-/* Hover effect for project images in the index page */
-.project-item a {
-    display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-item a:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
-}
-
-
-
-/* Project Cards Row */
-.projects-row {
-    display: flex;
-    margin: 0; /* Remove spacing between cards */
-}
-
-.project-card {
-    flex: 1;
-    cursor: pointer;
-    text-align: center;
-    padding: 10px; /* Reduced padding for compact design */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    border: 1px solid transparent; /* Default border */
-    display: flex;
-    flex-direction: column; /* Stack the content vertically */
-    justify-content: space-between; /* Ensure proper alignment */
-    align-items: center; /* Center-align content */
-    height: 250px; /* Fixed shorter height */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.project-card.selected {
-    border: 2px solid #CBAC1B; /* Highlight border with warm gold */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
-    transform: scale(1.03); /* Slightly enlarge the card */
-}
-
-
-.project-card h3, 
-.project-card .project-short-description {
-    color: inherit; /* Inherit color for consistency */
-}
-
-.project-image {
-    width: 60%; /* Smaller images */
-    height: auto;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #CBAC1B; /* Warm gold */
-}
-
-.project-card h3 {
-    font-family: 'Nunito Sans', sans-serif;
-    color: #2f2b42; /* Deep purple */
-    font-size: 1rem;
-    margin: 5px 0; /* Standard margin between title and content */
-}
-
-.project-short-description {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #555;
-    text-align: justify; /* Justify the short description */
-    width: 90%; /* Consistent width */
-    margin-top: auto; /* Keep content aligned consistently */
-}
-
-
-/* Hover Effects */
-.project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Description Cards */
-.project-details {
-    margin-top: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    max-width: 800px; /* Restrict the width for better readability */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.project-details.hidden {
-    display: none;
-}
-
-.project-details h1 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.5rem;
-    color: #2f2b42;
-    margin-bottom: 10px;
-}
-
-.project-details h2 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.2rem;
-    color: #2f2b42;
-    margin-bottom: 10px;
-}
-
-.project-details p {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9rem;
-    text-align: justify;
-    color: #2C2C2C;
-    line-height: 1.6;
-}
-
-/* Close Button */
-.close-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #CBAC1B; /* Warm gold */
-    color: white;
-    padding: 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
-}
-
-.close-button:hover {
-    background: #E3B23C; /* Brighter gold */
-}
-
-/* Tooltip for Bar Charts */
-.tooltip {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    height: 300px;
-    background: #292929; /* Dark background */
-    color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 10px;
-}
-
-.tooltip.hidden {
-    display: none;
-}
-
-.tooltip video {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-/* Bar Chart Container */
-.chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-.chart-container canvas {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Demonstrations Section */
-.demonstrations h2 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.3rem;
-    color: #2f2b42;
-    margin-bottom: 15px;
-}
-
-.demonstrations h3 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1.1rem;
-    color: #6C5CE7; /* Highlight color */
-    margin-bottom: 10px;
-}
-
-.demonstrations p {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 0.9rem;
-    color: #2C2C2C;
-    text-align: justify;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-/* Chart Container */
-.chart {
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-/* Video Modal - Positioned Under Sidebar */
-#videoModal {
-    position: fixed;  /* Make it always visible in the viewport */
-    bottom: 20px; /* Set to bottom of the screen */
-    right: 20px; /* Stick to the right */
-    width: 460px; /* Adjusted width */
-    background: rgba(0, 0, 0, 0.9);
-    padding: 15px;
-    border-radius: 10px;
-    display: none;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Ensure modal aligns under sidebar */
-.sidebar {
-    position: relative;
-}
-
-.sidebar #videoModal {
-    position: absolute;
-    bottom: -20px; /* Small offset */
-    left: 50%;
-    transform: translateX(-50%); /* Center inside sidebar */
-    width: 100%;
-    max-width: 450px; /* Keep it within a reasonable size */
-}
-
-/* Video Player Styling */
-#modalVideo {
-    width: 100%;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-/* Video Title */
-#videoTitle {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 1rem;
-    color: white;
-    margin-bottom: 8px;
-    text-align: center;
-}
-
-/* Ensure modal is visible when user hovers over the chart */
-#videoModal:hover {
-    display: block;
-}
-
-/* Hide video when user moves completely away */
-#videoModal.hidden {
-    display: none;
-}
-
-.video-instruction {
-    font-size: 14px;
-    color: #e5e5e5 !important; /* Force white color for visibility */
-    text-align: center !important;
-    font-style: italic;
-    margin-bottom: 5px;
-    display: block; /* Ensure it takes up space */
-}
-
-/* === Friction & Attention ONLY (scoped to Project 2 container) === */
-
-/* Scope all “lab” colors and axis tweaks to the Friction charts only */
-#project2 #fchart1a .highcharts-color-7 { fill: #ad0014 !important; stroke: none !important; } /* red */
-#project2 #fchart1a .highcharts-color-1 { fill: #006087 !important; stroke: none !important; } /* blue */
-
-/* Exp 2 (effect) colors */
-#project2 #fchart2a .highcharts-point:nth-child(1) { fill: #006738 !important; } /* green */
-#project2 #fchart2a .highcharts-point:nth-child(2) { fill: #999999 !important; } /* gray */
-#project2 #fchart2a .highcharts-point:nth-child(3) { fill: #c0392b !important; } /* red */
-#project2 #fchart2a .highcharts-point:nth-child(4) { fill: #999999 !important; } /* gray */
-
-/* Axis/labels similar to lab (scoped so Gravity charts aren’t touched) */
-#project2 #fchart1a .highcharts-axis-line,
-#project2 #fchart1a .highcharts-tick,
-#project2 #fchart2a .highcharts-axis-line,
-#project2 #fchart2a .highcharts-tick {
-  stroke: #000 !important; stroke-width: 2 !important;
-}
-#project2 #fchart1a .highcharts-grid-line,
-#project2 #fchart2a .highcharts-grid-line {
-  stroke: none !important;
-}
-#project2 #fchart1a .highcharts-title,
-#project2 #fchart2a .highcharts-title {
-  font-family: Arial, sans-serif; font-weight: 600; font-size: 20px;
-}
-#project2 #fchart1a .highcharts-axis-labels text,
-#project2 #fchart2a .highcharts-axis-labels text {
-  font-family: Arial, sans-serif; font-size: 12px;
-}
-
-/* The lab hides tooltips; keep that scoped too */
-#project2 #fchart1a .highcharts-tooltip,
-#project2 #fchart2a .highcharts-tooltip {
-  display: none !important;
-}
-
-
