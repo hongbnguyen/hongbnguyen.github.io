@@ -107,15 +107,18 @@ a:hover {
   margin: 4px 0;
   font-size: 0.95rem;
   color: #2C2C2C;
+  font-weight: 400;
 }
 
 .links h4 {
-  margin-top: 16px;
-  margin-bottom: 4px; /* ↓ bring links closer to title */
-  font-size: 0.95rem;
+  margin-top: 12px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
   color: #2f2b42;
   font-weight: 600;
+  letter-spacing: 0.3px;
 }
+
 
 .links a {
   display: inline-block;

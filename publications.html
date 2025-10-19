@@ -26,7 +26,7 @@
         <img src="img/profile/HN1.png" alt="Profile Picture of Hong B. Nguyen" class="profile-pic">
         <h3>Hong B. Nguyen</h3>
         <p>PhD Candidate, Psychology</p>
-        <p><strong>Email:</strong> <a href="mailto:nguyh376@newschool.edu">nguyh376@newschool.edu</a></p>
+        <p>hong.nguyen [at] newschool.edu</p>
         <div class="links">
           <h4>More Sites</h4>
           <a href="https://scholar.google.com/citations?user=t_Ep51oAAAAJ&hl=en" target="_blank">Google Scholar</a>
@@ -94,6 +94,7 @@
             <strong>${item.who || ""}</strong> ${item.what || ""}
             ${item.where ? ` <em>${item.where}</em>` : ""}
             ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
+            ${item.pdf ? ` <a href="${item.pdf}" target="_blank">[PDF]</a>` : ""}
           `;
           listElement.appendChild(li);
         });
@@ -120,6 +121,7 @@
             <strong>${item.who || ""}</strong> ${item.what || ""}
             ${item.where ? ` <em>${item.where}</em>` : ""}
             ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
+            ${item.pdf ? ` <a href="${item.pdf}" target="_blank">[PDF]</a>` : ""}
           `;
           listElement.appendChild(li);
         });
