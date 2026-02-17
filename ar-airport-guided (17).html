@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Airport Navigation - Complex Terminal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #0f0f1a;
+            color: white;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        
+        #container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .hud {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(15,15,26,0.95), transparent);
+            pointer-events: none;
+        }
+        
+        .title h1 { font-size: 18px; font-weight: 800; }
+        .title span { font-size: 11px; color: #00d4ff; letter-spacing: 2px; }
+        
+        .gate-box {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid #ff7744;
+            border-radius: 16px;
+            padding: 12px 24px;
+            text-align: center;
+        }
+        .gate-label { font-size: 10px; color: #888; }
+        .gate-num { font-size: 42px; font-weight: 800; color: #ff7744; }
+        
+        .bubble {
+            position: fixed;
+            top: 100px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            background: rgba(0,0,0,0.9);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 2px solid #444;
+        }
+        .bubble.show { opacity: 1; }
+        .bubble.fast { border-color: #00d4ff; }
+        .bubble.slow { border-color: #ff6eb4; }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 14px 20px;
+            border-radius: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: 2px solid #444;
+            background: transparent;
+            color: #888;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover { border-color: #00d4ff; color: white; }
+        .btn.active { background: #00d4ff; border-color: #00d4ff; color: #000; }
+        .btn.active.slow { background: #ff6eb4; border-color: #ff6eb4; }
+        .btn.reset { border-color: #ffdd00; color: #ffdd00; }
+        
+        .info {
+            position: fixed;
+            left: 30px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            pointer-events: none;
+        }
+        .info-card {
+            background: rgba(0,0,0,0.6);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 10px;
+            max-width: 180px;
+        }
+        .info-title { font-size: 10px; color: #00ff9d; letter-spacing: 1px; margin-bottom: 6px; }
+        .info-text { font-size: 12px; color: #888; line-height: 1.6; }
+        .key { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: white; }
+        
+        .minimap {
+            position: fixed;
+            right: 30px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            border-radius: 16px;
+            padding: 12px;
+            pointer-events: none;
+        }
+        .minimap-title { font-size: 10px; color: #666; letter-spacing: 1px; text-align: center; margin-bottom: 8px; }
+        
+        .stats {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 14px 20px;
+            border-radius: 20px;
+        }
+        .stat-val { font-size: 28px; font-weight: 800; }
+        .stat-label { font-size: 10px; color: #666; }
+        
+        .modal {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            z-index: 300;
+            background: rgba(0,0,0,0.95);
+            border: 2px solid #00ff9d;
+            border-radius: 30px;
+            padding: 40px 50px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+        .modal.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .modal-icon { font-size: 50px; margin-bottom: 10px; }
+        .modal-title { font-size: 28px; font-weight: 800; }
+        .modal-stats { display: flex; gap: 40px; justify-content: center; margin: 20px 0; }
+        .modal-btn {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #00ff9d, #00d4ff);
+            border: none;
+            border-radius: 25px;
+            color: #000;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div class="bubble" id="bubble">Follow signs!</div>
+    
+    <div class="hud">
+        <div class="title">
+            <h1>🔬 AR Navigation Study</h1>
+            <span>COMPLEX TERMINAL</span>
+        </div>
+        <div class="gate-box">
+            <div class="gate-label">FIND GATE</div>
+            <div class="gate-num">B24</div>
+        </div>
+    </div>
+    
+    <div class="info">
+        <div class="info-card">
+            <div class="info-title">CONTROLS</div>
+            <div class="info-text">
+                <span class="key">WASD</span> move<br>
+                <span class="key">MOUSE</span> look<br>
+                <span class="key">SHIFT</span> run
+            </div>
+        </div>
+    </div>
+    
+    <div class="minimap">
+        <div class="minimap-title">TERMINAL MAP</div>
+        <canvas id="minimap" width="180" height="200"></canvas>
+    </div>
+    
+    <div class="controls">
+        <button class="btn active" data-mode="none">👁️ Normal</button>
+        <button class="btn" data-mode="fast">🚀 Fast</button>
+        <button class="btn" data-mode="slow">🛍️ Slow</button>
+        <button class="btn reset" onclick="resetPos()">🔄 Reset</button>
+    </div>
+    
+    <div class="stats">
+        <div><div class="stat-val" style="color:#00d4ff" id="time">0:00</div><div class="stat-label">TIME</div></div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-icon">🎉</div>
+        <div class="modal-title">Gate Found!</div>
+        <div class="modal-stats">
+            <div><div class="stat-val" id="final-time" style="color:#00d4ff;font-size:36px;font-weight:800">0:00</div><div class="stat-label">TIME</div></div>
+        </div>
+        <button class="modal-btn" onclick="restart()">Try Again</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let pos = { x: 0, y: 1.7, z: 0 };
+        let rot = { x: 0, y: 0 };
+        let keys = {};
+        let mode = 'none';
+        let startTime = Date.now();
+        let complete = false;
+        
+        let focusObjs = [];
+        let blurObjs = [];
+        let fastDots = [];
+        let slowDots = [];
+        
+        /*
+         * COMPLEX TERMINAL LAYOUT
+         * =======================
+         * 
+         *                         [Security]
+         *                             |
+         *     +--[A Gates]--[MAIN HALL]--[B Gates]--+
+         *                        |                   |
+         *              [Food Court Plaza]        [B10-B20]
+         *                   /      \                 |
+         *           [Shops]        [Coffee]      [B21-B30]--[GATE B24]
+         *              |              |
+         *         [Duty Free]----[Lounge]
+         * 
+         * Fast path: Main Hall → B Gates → B21-B30 → Gate B24
+         * Slow path: Main Hall → Food Court → Shops → Duty Free → Lounge → B Gates → Gate B24
+         */
+        
+        const GATE = { x: 100, z: -60 };
+        
+        // Walkable areas - wide open spaces
+        const walkableAreas = [
+            // Main Hall (starting area) - wide open
+            { minX: -40, maxX: 40, minZ: -30, maxZ: 10 },
+            
+            // B Gates corridor (right from main hall)
+            { minX: 35, maxX: 110, minZ: -30, maxZ: 10 },
+            
+            // B21-B30 corridor (going down from B Gates)
+            { minX: 70, maxX: 110, minZ: -70, maxZ: -25 },
+            
+            // A Gates corridor (left from main hall)
+            { minX: -80, maxX: -35, minZ: -30, maxZ: 10 },
+            
+            // Food Court Plaza (down from main hall)
+            { minX: -30, maxX: 30, minZ: -70, maxZ: -25 },
+            
+            // Shops corridor (left from food court)
+            { minX: -60, maxX: -25, minZ: -70, maxZ: -40 },
+            
+            // Duty Free (further left)
+            { minX: -90, maxX: -55, minZ: -90, maxZ: -50 },
+            
+            // Lounge area (connects duty free to B gates)
+            { minX: -60, maxX: 30, minZ: -100, maxZ: -65 },
+            
+            // Back corridor (connects lounge to B gates area)
+            { minX: 25, maxX: 110, minZ: -100, maxZ: -65 }
+        ];
+        
+        // Fast path - efficient route following signs
+        const fastPath = [
+            {x:0, z:0},
+            {x:20, z:-10},
+            {x:50, z:-10},      // Enter B Gates
+            {x:80, z:-10},      // B Gates corridor
+            {x:90, z:-30},      // Turn to B21-B30
+            {x:90, z:-50},      // B21-B30 corridor
+            {x:100, z:-60}      // Gate B24
+        ];
+        
+        // Slow path - gets distracted through shopping
+        const slowPath = [
+            {x:0, z:0},
+            {x:0, z:-20},
+            {x:0, z:-45},       // Food Court
+            {x:-40, z:-55},     // Shops
+            {x:-70, z:-70},     // Duty Free
+            {x:-40, z:-85},     // Lounge
+            {x:20, z:-85},      // Back corridor
+            {x:60, z:-85},
+            {x:90, z:-85},
+            {x:90, z:-60},      // Up to gate
+            {x:100, z:-60}      // Gate B24
+        ];
+        
+        const distractions = [
+            {x:0, z:-45, msg:"Ooh, food court! 🍔"},
+            {x:-40, z:-55, msg:"Nice shops! 👀"},
+            {x:-70, z:-70, msg:"Duty free deals! 💎"},
+            {x:-40, z:-85, msg:"VIP lounge! ✨"},
+            {x:60, z:-85, msg:"Almost there... 🤔"},
+            {x:100, z:-60, msg:"Finally! 😅"}
+        ];
+        
+        const guideMsg = [
+            "Follow B Gates →",
+            "B21-B30 this way!",
+            "B24 ahead!",
+            "Gate found! ✈️"
+        ];
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);
+            scene.fog = new THREE.Fog(0x1a1a2e, 50, 150);
+            
+            camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 300);
+            camera.position.set(0, 1.7, 0);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(innerWidth, innerHeight);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            document.getElementById('container').appendChild(renderer.domElement);
+            
+            setupLights();
+            buildEnvironment();
+            buildMainHall();
+            buildBGatesCorridor();
+            buildFoodCourt();
+            buildShops();
+            buildDutyFree();
+            buildLounge();
+            buildGate();
+            buildHangingSigns();
+            buildPeople();
+            buildPathDots();
+            
+            setupEvents();
+            animate();
+        }
+        
+        function setupLights() {
+            scene.add(new THREE.AmbientLight(0x606080, 0.5));
+            
+            const sun = new THREE.DirectionalLight(0xffffff, 0.4);
+            sun.position.set(50, 80, 50);
+            scene.add(sun);
+            
+            // Ceiling lights throughout
+            const lightPositions = [
+                [0, 0], [0, -20], [0, -45], [0, -85],
+                [40, -10], [70, -10], [90, -10],
+                [90, -40], [90, -60],
+                [-40, -10], [-60, -10],
+                [-40, -55], [-70, -70],
+                [-40, -85], [30, -85], [60, -85]
+            ];
+            
+            lightPositions.forEach(([x, z]) => {
+                const light = new THREE.PointLight(0xffffee, 0.7, 35);
+                light.position.set(x, 4.5, z);
+                scene.add(light);
+            });
+        }
+        
+        function buildEnvironment() {
+            // Large floor
+            const floor = new THREE.Mesh(
+                new THREE.PlaneGeometry(300, 250),
+                new THREE.MeshStandardMaterial({ color: 0x2a2a3e })
+            );
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.set(20, 0, -45);
+            scene.add(floor);
+            
+            // Ceiling
+            const ceiling = new THREE.Mesh(
+                new THREE.PlaneGeometry(300, 250),
+                new THREE.MeshStandardMaterial({ color: 0x1a1a2e })
+            );
+            ceiling.rotation.x = Math.PI / 2;
+            ceiling.position.set(20, 5.5, -45);
+            scene.add(ceiling);
+            
+            // Floor pattern
+            const tileMat = new THREE.MeshStandardMaterial({ color: 0x353550 });
+            for (let x = -100; x < 120; x += 6) {
+                for (let z = 20; z > -110; z -= 6) {
+                    if (Math.random() > 0.6) {
+                        const tile = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 2.5), tileMat);
+                        tile.rotation.x = -Math.PI / 2;
+                        tile.position.set(x, 0.02, z);
+                        scene.add(tile);
+                    }
+                }
+            }
+            
+            // Outer walls only (no internal blocking walls)
+            const wallMat = new THREE.MeshStandardMaterial({ color: 0x3d3d5c });
+            
+            // Back wall of main hall
+            addWall(0, 12, 90, 0.5, wallMat);
+            
+            // Left boundary
+            addWall(-92, -40, 0.5, 110, wallMat);
+            
+            // Right boundary
+            addWall(112, -40, 0.5, 120, wallMat);
+            
+            // Bottom boundary
+            addWall(10, -105, 210, 0.5, wallMat);
+            
+            // Some decorative pillars
+            const pillarMat = new THREE.MeshStandardMaterial({ color: 0x4a4a6a });
+            const pillarPositions = [
+                [-30, -10], [30, -10], [-30, -60], [30, -60],
+                [60, -10], [60, -60], [90, -30]
+            ];
+            
+            pillarPositions.forEach(([x, z]) => {
+                const pillar = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.8, 0.8, 5.5, 8),
+                    pillarMat
+                );
+                pillar.position.set(x, 2.75, z);
+                scene.add(pillar);
+            });
+        }
+        
+        function addWall(x, z, w, d, mat) {
+            const wall = new THREE.Mesh(new THREE.BoxGeometry(w, 5.5, d), mat);
+            wall.position.set(x, 2.75, z);
+            scene.add(wall);
+        }
+        
+        function buildMainHall() {
+            // Information desk in center
+            const desk = new THREE.Mesh(
+                new THREE.CylinderGeometry(3, 3, 1.2, 16),
+                new THREE.MeshStandardMaterial({ color: 0x4a6a8a })
+            );
+            desk.position.set(0, 0.6, -10);
+            scene.add(desk);
+            
+            // Info sign above desk
+            const infoSign = createFloatingSign("ℹ️ INFORMATION", 0x00aaff, 0, 4, -10);
+            scene.add(infoSign);
+            
+            // Security checkpoint sign (behind start)
+            const secSign = createFloatingSign("← Security | Gates →", 0x888888, 0, 4.2, 5);
+            scene.add(secSign);
+        }
+        
+        function buildBGatesCorridor() {
+            // B Gates entrance arch
+            const archMat = new THREE.MeshStandardMaterial({ 
+                color: 0x2a4a6a,
+                emissive: 0x00d4ff,
+                emissiveIntensity: 0.1
+            });
+            
+            // Left pillar of arch
+            const pillarL = new THREE.Mesh(new THREE.BoxGeometry(1, 5, 1), archMat);
+            pillarL.position.set(38, 2.5, -5);
+            scene.add(pillarL);
+            
+            // Right pillar
+            const pillarR = new THREE.Mesh(new THREE.BoxGeometry(1, 5, 1), archMat);
+            pillarR.position.set(38, 2.5, -15);
+            scene.add(pillarR);
+            
+            // Top of arch
+            const archTop = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 12), archMat);
+            archTop.position.set(38, 4.8, -10);
+            scene.add(archTop);
+            
+            // B10-B20 sign
+            createHangingSign("B10-B20 →", 0x00d4ff, 65, 4.2, -10, 0, true);
+            
+            // B21-B30 turn sign
+            createHangingSign("↓ B21-B30", 0x00d4ff, 85, 4.2, -25, 0, true);
+            
+            // Near gate sign
+            createHangingSign("B24 →", 0x00d4ff, 90, 4.2, -50, 0, true);
+        }
+        
+        function buildFoodCourt() {
+            const grp = new THREE.Group();
+            
+            // Multiple food stalls in a semi-circle
+            const stalls = [
+                { angle: -0.4, name: "🍔 BURGERS", color: 0xff6a4a },
+                { angle: 0, name: "🍕 PIZZA", color: 0xffaa00 },
+                { angle: 0.4, name: "🍜 NOODLES", color: 0x66ff66 }
+            ];
+            
+            stalls.forEach(stall => {
+                const x = Math.sin(stall.angle) * 15;
+                const z = -Math.cos(stall.angle) * 8 - 8;
+                
+                // Counter
+                const counter = new THREE.Mesh(
+                    new THREE.BoxGeometry(8, 1.2, 2),
+                    new THREE.MeshStandardMaterial({ color: 0x5a4a3a })
+                );
+                counter.position.set(x, 0.6, z);
+                counter.rotation.y = -stall.angle;
+                grp.add(counter);
+                
+                // Menu board
+                const menu = new THREE.Mesh(
+                    new THREE.BoxGeometry(6, 2, 0.2),
+                    new THREE.MeshStandardMaterial({ 
+                        color: 0x1a1a1a,
+                        emissive: stall.color,
+                        emissiveIntensity: 0.4
+                    })
+                );
+                menu.position.set(x, 3.5, z - 1.5);
+                menu.rotation.y = -stall.angle;
+                grp.add(menu);
+                
+                // Text
+                const canvas = document.createElement('canvas');
+                canvas.width = 400;
+                canvas.height = 130;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#1a1a1a';
+                ctx.fillRect(0, 0, 400, 130);
+                ctx.fillStyle = '#' + stall.color.toString(16).padStart(6, '0');
+                ctx.font = 'bold 48px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(stall.name, 200, 70);
+                
+                const tex = new THREE.CanvasTexture(canvas);
+                const txt = new THREE.Mesh(
+                    new THREE.PlaneGeometry(5.8, 1.9),
+                    new THREE.MeshBasicMaterial({ map: tex })
+                );
+                txt.position.set(x + Math.sin(-stall.angle) * 0.15, 3.5, z - 1.35);
+                txt.rotation.y = -stall.angle;
+                grp.add(txt);
+            });
+            
+            // Seating area - round tables
+            for (let i = 0; i < 6; i++) {
+                const tx = -12 + (i % 3) * 12;
+                const tz = 5 + Math.floor(i / 3) * 8;
+                
+                const table = new THREE.Mesh(
+                    new THREE.CylinderGeometry(1, 1, 0.8, 8),
+                    new THREE.MeshStandardMaterial({ color: 0x4a4a6a })
+                );
+                table.position.set(tx, 0.4, tz);
+                grp.add(table);
+                
+                // Chairs
+                for (let j = 0; j < 4; j++) {
+                    const angle = (j / 4) * Math.PI * 2;
+                    const chair = new THREE.Mesh(
+                        new THREE.BoxGeometry(0.6, 0.5, 0.6),
+                        new THREE.MeshStandardMaterial({ color: 0xff6a4a })
+                    );
+                    chair.position.set(tx + Math.cos(angle) * 2, 0.25, tz + Math.sin(angle) * 2);
+                    grp.add(chair);
+                }
+            }
+            
+            grp.position.set(0, 0, -45);
+            grp.userData = { origEmissive: 0.4 };
+            scene.add(grp);
+            blurObjs.push(grp);
+            
+            // Food court sign
+            createHangingSign("↓ Food Court", 0xff6a4a, 0, 4.2, -28, 0, false);
+        }
+        
+        function buildShops() {
+            const grp = new THREE.Group();
+            
+            const shops = [
+                { x: 0, name: "👕 FASHION", color: 0xff69b4 },
+                { x: -15, name: "📱 ELECTRONICS", color: 0x6a4aff }
+            ];
+            
+            shops.forEach(shop => {
+                // Storefront
+                const front = new THREE.Mesh(
+                    new THREE.BoxGeometry(12, 4, 0.3),
+                    new THREE.MeshStandardMaterial({
+                        color: 0x2a2a4a,
+                        emissive: shop.color,
+                        emissiveIntensity: 0.3
+                    })
+                );
+                front.position.set(shop.x, 2, -5);
+                grp.add(front);
+                
+                // Sign
+                const canvas = document.createElement('canvas');
+                canvas.width = 512;
+                canvas.height = 128;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#2a2a4a';
+                ctx.fillRect(0, 0, 512, 128);
+                ctx.fillStyle = '#' + shop.color.toString(16).padStart(6, '0');
+                ctx.font = 'bold 52px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(shop.name, 256, 75);
+                
+                const tex = new THREE.CanvasTexture(canvas);
+                const sign = new THREE.Mesh(
+                    new THREE.PlaneGeometry(11, 2.5),
+                    new THREE.MeshBasicMaterial({ map: tex })
+                );
+                sign.position.set(shop.x, 3.8, -4.8);
+                grp.add(sign);
+                
+                // Display window items
+                for (let i = 0; i < 3; i++) {
+                    const item = new THREE.Mesh(
+                        new THREE.BoxGeometry(1.5, 2, 0.5),
+                        new THREE.MeshStandardMaterial({ color: shop.color })
+                    );
+                    item.position.set(shop.x - 4 + i * 4, 1, -4);
+                    grp.add(item);
+                }
+            });
+            
+            grp.position.set(-40, 0, -50);
+            grp.userData = { origEmissive: 0.3 };
+            scene.add(grp);
+            blurObjs.push(grp);
+        }
+        
+        function buildDutyFree() {
+            const grp = new THREE.Group();
+            
+            // Main store structure
+            const storefront = new THREE.Mesh(
+                new THREE.BoxGeometry(25, 4.5, 0.3),
+                new THREE.MeshStandardMaterial({
+                    color: 0x1a1a2e,
+                    emissive: 0xffaa4a,
+                    emissiveIntensity: 0.35
+                })
+            );
+            storefront.position.set(0, 2.25, -8);
+            grp.add(storefront);
+            
+            // Big sign
+            const canvas = document.createElement('canvas');
+            canvas.width = 700;
+            canvas.height = 150;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 700, 150);
+            ctx.fillStyle = '#ffaa4a';
+            ctx.font = 'bold 60px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('💎 DUTY FREE 💎', 350, 60);
+            ctx.font = '28px Arial';
+            ctx.fillText('Tax-Free Shopping', 350, 110);
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            const sign = new THREE.Mesh(
+                new THREE.PlaneGeometry(24, 5),
+                new THREE.MeshBasicMaterial({ map: tex })
+            );
+            sign.position.set(0, 4, -7.8);
+            grp.add(sign);
+            
+            // Display cases
+            for (let i = 0; i < 4; i++) {
+                const display = new THREE.Mesh(
+                    new THREE.BoxGeometry(4, 1.5, 2),
+                    new THREE.MeshStandardMaterial({
+                        color: 0x2a2a4a,
+                        emissive: 0xffd700,
+                        emissiveIntensity: 0.2
+                    })
+                );
+                display.position.set(-9 + i * 6, 0.75, 0);
+                grp.add(display);
+                
+                // Products
+                for (let j = 0; j < 3; j++) {
+                    const product = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.25, 8, 8),
+                        new THREE.MeshStandardMaterial({
+                            color: 0xffd700,
+                            emissive: 0xffd700,
+                            emissiveIntensity: 0.3
+                        })
+                    );
+                    product.position.set(-10 + i * 6 + j * 1.5, 1.7, 0);
+                    grp.add(product);
+                }
+            }
+            
+            grp.position.set(-72, 0, -62);
+            grp.userData = { origEmissive: 0.35 };
+            scene.add(grp);
+            blurObjs.push(grp);
+        }
+        
+        function buildLounge() {
+            const grp = new THREE.Group();
+            
+            // Lounge seating - comfortable sofas
+            const sofaMat = new THREE.MeshStandardMaterial({ color: 0x4a3a6a });
+            
+            for (let i = 0; i < 3; i++) {
+                // Sofa
+                const sofa = new THREE.Mesh(
+                    new THREE.BoxGeometry(5, 1, 2),
+                    sofaMat
+                );
+                sofa.position.set(-10 + i * 12, 0.5, 0);
+                grp.add(sofa);
+                
+                // Back rest
+                const back = new THREE.Mesh(
+                    new THREE.BoxGeometry(5, 1.2, 0.5),
+                    sofaMat
+                );
+                back.position.set(-10 + i * 12, 1.3, -0.8);
+                grp.add(back);
+                
+                // Coffee table
+                const table = new THREE.Mesh(
+                    new THREE.BoxGeometry(2, 0.5, 1.5),
+                    new THREE.MeshStandardMaterial({ color: 0x3a3a4a })
+                );
+                table.position.set(-10 + i * 12, 0.25, 2.5);
+                grp.add(table);
+            }
+            
+            // Lounge sign
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#2a2a4a';
+            ctx.fillRect(0, 0, 400, 100);
+            ctx.fillStyle = '#aa88ff';
+            ctx.font = 'bold 42px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('✨ VIP LOUNGE', 200, 60);
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            const sign = new THREE.Mesh(
+                new THREE.PlaneGeometry(10, 2.5),
+                new THREE.MeshBasicMaterial({ map: tex })
+            );
+            sign.position.set(0, 4, -5);
+            grp.add(sign);
+            
+            grp.position.set(-20, 0, -85);
+            grp.userData = { origEmissive: 0.3 };
+            scene.add(grp);
+            blurObjs.push(grp);
+        }
+        
+        function buildGate() {
+            const grp = new THREE.Group();
+            
+            // Gate counter desk
+            const desk = new THREE.Mesh(
+                new THREE.BoxGeometry(14, 1.2, 3),
+                new THREE.MeshStandardMaterial({ color: 0x4a4a6a })
+            );
+            desk.position.set(0, 0.6, 5);
+            grp.add(desk);
+            
+            // Computer monitors
+            for (let i = 0; i < 4; i++) {
+                const monitor = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.5, 1, 0.1),
+                    new THREE.MeshStandardMaterial({ 
+                        color: 0x111111,
+                        emissive: 0x0066ff,
+                        emissiveIntensity: 0.4
+                    })
+                );
+                monitor.position.set(-5 + i * 3.5, 1.8, 5);
+                grp.add(monitor);
+            }
+            
+            // Big gate sign
+            const signBg = new THREE.Mesh(
+                new THREE.BoxGeometry(12, 4, 0.3),
+                new THREE.MeshStandardMaterial({
+                    color: 0x1a1a2e,
+                    emissive: 0xff7744,
+                    emissiveIntensity: 0.5
+                })
+            );
+            signBg.position.set(0, 4.5, 8);
+            grp.add(signBg);
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = 500;
+            canvas.height = 180;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 500, 180);
+            ctx.fillStyle = '#ff7744';
+            ctx.font = 'bold 100px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('B24', 250, 85);
+            ctx.font = '28px Arial';
+            ctx.fillStyle = '#00ff00';
+            ctx.fillText('✈ NOW BOARDING', 250, 140);
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            const txt = new THREE.Mesh(
+                new THREE.PlaneGeometry(11.8, 3.9),
+                new THREE.MeshBasicMaterial({ map: tex })
+            );
+            txt.position.set(0, 4.5, 8.16);
+            grp.add(txt);
+            
+            // Seating rows
+            const seatMat = new THREE.MeshStandardMaterial({ color: 0x3a5a7a });
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 6; col++) {
+                    const seat = new THREE.Mesh(
+                        new THREE.BoxGeometry(1.1, 0.55, 1.1),
+                        seatMat
+                    );
+                    seat.position.set(-6 + col * 2.4, 0.5, -3 - row * 2.5);
+                    grp.add(seat);
+                    
+                    const back = new THREE.Mesh(
+                        new THREE.BoxGeometry(1.1, 1, 0.15),
+                        seatMat
+                    );
+                    back.position.set(-6 + col * 2.4, 1.25, -3.5 - row * 2.5);
+                    grp.add(back);
+                }
+            }
+            
+            // Jetway door
+            const doorFrame = new THREE.Mesh(
+                new THREE.BoxGeometry(5, 3.5, 0.4),
+                new THREE.MeshStandardMaterial({ color: 0x555555 })
+            );
+            doorFrame.position.set(0, 1.75, 10);
+            grp.add(doorFrame);
+            
+            const doorHole = new THREE.Mesh(
+                new THREE.PlaneGeometry(4, 3),
+                new THREE.MeshBasicMaterial({ color: 0x050510 })
+            );
+            doorHole.position.set(0, 1.75, 9.79);
+            grp.add(doorHole);
+            
+            grp.position.set(GATE.x, 0, GATE.z);
+            grp.userData = { origEmissive: 0.5 };
+            scene.add(grp);
+            focusObjs.push(grp);
+        }
+        
+        function createFloatingSign(text, color, x, y, z) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 512, 100);
+            ctx.fillStyle = '#' + color.toString(16).padStart(6, '0');
+            ctx.font = 'bold 36px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, 256, 60);
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            const sign = new THREE.Mesh(
+                new THREE.PlaneGeometry(8, 1.5),
+                new THREE.MeshBasicMaterial({ map: tex, transparent: true })
+            );
+            sign.position.set(x, y, z);
+            return sign;
+        }
+        
+        function createHangingSign(text, color, x, y, z, rotY, isNav) {
+            const grp = new THREE.Group();
+            
+            // Sign board
+            const board = new THREE.Mesh(
+                new THREE.BoxGeometry(10, 2, 0.2),
+                new THREE.MeshStandardMaterial({
+                    color: 0x1a1a2e,
+                    emissive: color,
+                    emissiveIntensity: 0.3
+                })
+            );
+            grp.add(board);
+            
+            // Text on both sides
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 512, 100);
+            ctx.fillStyle = '#' + color.toString(16).padStart(6, '0');
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, 256, 65);
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            
+            const front = new THREE.Mesh(
+                new THREE.PlaneGeometry(9.8, 1.9),
+                new THREE.MeshBasicMaterial({ map: tex })
+            );
+            front.position.z = 0.11;
+            grp.add(front);
+            
+            const back = new THREE.Mesh(
+                new THREE.PlaneGeometry(9.8, 1.9),
+                new THREE.MeshBasicMaterial({ map: tex })
+            );
+            back.position.z = -0.11;
+            back.rotation.y = Math.PI;
+            grp.add(back);
+            
+            // Hanging wires
+            const wireMat = new THREE.MeshBasicMaterial({ color: 0x888888 });
+            const wire1 = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), wireMat);
+            wire1.position.set(-4, 1.6, 0);
+            grp.add(wire1);
+            const wire2 = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.2), wireMat);
+            wire2.position.set(4, 1.6, 0);
+            grp.add(wire2);
+            
+            grp.position.set(x, y, z);
+            grp.rotation.y = rotY;
+            grp.userData = { isNav, origEmissive: 0.3 };
+            scene.add(grp);
+            
+            if (isNav) focusObjs.push(grp);
+            return grp;
+        }
+        
+        function buildHangingSigns() {
+            // Main hall directional signs
+            createHangingSign("← A Gates | B Gates →", 0x00d4ff, 0, 4.2, -5, 0, true);
+            createHangingSign("A1-A15 ←", 0x888888, -50, 4.2, -10, 0, false);
+        }
+        
+        function buildPeople() {
+            const positions = [
+                [5, -5], [-10, -8], [30, -12], [60, -8], [85, -15],
+                [95, -45], [5, -40], [-15, -52], [-60, -68],
+                [-30, -82], [40, -80], [70, -82]
+            ];
+            
+            positions.forEach(([x, z]) => {
+                const grp = new THREE.Group();
+                
+                const body = new THREE.Mesh(
+                    new THREE.CylinderGeometry(0.3, 0.38, 1.3, 8),
+                    new THREE.MeshStandardMaterial({
+                        color: [0x4a5568, 0x5a4a68, 0x4a6858, 0x685a4a, 0x5a5a6a][Math.floor(Math.random() * 5)]
+                    })
+                );
+                body.position.y = 1.15;
+                grp.add(body);
+                
+                const head = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.25, 12, 12),
+                    new THREE.MeshStandardMaterial({ color: 0xd4a574 })
+                );
+                head.position.y = 2;
+                grp.add(head);
+                
+                grp.position.set(x, 0, z);
+                grp.rotation.y = Math.random() * Math.PI * 2;
+                scene.add(grp);
+                blurObjs.push(grp);
+            });
+        }
+        
+        function buildPathDots() {
+            // Fast path dots
+            const fastMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.9 });
+            for (let i = 0; i < fastPath.length - 1; i++) {
+                const a = fastPath[i], b = fastPath[i + 1];
+                const dist = Math.hypot(b.x - a.x, b.z - a.z);
+                const steps = Math.ceil(dist / 2.5);
+                for (let j = 0; j <= steps; j++) {
+                    const t = j / steps;
+                    const dot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 8), fastMat.clone());
+                    dot.position.set(a.x + (b.x - a.x) * t, 0.15, a.z + (b.z - a.z) * t);
+                    dot.userData.phase = Math.random() * Math.PI * 2;
+                    dot.visible = false;
+                    scene.add(dot);
+                    fastDots.push(dot);
+                }
+            }
+            
+            // Slow path dots
+            const slowMat = new THREE.MeshBasicMaterial({ color: 0xff6eb4, transparent: true, opacity: 0.9 });
+            for (let i = 0; i < slowPath.length - 1; i++) {
+                const a = slowPath[i], b = slowPath[i + 1];
+                const dist = Math.hypot(b.x - a.x, b.z - a.z);
+                const steps = Math.ceil(dist / 2.5);
+                for (let j = 0; j <= steps; j++) {
+                    const t = j / steps;
+                    const dot = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 8), slowMat.clone());
+                    dot.position.set(a.x + (b.x - a.x) * t, 0.15, a.z + (b.z - a.z) * t);
+                    dot.userData.phase = Math.random() * Math.PI * 2;
+                    dot.visible = false;
+                    scene.add(dot);
+                    slowDots.push(dot);
+                }
+            }
+            
+            // Gate ring
+            const ring = new THREE.Mesh(
+                new THREE.TorusGeometry(5, 0.25, 8, 32),
+                new THREE.MeshBasicMaterial({ color: 0xff7744, transparent: true, opacity: 0.9 })
+            );
+            ring.position.set(GATE.x, 0.15, GATE.z);
+            ring.rotation.x = -Math.PI / 2;
+            ring.name = 'gateRing';
+            ring.visible = false;
+            scene.add(ring);
+        }
+        
+        // === MODE SWITCHING ===
+        function updateMode() {
+            const bubble = document.getElementById('bubble');
+            const ring = scene.getObjectByName('gateRing');
+            
+            bubble.classList.remove('fast', 'slow', 'show');
+            
+            if (mode === 'none') {
+                fastDots.forEach(d => d.visible = false);
+                slowDots.forEach(d => d.visible = false);
+                if (ring) ring.visible = false;
+                scene.fog = new THREE.Fog(0x1a1a2e, 50, 150);
+                resetVis();
+            } else if (mode === 'fast') {
+                fastDots.forEach(d => d.visible = true);
+                slowDots.forEach(d => d.visible = false);
+                if (ring) ring.visible = true;
+                bubble.classList.add('show', 'fast');
+                scene.fog = new THREE.Fog(0x0a0a15, 8, 35);
+                blurObjs.forEach(o => setVis(o, 0.1, 0.02));
+                focusObjs.forEach(o => setVis(o, 1, 0.5));
+            } else if (mode === 'slow') {
+                fastDots.forEach(d => d.visible = false);
+                slowDots.forEach(d => d.visible = true);
+                if (ring) ring.visible = true;
+                bubble.classList.add('show', 'slow');
+                scene.fog = new THREE.Fog(0x0a0a15, 12, 50);
+                blurObjs.forEach(o => setVis(o, 1, 0.6));
+                focusObjs.forEach(o => setVis(o, 0.12, 0.02));
+            }
+        }
+        
+        function setVis(obj, opacity, emissive) {
+            obj.traverse(c => {
+                if (c.material) {
+                    c.material.transparent = true;
+                    c.material.opacity = opacity;
+                    if (c.material.emissiveIntensity !== undefined) {
+                        c.material.emissiveIntensity = emissive;
+                    }
+                }
+            });
+        }
+        
+        function resetVis() {
+            [...focusObjs, ...blurObjs].forEach(o => {
+                setVis(o, 1, o.userData?.origEmissive || 0.3);
+            });
+        }
+        
+        function updateBubble() {
+            if (mode === 'none') return;
+            const bubble = document.getElementById('bubble');
+            const wp = mode === 'fast' ? fastPath : slowPath;
+            
+            let closest = 0, minD = Infinity;
+            for (let i = 0; i < wp.length; i++) {
+                const d = Math.hypot(pos.x - wp[i].x, pos.z - wp[i].z);
+                if (d < minD) { minD = d; closest = i; }
+            }
+            
+            let msg;
+            if (mode === 'fast') {
+                msg = guideMsg[Math.min(Math.floor(closest * guideMsg.length / wp.length), guideMsg.length - 1)];
+            } else {
+                const near = distractions.find(d => Math.hypot(pos.x - d.x, pos.z - d.z) < 18);
+                msg = near ? near.msg : "Where's the gate? 🤔";
+            }
+            bubble.textContent = msg;
+        }
+        
+        function animateDots(t) {
+            const dots = mode === 'fast' ? fastDots : mode === 'slow' ? slowDots : [];
+            dots.forEach(d => {
+                const p = d.userData.phase;
+                d.material.opacity = 0.5 + Math.sin(t * 4 + p) * 0.4;
+                d.position.y = 0.15 + Math.sin(t * 3 + p) * 0.12;
+            });
+            const ring = scene.getObjectByName('gateRing');
+            if (ring && ring.visible) ring.rotation.z = t * 0.4;
+        }
+        
+        // === COLLISION ===
+        function validPos(x, z) {
+            const pad = 0.6;
+            for (const a of walkableAreas) {
+                if (x >= a.minX + pad && x <= a.maxX - pad &&
+                    z >= a.minZ + pad && z <= a.maxZ - pad) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function resetPos() {
+            pos = { x: 0, y: 1.7, z: 0 };
+            rot = { x: 0, y: 0 };
+        }
+        
+        // === EVENTS ===
+        function setupEvents() {
+            document.addEventListener('keydown', e => {
+                keys[e.code] = true;
+                if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft'].includes(e.code)) e.preventDefault();
+            });
+            document.addEventListener('keyup', e => keys[e.code] = false);
+            
+            document.addEventListener('mousemove', e => {
+                if (complete) return;
+                rot.y -= e.movementX * 0.002;
+                rot.x -= e.movementY * 0.002;
+                rot.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rot.x));
+            });
+            
+            renderer.domElement.addEventListener('click', () => {
+                renderer.domElement.requestPointerLock();
+            });
+            
+            document.querySelectorAll('.btn[data-mode]').forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.btn[data-mode]').forEach(b => b.classList.remove('active', 'slow'));
+                    btn.classList.add('active');
+                    if (btn.dataset.mode === 'slow') btn.classList.add('slow');
+                    mode = btn.dataset.mode;
+                    updateMode();
+                });
+            });
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = innerWidth / innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(innerWidth, innerHeight);
+            });
+        }
+        
+        // === GAME LOOP ===
+        function updatePlayer(dt) {
+            if (complete) return;
+            
+            const speed = keys['ShiftLeft'] ? 16 : 8;
+            let fwd = 0, strafe = 0;
+            
+            if (keys['KeyW']) fwd += 1;
+            if (keys['KeyS']) fwd -= 1;
+            if (keys['KeyD']) strafe += 1;
+            if (keys['KeyA']) strafe -= 1;
+            
+            if (fwd || strafe) {
+                const ang = rot.y;
+                let dx = (-Math.sin(ang) * fwd + Math.cos(ang) * strafe) * speed * dt;
+                let dz = (-Math.cos(ang) * fwd - Math.sin(ang) * strafe) * speed * dt;
+                
+                if (fwd && strafe) { dx *= 0.707; dz *= 0.707; }
+                
+                const nx = pos.x + dx, nz = pos.z + dz;
+                
+                if (validPos(nx, nz)) {
+                    pos.x = nx;
+                    pos.z = nz;
+                } else if (validPos(nx, pos.z)) {
+                    pos.x = nx;
+                } else if (validPos(pos.x, nz)) {
+                    pos.z = nz;
+                }
+            }
+            
+            camera.position.set(pos.x, pos.y, pos.z);
+            camera.rotation.order = 'YXZ';
+            camera.rotation.y = rot.y;
+            camera.rotation.x = rot.x;
+        }
+        
+        function checkWin() {
+            if (complete) return;
+            if (Math.hypot(pos.x - GATE.x, pos.z - GATE.z) < 8) {
+                complete = true;
+                document.getElementById('final-time').textContent = document.getElementById('time').textContent;
+                document.getElementById('modal').classList.add('show');
+                document.getElementById('bubble').classList.remove('show');
+                document.exitPointerLock();
+            }
+        }
+        
+        function updateTime() {
+            if (complete) return;
+            const sec = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('time').textContent = `${Math.floor(sec / 60)}:${(sec % 60).toString().padStart(2, '0')}`;
+        }
+        
+        function drawMinimap() {
+            const c = document.getElementById('minimap');
+            const ctx = c.getContext('2d');
+            
+            ctx.fillStyle = 'rgba(0,0,0,0.5)';
+            ctx.fillRect(0, 0, 180, 200);
+            
+            // Scale: world x: -90 to 110 (200) -> map 10-170 (160)
+            //        world z: 10 to -100 (110) -> map 10-190 (180)
+            const mapX = x => 90 + x * 0.8;
+            const mapZ = z => 20 - z * 1.6;
+            
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            // Draw corridors
+            ctx.beginPath();
+            // Main hall
+            ctx.moveTo(mapX(-35), mapZ(5));
+            ctx.lineTo(mapX(35), mapZ(5));
+            ctx.lineTo(mapX(35), mapZ(-25));
+            ctx.lineTo(mapX(-35), mapZ(-25));
+            ctx.closePath();
+            ctx.stroke();
+            
+            // B Gates
+            ctx.beginPath();
+            ctx.moveTo(mapX(35), mapZ(-10));
+            ctx.lineTo(mapX(105), mapZ(-10));
+            ctx.lineTo(mapX(105), mapZ(-65));
+            ctx.lineTo(mapX(75), mapZ(-65));
+            ctx.lineTo(mapX(75), mapZ(-25));
+            ctx.stroke();
+            
+            // Food court & shops
+            ctx.beginPath();
+            ctx.moveTo(mapX(0), mapZ(-25));
+            ctx.lineTo(mapX(0), mapZ(-65));
+            ctx.lineTo(mapX(-55), mapZ(-65));
+            ctx.lineTo(mapX(-85), mapZ(-85));
+            ctx.lineTo(mapX(25), mapZ(-85));
+            ctx.lineTo(mapX(75), mapZ(-85));
+            ctx.lineTo(mapX(75), mapZ(-65));
+            ctx.stroke();
+            
+            // Highlight path
+            if (mode !== 'none') {
+                ctx.strokeStyle = mode === 'fast' ? '#00d4ff' : '#ff6eb4';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                
+                const path = mode === 'fast' ? fastPath : slowPath;
+                ctx.moveTo(mapX(path[0].x), mapZ(path[0].z));
+                path.forEach(p => ctx.lineTo(mapX(p.x), mapZ(p.z)));
+                ctx.stroke();
+            }
+            
+            // Gate marker
+            ctx.fillStyle = '#ff7744';
+            ctx.beginPath();
+            ctx.arc(mapX(GATE.x), mapZ(GATE.z), 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Player
+            const px = mapX(pos.x);
+            const pz = mapZ(pos.z);
+            
+            ctx.strokeStyle = '#00ff9d';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(px, pz);
+            ctx.lineTo(px + Math.sin(rot.y) * 10, pz + Math.cos(rot.y) * 10);
+            ctx.stroke();
+            
+            ctx.fillStyle = '#00ff9d';
+            ctx.beginPath();
+            ctx.arc(px, pz, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function restart() {
+            pos = { x: 0, y: 1.7, z: 0 };
+            rot = { x: 0, y: 0 };
+            complete = false;
+            startTime = Date.now();
+            document.getElementById('modal').classList.remove('show');
+            
+            const modes = ['none', 'fast', 'slow'];
+            mode = modes[(modes.indexOf(mode) + 1) % 3];
+            
+            document.querySelectorAll('.btn[data-mode]').forEach(b => {
+                b.classList.remove('active', 'slow');
+                if (b.dataset.mode === mode) {
+                    b.classList.add('active');
+                    if (mode === 'slow') b.classList.add('slow');
+                }
+            });
+            updateMode();
+        }
+        
+        let lastT = performance.now();
+        function animate() {
+            requestAnimationFrame(animate);
+            const now = performance.now();
+            const dt = (now - lastT) / 1000;
+            lastT = now;
+            
+            updatePlayer(dt);
+            updateBubble();
+            animateDots(now / 1000);
+            checkWin();
+            updateTime();
+            drawMinimap();
+            
+            renderer.render(scene, camera);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
