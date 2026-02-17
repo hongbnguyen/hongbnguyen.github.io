@@ -333,6 +333,29 @@
             opacity: 0.4;
         }
 
+        /* Cursor glow effect */
+        .cursor-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: radial-gradient(
+                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(182, 164, 105, 0.08),
+                rgba(255, 255, 255, 0.04) 30%,
+                transparent 60%
+            );
+        }
+
+        .cursor-glow.active {
+            opacity: 1;
+        }
+
         /* Proximity brightness effect */
         .proximity-target {
             transition: filter 0.4s ease, opacity 0.4s ease;
@@ -376,6 +399,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Cursor glow effect -->
+    <div class="cursor-glow" id="cursor-glow"></div>
 
     <!-- Floating conceptual words -->
     <div class="floating-words">
@@ -424,17 +450,16 @@
                 
                 <div class="about-content">
                     <p class="proximity-target">Hi, I’m Hong B. Nguyen — a cognitive scientist studying how surprisingly sophisticated implicit knowledge is woven into ordinary perception.</p>
-                    
+                   
                     <p class="proximity-target">My research shows that the visual system makes rapid, unconscious assumptions about invisible physical forces like gravity and friction in order to predict how objects will move. I also study how we automatically extract social meaning from motion and faces — for example, instantly seeing chasing, intention, or mischief in simple shapes. A third line of my work examines how visual attention and information sampling shape higher-level tasks, from navigating digital spaces to engaging with art.</p>
-                    
+                   
                     <p class="proximity-target">Across these projects, I argue that fast visual processing is far “smarter” than we typically give it credit for — and that seeing is already doing much of the work we call thinking.</p>
-                    
                     
                 </div>
             </div>
         </section>
 
-        
+       
     </main>
 
     <!-- Footer -->
@@ -473,12 +498,22 @@
 
         // Cursor proximity effect
         const proximityTargets = document.querySelectorAll('.proximity-target');
+        const cursorGlow = document.getElementById('cursor-glow');
         let mouseX = 0, mouseY = 0;
         let cursorHintShown = false;
+        let glowActive = false;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+
+            // Update cursor glow position
+            if (!glowActive) {
+                cursorGlow.classList.add('active');
+                glowActive = true;
+            }
+            cursorGlow.style.setProperty('--mouse-x', mouseX + 'px');
+            cursorGlow.style.setProperty('--mouse-y', mouseY + 'px');
 
             // Floating words drift
             floatingWords.forEach((word, i) => {
@@ -491,7 +526,7 @@
                 word.style.transform = `translate(${distX}px, ${baseY + distY}px)`;
             });
 
-            // Proximity brightness
+            // Proximity brightness for text
             proximityTargets.forEach(target => {
                 const rect = target.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
@@ -515,6 +550,12 @@
                 }, 3000);
                 cursorHintShown = true;
             }
+        });
+
+        // Hide glow when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.classList.remove('active');
+            glowActive = false;
         });
 
         // Smooth scroll for anchor links
