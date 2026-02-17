@@ -240,15 +240,15 @@
         .demo-container {
             position: relative;
             width: 100%;
-            max-width: 1000px;
-            height: 70vh;
-            min-height: 500px;
+            max-width: 1100px;
+            height: 80vh;
+            min-height: 600px;
             border-radius: 12px;
             overflow: hidden;
             margin: 0 auto var(--space-lg);
             background: #0f0f1a;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
         }
 
         .demo-iframe {
@@ -256,6 +256,43 @@
             height: 100%;
             border: none;
             display: block;
+            transform-origin: 0 0;
+        }
+
+        .demo-controls {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+        }
+
+        .demo-btn {
+            padding: 10px 16px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .demo-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .demo-btn svg {
+            width: 14px;
+            height: 14px;
         }
 
         .demo-overlay {
@@ -283,13 +320,35 @@
         }
 
         #attention .demo-container {
-            border-color: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fullscreen styles */
+        .demo-container:fullscreen,
+        .demo-container:-webkit-full-screen {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            min-height: auto;
+            border-radius: 0;
+            border: none;
+        }
+
+        .demo-container:fullscreen .demo-iframe,
+        .demo-container:-webkit-full-screen .demo-iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        .demo-container:fullscreen .demo-overlay,
+        .demo-container:-webkit-full-screen .demo-overlay {
+            display: none;
         }
         
         @media (max-width: 768px) {
             .demo-container {
-                height: 50vh;
-                min-height: 350px;
+                height: 60vh;
+                min-height: 400px;
             }
         }
 
@@ -766,10 +825,19 @@
                     What if the path forward simply... appeared?
                 </p>
 
-                <div class="demo-container fade-in" data-hover-zone="attention-demo">
+                <div class="demo-container fade-in" data-hover-zone="attention-demo" id="demo-container">
+                    <div class="demo-controls">
+                        <button class="demo-btn" onclick="toggleFullscreen()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                            </svg>
+                            Fullscreen
+                        </button>
+                    </div>
                     <iframe 
                         src="ar-airport-guided.html" 
                         class="demo-iframe"
+                        id="demo-iframe"
                         title="AR Airport Navigation Demo"
                         allowfullscreen>
                     </iframe>
@@ -915,6 +983,25 @@
     </footer>
 
     <script>
+        // Fullscreen toggle for demo
+        function toggleFullscreen() {
+            const container = document.getElementById('demo-container');
+            
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+
         // Attention Tracking System
         const attentionData = {
             forces: { time: 0, hovers: 0 },
@@ -1061,4 +1148,4 @@
     </script>
 
 </body>
-</html>
+</html
