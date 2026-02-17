@@ -102,8 +102,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -112,20 +112,22 @@
         .floating-word {
             position: absolute;
             font-family: var(--serif);
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 400;
             color: var(--text);
             opacity: 0.04;
             transition: transform 0.8s ease-out, opacity 0.3s ease;
             user-select: none;
+            white-space: nowrap;
         }
 
-        .floating-word:nth-child(1) { top: 15%; left: 8%; }
-        .floating-word:nth-child(2) { top: 25%; right: 12%; }
-        .floating-word:nth-child(3) { top: 45%; left: 5%; }
-        .floating-word:nth-child(4) { top: 55%; right: 8%; }
-        .floating-word:nth-child(5) { top: 70%; left: 15%; }
-        .floating-word:nth-child(6) { top: 80%; right: 18%; }
+        /* Spread words across full viewport */
+        .floating-word:nth-child(1) { top: 8%; left: 3%; }
+        .floating-word:nth-child(2) { top: 12%; right: 5%; }
+        .floating-word:nth-child(3) { top: 38%; left: 2%; }
+        .floating-word:nth-child(4) { top: 50%; right: 3%; }
+        .floating-word:nth-child(5) { top: 72%; left: 5%; }
+        .floating-word:nth-child(6) { top: 85%; right: 8%; }
 
         /* Hero Section */
         .hero {
@@ -375,7 +377,7 @@
     <nav id="nav">
         <a href="index.html" class="nav-name">Hong B. Nguyen</a>
         <div class="nav-links">
-            <a href="project-page.html">Work</a>
+            <a href="projects-new.html">Work</a>
             <a href="publications.html">Publications</a>
             <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
             <a href="mailto:hong.nguyen@newschool.edu">Contact</a>
