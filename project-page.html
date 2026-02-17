@@ -8,1144 +8,248 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Project page specific styles */
         :root {
-            --forces-bg: #0a1628;
-            --forces-accent: #3d5a80;
-            --attention-bg: #f8f9fa;
-            --attention-accent: #6c757d;
-            --aesthetics-bg: #f5f0e8;
-            --aesthetics-accent: #8b7355;
-            --games-bg: #1a1a2e;
-            --games-accent: #4a4e69;
-            
-            --text-light: #ffffff;
-            --text-dark: #2C2C2C;
-            --text-muted: #6c757d;
-            
-            --serif: 'Cormorant Garamond', Georgia, serif;
-            --sans: 'Noto Sans', sans-serif;
-            
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 4rem;
-            --space-xl: 6rem;
-        }
-
-        /* Override main layout for project page */
-        body.project-page {
-            background: none;
-        }
-
-        .project-page .main-layout {
-            display: block;
-            max-width: none;
-            margin: 0;
-            padding: 0;
-            gap: 0;
-        }
-
-        /* Section navigation (sticky below main header) */
-        .section-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(47, 43, 66, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 12px 0;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .section-nav a {
-            font-family: var(--sans);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 6px 12px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .section-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background: #CBAC1B;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .section-nav a:hover {
-            color: #CBAC1B;
-            text-decoration: none;
-        }
-
-        .section-nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Project sections */
-        .project-section {
-            min-height: 100vh;
-            padding: var(--space-xl) var(--space-md);
-            position: relative;
-        }
-
-        .section-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* Hero text */
-        .hero-text {
-            font-family: var(--serif);
-            font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-            font-weight: 400;
-            line-height: 1.45;
-            max-width: 750px;
-            margin-bottom: var(--space-lg);
-            opacity: 0;
-            transform: translateY(25px);
-            animation: fadeUp 0.8s ease forwards;
-        }
-
-        .hero-text em {
-            font-style: italic;
-            opacity: 0.7;
-        }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Content grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-lg);
-            margin-top: var(--space-lg);
-        }
-
-        @media (max-width: 768px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .narrative {
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            line-height: 1.85;
-        }
-
-        .narrative p {
-            margin-bottom: var(--space-sm);
-        }
-
-        /* Project cards */
-        .project-cards {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-md);
-        }
-
-        .project-card {
-            padding: var(--space-md);
-            border-radius: 4px;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            background: none;
-            box-shadow: none;
-            margin-bottom: 0;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: #CBAC1B;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
-        .project-card h3 {
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: var(--space-xs);
-        }
-
-        .project-card p {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            margin-bottom: var(--space-sm);
-        }
-
-        .card-link {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #CBAC1B;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .project-card:hover .card-link {
-            opacity: 1;
-        }
-
-        /* Demo placeholder */
-        .demo-placeholder {
-            aspect-ratio: 16/9;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--space-lg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .demo-placeholder span {
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            opacity: 0.4;
-        }
-
-        /* Demo iframe container */
-        .demo-container {
-            position: relative;
-            width: 100%;
-            max-width: 1100px;
-            height: 80vh;
-            min-height: 600px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 0 auto var(--space-lg);
-            background: #0f0f1a;
-            border: 2px solid rgba(0, 0, 0, 0.15);
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
-        }
-
-        .demo-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            transform-origin: 0 0;
-        }
-
-        .demo-controls {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            z-index: 10;
-            display: flex;
-            gap: 8px;
-        }
-
-        .demo-btn {
-            padding: 10px 16px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #fff;
-            font-family: var(--sans);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .demo-btn:hover {
-            background: rgba(0, 212, 255, 0.2);
-            border-color: #00d4ff;
-        }
-
-        .demo-btn svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .demo-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px 24px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-            pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-            text-align: center;
-        }
-
-        .demo-overlay span {
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .demo-container:hover .demo-overlay {
-            opacity: 0;
-        }
-
-        #attention .demo-container {
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        /* Fullscreen styles */
-        .demo-container:fullscreen,
-        .demo-container:-webkit-full-screen {
-            width: 100vw;
-            height: 100vh;
-            max-width: none;
-            min-height: auto;
-            border-radius: 0;
-            border: none;
-        }
-
-        .demo-container:fullscreen .demo-iframe,
-        .demo-container:-webkit-full-screen .demo-iframe {
-            width: 100%;
-            height: 100%;
-        }
-
-        .demo-container:fullscreen .demo-overlay,
-        .demo-container:-webkit-full-screen .demo-overlay {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .demo-container {
-                height: 60vh;
-                min-height: 400px;
-            }
-        }
-
-        /* ==================== */
-        /* SECTION 1: FORCES    */
-        /* ==================== */
-        #forces {
-            background: linear-gradient(180deg, var(--forces-bg) 0%, #050a12 100%);
-            color: var(--text-light);
-        }
-
-        #forces .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: var(--text-light);
-        }
-
-        #forces .project-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        #forces .project-card h3 {
-            color: var(--text-light);
-        }
-
-        #forces .demo-placeholder {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Particles */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* ==================== */
-        /* SECTION 2: ATTENTION */
-        /* ==================== */
-        #attention {
-            background: linear-gradient(180deg, var(--attention-bg) 0%, #ffffff 100%);
-            color: var(--text-dark);
-        }
-
-        #attention .project-card {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            color: var(--text-dark);
-        }
-
-        #attention .project-card:hover {
-            background: rgba(0, 0, 0, 0.04);
-            border-color: rgba(0, 0, 0, 0.08);
-        }
-
-        #attention .demo-placeholder {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        /* Scanline */
-        .scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .scanline::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent);
-            animation: scan 8s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        .vignette {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 1.05rem;
-            max-width: 580px;
-            margin: var(--space-md) 0 var(--space-lg);
-            padding-left: var(--space-md);
-            border-left: 2px solid rgba(0, 0, 0, 0.1);
-            color: var(--text-muted);
-        }
-
-        .concept-panels {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
-        }
-
-        @media (max-width: 768px) {
-            .concept-panels {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .concept-panel {
-            text-align: center;
-            padding: var(--space-md);
-        }
-
-        .concept-panel .number {
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            opacity: 0.12;
-            margin-bottom: var(--space-xs);
-        }
-
-        .concept-panel h4 {
-            font-family: var(--sans);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: var(--space-xs);
-            color: #2f2b42;
-        }
-
-        .concept-panel p {
-            font-size: 0.85rem;
-            opacity: 0.7;
-        }
-
-        .idea-statement {
-            font-family: var(--serif);
-            font-size: 1.2rem;
-            text-align: center;
-            max-width: 650px;
-            margin: var(--space-lg) auto 0;
-            padding: var(--space-md);
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        /* ===================== */
-        /* SECTION 3: AESTHETICS */
-        /* ===================== */
-        #aesthetics {
-            background: linear-gradient(180deg, var(--aesthetics-bg) 0%, #faf7f2 100%);
-            color: var(--text-dark);
-        }
-
-        #aesthetics .project-card {
-            background: rgba(139, 115, 85, 0.05);
-            border: 1px solid rgba(139, 115, 85, 0.1);
-            color: var(--text-dark);
-        }
-
-        #aesthetics .project-card:hover {
-            background: rgba(139, 115, 85, 0.08);
-            border-color: rgba(139, 115, 85, 0.15);
-        }
-
-        #aesthetics .demo-placeholder {
-            background: rgba(139, 115, 85, 0.05);
-            border: 1px solid rgba(139, 115, 85, 0.1);
-        }
-
-        .two-blocks {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-lg);
-            margin-top: var(--space-lg);
-        }
-
-        @media (max-width: 768px) {
-            .two-blocks {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .block h3 {
-            font-family: var(--sans);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: var(--space-sm);
-            opacity: 0.5;
-            color: #2f2b42;
-        }
-
-        .block ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .block li {
-            font-size: 0.92rem;
-            padding: var(--space-xs) 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        /* ================= */
-        /* SECTION 4: GAMES  */
-        /* ================= */
-        #games {
-            background: linear-gradient(180deg, var(--games-bg) 0%, #0f0f1a 100%);
-            color: var(--text-light);
-        }
-
-        #games .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: var(--text-light);
-        }
-
-        #games .project-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        #games .project-card h3 {
-            color: var(--text-light);
-        }
-
-        .concept-sketches {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
-        }
-
-        @media (max-width: 768px) {
-            .concept-sketches {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .sketch {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-md);
-            transition: all 0.4s ease;
-        }
-
-        .sketch:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .sketch-icon {
-            font-size: 2rem;
-            margin-bottom: var(--space-sm);
-            opacity: 0.25;
-        }
-
-        .sketch h4 {
-            font-family: var(--sans);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-align: center;
-            color: var(--text-light);
-        }
-
-        .sketch p {
-            font-size: 0.75rem;
-            opacity: 0.5;
-            text-align: center;
-            margin-top: var(--space-xs);
-        }
-
-        /* ========================= */
-        /* ATTENTION TRACKING FOOTER */
-        /* ========================= */
-        #attention-footer {
-            background: #0a0a0f;
-            color: var(--text-light);
-            padding: var(--space-xl) var(--space-md);
-            text-align: center;
-        }
-
-        .attention-title {
-            font-family: var(--serif);
-            font-size: 1.4rem;
-            margin-bottom: var(--space-lg);
-            opacity: 0.6;
-        }
-
-        .heatmap-container {
-            max-width: 700px;
-            margin: 0 auto var(--space-lg);
-        }
-
-        .heatmap-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
-            margin-bottom: var(--space-md);
-        }
-
-        .heatmap-cell {
-            aspect-ratio: 2/1;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            transition: all 0.5s ease;
-            position: relative;
-        }
-
-        .heatmap-cell span {
-            position: relative;
-            z-index: 1;
-            opacity: 0.6;
-        }
-
-        .personalized-message {
-            font-family: var(--serif);
-            font-style: italic;
-            font-size: 1.05rem;
-            max-width: 480px;
-            margin: 0 auto var(--space-lg);
-            opacity: 0.55;
-            min-height: 2.5em;
-        }
-
-        .throughline {
-            max-width: 650px;
-            margin: var(--space-xl) auto 0;
-            padding-top: var(--space-lg);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .throughline p {
-            font-family: var(--serif);
-            font-size: 1.05rem;
-            line-height: 1.75;
-            opacity: 0.45;
-        }
-
-        /* Fade animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(18px);
-            transition: all 0.7s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-
-        /* Override footer for this page */
-        .project-page footer {
-            margin-top: 0;
-        }
+            --forces-bg: #0a1628; --attention-bg: #f8f9fa; --aesthetics-bg: #f5f0e8; --games-bg: #1a1a2e;
+            --text-light: #ffffff; --text-dark: #2C2C2C; --text-muted: #6c757d;
+            --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Noto Sans', sans-serif;
+            --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem; --space-lg: 4rem; --space-xl: 6rem;
+        }
+        body.project-page { background: none; }
+        .project-page .main-layout { display: block; max-width: none; margin: 0; padding: 0; }
+        .section-nav { position: sticky; top: 0; z-index: 100; background: rgba(47, 43, 66, 0.95); backdrop-filter: blur(10px); padding: 12px 0; display: flex; justify-content: center; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .section-nav a { font-family: var(--sans); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: rgba(255, 255, 255, 0.5); padding: 6px 12px; transition: all 0.3s ease; }
+        .section-nav a:hover { color: #CBAC1B; text-decoration: none; }
+        .project-section { min-height: 100vh; padding: var(--space-xl) var(--space-md); position: relative; }
+        .section-inner { max-width: 1000px; margin: 0 auto; }
+        .hero-text { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 400; line-height: 1.45; max-width: 750px; margin-bottom: var(--space-lg); opacity: 0; transform: translateY(25px); animation: fadeUp 0.8s ease forwards; }
+        .hero-text em { font-style: italic; opacity: 0.7; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .narrative { font-family: var(--sans); font-size: 0.95rem; line-height: 1.85; }
+        .narrative p { margin-bottom: var(--space-sm); }
+        .study-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-top: var(--space-lg); }
+        @media (max-width: 768px) { .study-cards { grid-template-columns: 1fr; } }
+        .study-card { padding: var(--space-md); border-radius: 8px; transition: all 0.4s ease; cursor: pointer; }
+        .study-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 4px; margin-bottom: var(--space-sm); opacity: 0.85; transition: opacity 0.3s ease; }
+        .study-card:hover img { opacity: 1; }
+        .study-card h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; margin-bottom: var(--space-xs); line-height: 1.4; }
+        .study-card p { font-size: 0.85rem; opacity: 0.7; margin-bottom: var(--space-sm); }
+        .study-card .card-link { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #CBAC1B; opacity: 0.7; }
+        .study-card:hover .card-link { opacity: 1; }
+        #forces .study-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-light); }
+        #forces .study-card:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(203, 172, 27, 0.3); }
+        #forces .study-card.selected { border-color: #CBAC1B; background: rgba(203, 172, 27, 0.1); }
+        #forces .study-card h3 { color: var(--text-light); }
+        .study-details { margin-top: var(--space-lg); padding: var(--space-lg); border-radius: 12px; display: none; }
+        .study-details.active { display: block; animation: slideDown 0.4s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        #forces .study-details { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .study-details .close-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; opacity: 0.6; margin-bottom: var(--space-md); color: inherit; }
+        .study-details .close-btn:hover { opacity: 1; }
+        .study-details h1 { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; margin-bottom: var(--space-sm); line-height: 1.4; }
+        #forces .study-details h1 { color: var(--text-light); }
+        .study-details .publication-ref { font-size: 0.85rem; opacity: 0.7; margin-bottom: var(--space-md); padding-bottom: var(--space-md); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .study-details .publication-ref a { color: #CBAC1B; margin-left: 8px; }
+        .study-details .description { font-size: 0.95rem; line-height: 1.8; margin-bottom: var(--space-lg); text-align: justify; }
+        .study-details h2 { font-family: var(--sans); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin: var(--space-lg) 0 var(--space-md); opacity: 0.6; }
+        .study-details h3 { font-family: var(--sans); font-size: 1.1rem; font-weight: 700; margin: var(--space-lg) 0 var(--space-sm); }
+        #forces .study-details h3 { color: #CBAC1B; }
+        .study-details .experiment-text { font-size: 0.92rem; line-height: 1.8; margin-bottom: var(--space-sm); text-align: justify; }
+        .chart-container { margin: var(--space-md) 0 var(--space-lg); background: rgba(255,255,255,0.02); border-radius: 8px; padding: var(--space-sm); }
+        .chart { width: 100%; min-height: 350px; }
+        .demo-placeholder { aspect-ratio: 16/9; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-lg); }
+        .demo-placeholder span { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.4; }
+        .demo-container { position: relative; width: 100%; max-width: 1100px; height: 80vh; min-height: 600px; border-radius: 12px; overflow: hidden; margin: 0 auto var(--space-lg); background: #0f0f1a; border: 2px solid rgba(0, 0, 0, 0.15); box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2); }
+        .demo-iframe { width: 100%; height: 100%; border: none; }
+        .demo-controls { position: absolute; top: 16px; right: 16px; z-index: 10; }
+        .demo-btn { padding: 10px 16px; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #fff; font-family: var(--sans); font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .demo-btn:hover { background: rgba(0, 212, 255, 0.2); border-color: #00d4ff; }
+        .demo-btn svg { width: 14px; height: 14px; }
+        .demo-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 24px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); text-align: center; pointer-events: none; }
+        .demo-overlay span { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+        .demo-container:hover .demo-overlay { opacity: 0; transition: opacity 0.3s; }
+        .demo-container:fullscreen { width: 100vw; height: 100vh; max-width: none; border-radius: 0; border: none; }
+        @media (max-width: 768px) { .demo-container { height: 60vh; min-height: 400px; } }
+        #forces { background: linear-gradient(180deg, var(--forces-bg) 0%, #050a12 100%); color: var(--text-light); }
+        .particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; width: 2px; height: 2px; background: rgba(255, 255, 255, 0.12); border-radius: 50%; animation: fall linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-10px); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh); opacity: 0; } }
+        #attention { background: linear-gradient(180deg, var(--attention-bg) 0%, #ffffff 100%); color: var(--text-dark); }
+        #attention .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .scanline { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .scanline::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent); animation: scan 8s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .vignette { font-family: var(--serif); font-style: italic; font-size: 1.05rem; max-width: 580px; margin: var(--space-md) 0 var(--space-lg); padding-left: var(--space-md); border-left: 2px solid rgba(0, 0, 0, 0.1); color: var(--text-muted); }
+        .concept-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-lg); }
+        @media (max-width: 768px) { .concept-panels { grid-template-columns: 1fr; } }
+        .concept-panel { text-align: center; padding: var(--space-md); }
+        .concept-panel .number { font-family: var(--serif); font-size: 2.2rem; opacity: 0.12; }
+        .concept-panel h4 { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #2f2b42; }
+        .concept-panel p { font-size: 0.85rem; opacity: 0.7; }
+        .idea-statement { font-family: var(--serif); font-size: 1.2rem; text-align: center; max-width: 650px; margin: var(--space-lg) auto 0; padding: var(--space-md); border-top: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+        #aesthetics { background: linear-gradient(180deg, var(--aesthetics-bg) 0%, #faf7f2 100%); color: var(--text-dark); }
+        #aesthetics .study-card { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
+        #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
+        .two-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-top: var(--space-lg); }
+        @media (max-width: 768px) { .two-blocks { grid-template-columns: 1fr; } }
+        .block h3 { font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; color: #2f2b42; }
+        .block ul { list-style: none; padding: 0; }
+        .block li { font-size: 0.92rem; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        #games { background: linear-gradient(180deg, var(--games-bg) 0%, #0f0f1a 100%); color: var(--text-light); }
+        #games .study-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); }
+        #games .study-card h3 { color: var(--text-light); }
+        .concept-sketches { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-lg); }
+        @media (max-width: 768px) { .concept-sketches { grid-template-columns: 1fr; } }
+        .sketch { aspect-ratio: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-md); transition: all 0.4s ease; }
+        .sketch:hover { background: rgba(255, 255, 255, 0.04); transform: translateY(-4px); }
+        .sketch-icon { font-size: 2rem; opacity: 0.25; }
+        .sketch h4 { font-family: var(--sans); font-size: 0.85rem; font-weight: 600; text-align: center; color: var(--text-light); }
+        .sketch p { font-size: 0.75rem; opacity: 0.5; text-align: center; }
+        #attention-footer { background: #0a0a0f; color: var(--text-light); padding: var(--space-xl) var(--space-md); text-align: center; }
+        .attention-title { font-family: var(--serif); font-size: 1.4rem; margin-bottom: var(--space-lg); opacity: 0.6; }
+        .heatmap-container { max-width: 700px; margin: 0 auto var(--space-lg); }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+        .heatmap-cell { aspect-ratio: 2/1; background: rgba(255, 255, 255, 0.04); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.5s ease; }
+        .heatmap-cell span { opacity: 0.6; }
+        .personalized-message { font-family: var(--serif); font-style: italic; font-size: 1.05rem; max-width: 480px; margin: var(--space-md) auto var(--space-lg); opacity: 0.55; min-height: 2.5em; }
+        .throughline { max-width: 650px; margin: var(--space-xl) auto 0; padding-top: var(--space-lg); border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .throughline p { font-family: var(--serif); font-size: 1.05rem; line-height: 1.75; opacity: 0.45; }
+        .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: none; align-items: center; justify-content: center; }
+        .video-modal.active { display: flex; }
+        .video-modal-content { background: #1a1a2e; border-radius: 12px; padding: var(--space-md); max-width: 600px; width: 90%; position: relative; }
+        .video-modal .close-modal { position: absolute; top: -40px; right: 0; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.7; }
+        .video-modal h4 { font-family: var(--sans); font-size: 1rem; color: #fff; margin-bottom: var(--space-sm); }
+        .video-modal video { width: 100%; border-radius: 8px; }
+        .video-modal .video-instruction { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: var(--space-sm); }
+        .fade-in { opacity: 0; transform: translateY(18px); transition: all 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .project-page footer { margin-top: 0; }
     </style>
 </head>
 <body class="project-page">
-
-    <!-- Main Header (same as rest of site) -->
-    <header class="main-header">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="publications.html">Publications</a>
-            <a href="projects-page.html">Projects</a>
-            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
-        </nav>
-    </header>
-
-    <!-- Section Navigation -->
-    <nav class="section-nav">
-        <a href="#forces">Forces</a>
-        <a href="#attention">Attention</a>
-        <a href="#aesthetics">Aesthetics</a>
-        <a href="#games">Games</a>
-    </nav>
-
-    <!-- Main Layout Container -->
+    <header class="main-header"><nav><a href="index.html">Home</a><a href="publications.html">Publications</a><a href="projects-new.html">Projects</a><a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a></nav></header>
+    <nav class="section-nav"><a href="#forces">Forces</a><a href="#attention">Attention</a><a href="#aesthetics">Aesthetics</a><a href="#games">Games</a></nav>
     <div class="main-layout">
-
-        <!-- Section 1: Physical Forces -->
         <section id="forces" class="project-section" data-section="forces">
             <div class="particles" id="particles"></div>
             <div class="section-inner">
-                <p class="hero-text">
-                    The visual system does not just see motion.<br>
-                    <em>It predicts invisible forces.</em>
-                </p>
-
-                <div class="demo-placeholder" data-hover-zone="forces-demo">
-                    <span>Interactive Demo — Coming Soon</span>
+                <p class="hero-text">The visual system does not just see motion.<br><em>It predicts invisible forces.</em></p>
+                <div class="narrative fade-in"><p>Vision encodes implicit priors about gravity and friction. We show enhanced sensitivity to speed changes opposite gravity's direction, and automatic spatial orienting based on frictive surface contact.</p></div>
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="gravity" onclick="toggleStudy('gravity')"><img src="img/projects/icon_force2.png" alt="Gravity Study"><h3>Prioritization of Speed Changes Opposite Gravity</h3><p>Better detection of acceleration in upwardly moving objects.</p><span class="card-link">View experiments →</span></div>
+                    <div class="study-card" data-study="friction" onclick="toggleStudy('friction')"><img src="img/projects/wheel.jpg" alt="Friction Study"><h3>Friction & Spatial Attention</h3><p>An implicit model of friction drives spatial orienting.</p><span class="card-link">View experiments →</span></div>
                 </div>
-
-                <div class="content-grid">
-                    <div class="narrative fade-in">
-                        <p>Vision encodes implicit priors about gravity. We show enhanced sensitivity to speed changes opposite gravity's direction.</p>
-                        <p>Friction cues bias spatial attention. The visual system encodes invisible forces automatically, before conscious awareness.</p>
-                    </div>
-                    <div class="project-cards">
-                        <div class="project-card fade-in stagger-1" data-hover-zone="forces-card-1">
-                            <h3>Gravity Prior in Motion Perception</h3>
-                            <p>Better sensitivity to speed changes opposite gravity direction</p>
-                            <span class="card-link">Read paper →</span>
-                        </div>
-                        <div class="project-card fade-in stagger-2" data-hover-zone="forces-card-2">
-                            <h3>Friction and Spatial Attention</h3>
-                            <p>Rotating objects cue spatial attention via frictive surface contact</p>
-                            <span class="card-link">Read paper →</span>
-                        </div>
-                    </div>
+                <div id="gravity-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('gravity')">← Close</div>
+                    <h1>May the Force be against you: Better sensitivity to speed changes opposite gravity</h1>
+                    <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2023). <strong>May the Force be against you.</strong> <em>JEP:HPP, 49, 1016-1030.</em><a href="#">PDF</a></p>
+                    <p class="description">We hypothesized that observers would be more sensitive to an object's speed changes if those speed changes were opposite to natural gravitational acceleration. Across six experiments, we found enhanced sensitivity to accelerations opposite to gravity.</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Experiment 1 — Acceleration (Upward vs. Downward)</h3>
+                    <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Downward-moving objects.</p>
+                    <div class="chart-container"><div id="chart1a" class="chart"></div></div>
+                    <h3>Experiment 2 — Acceleration (Upward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart2a" class="chart"></div></div>
+                    <h3>Experiment 3 — Acceleration (Downward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were worse at detecting acceleration for Downward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart3a" class="chart"></div></div>
+                    <h3>Experiment 4 — Deceleration (Upward vs. Downward)</h3>
+                    <p class="experiment-text">Observers were better at detecting decelerations for Downward-moving objects than Upward-moving objects.</p>
+                    <div class="chart-container"><div id="chart4a" class="chart"></div></div>
+                    <h3>Experiment 5 — Deceleration (Downward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were better at detecting deceleration for Downward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart5a" class="chart"></div></div>
+                    <h3>Experiment 6 — Deceleration (Upward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were worse at detecting deceleration for Upward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart6a" class="chart"></div></div>
+                </div>
+                <div id="friction-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('friction')">← Close</div>
+                    <h1>Rotating objects cue spatial attention via frictive surface contact</h1>
+                    <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2024). <strong>Rotating objects cue spatial attention.</strong> <em>Cognition, 242, 105655.</em><a href="#">PDF</a></p>
+                    <p class="description">We report a new attentional cueing effect showing how attention models friction. Clockwise rotation causes rightward movement when in frictive contact with a floor. Is this encoded in spatial orienting?</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Experiment 1 — Rotating objects cue spatial attention</h3>
+                    <p class="experiment-text">Clockwise rotation produced faster responses to targets on the right, counterclockwise to the left.</p>
+                    <div class="chart-container"><div id="fchart1a" class="chart"></div></div>
+                    <h3>Experiment 2 — Reversal by ceiling contact</h3>
+                    <p class="experiment-text">Floor-touching showed cueing, floor-not-touching abolished it, ceiling-touching reversed it!</p>
+                    <div class="chart-container"><div id="fchart2a" class="chart"></div></div>
                 </div>
             </div>
         </section>
-
-        <!-- Section 2: Attention -->
         <section id="attention" class="project-section" data-section="attention">
             <div class="scanline"></div>
             <div class="section-inner">
-                <p class="hero-text">
-                    What if navigation design<br>
-                    <em>learned from attention itself?</em>
-                </p>
-
-                <p class="vignette fade-in">
-                    A traveler with a tight connection rushes through an unfamiliar terminal. 
-                    Signage competes with advertisements. Gate numbers blur. 
-                    What if the path forward simply... appeared?
-                </p>
-
-                <div class="demo-container fade-in" data-hover-zone="attention-demo" id="demo-container">
-                    <div class="demo-controls">
-                        <button class="demo-btn" onclick="toggleFullscreen()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-                            </svg>
-                            Fullscreen
-                        </button>
-                    </div>
-                    <iframe 
-                        src="ar-airport-guided.html" 
-                        class="demo-iframe"
-                        id="demo-iframe"
-                        title="AR Airport Navigation Demo"
-                        allowfullscreen>
-                    </iframe>
-                    <div class="demo-overlay">
-                        <span>Click to interact • WASD to move • Mouse to look</span>
-                    </div>
+                <p class="hero-text">What if navigation design<br><em>learned from attention itself?</em></p>
+                <p class="vignette fade-in">A traveler with a tight connection rushes through an unfamiliar terminal. Signage competes with advertisements. What if the path forward simply... appeared?</p>
+                <div class="demo-container fade-in" id="demo-container">
+                    <div class="demo-controls"><button class="demo-btn" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Fullscreen</button></div>
+                    <iframe src="ar-airport-guided.html" class="demo-iframe" allowfullscreen></iframe>
+                    <div class="demo-overlay"><span>Click to interact • WASD to move • Mouse to look</span></div>
                 </div>
-
                 <div class="concept-panels fade-in">
-                    <div class="concept-panel">
-                        <div class="number">01</div>
-                        <h4>Record</h4>
-                        <p>Capture expert attention patterns in naturalistic environments</p>
-                    </div>
-                    <div class="concept-panel">
-                        <div class="number">02</div>
-                        <h4>Extract</h4>
-                        <p>Identify salient features that guide successful navigation</p>
-                    </div>
-                    <div class="concept-panel">
-                        <div class="number">03</div>
-                        <h4>Enhance</h4>
-                        <p>Subtly modify salience to scaffold novice attention</p>
-                    </div>
+                    <div class="concept-panel"><div class="number">01</div><h4>Record</h4><p>Capture expert attention patterns</p></div>
+                    <div class="concept-panel"><div class="number">02</div><h4>Extract</h4><p>Identify guiding salient features</p></div>
+                    <div class="concept-panel"><div class="number">03</div><h4>Enhance</h4><p>Scaffold novice attention</p></div>
                 </div>
-
-                <p class="idea-statement fade-in">
-                    Replace prescriptive signage with empirically learned attentional scaffolds.
-                </p>
+                <p class="idea-statement fade-in">Replace prescriptive signage with empirically learned attentional scaffolds.</p>
             </div>
         </section>
-
-        <!-- Section 3: Aesthetics -->
         <section id="aesthetics" class="project-section" data-section="aesthetics">
             <div class="section-inner">
-                <p class="hero-text">
-                    Beauty is not in the image.<br>
-                    <em>It is in how we look.</em>
-                </p>
-
-                <div class="demo-placeholder fade-in" data-hover-zone="aesthetics-demo">
-                    <span>Gaze Trajectory Viewer — Coming Soon</span>
-                </div>
-
+                <p class="hero-text">Beauty is not in the image.<br><em>It is in how we look.</em></p>
+                <div class="demo-placeholder fade-in"><span>Gaze Trajectory Viewer — Coming Soon</span></div>
                 <div class="two-blocks">
-                    <div class="block fade-in stagger-1">
-                        <h3>Attentional Transplants</h3>
-                        <ul>
-                            <li>Attention patterns drive aesthetic disagreement</li>
-                            <li>Prediction fluency mediates preference</li>
-                            <li>Same-image specificity matters</li>
-                        </ul>
-                    </div>
-                    <div class="block fade-in stagger-2">
-                        <h3>Mischief Project</h3>
-                        <ul>
-                            <li>Subtle visual scaffolds signal social intent</li>
-                            <li>Perception extracts animacy and goal structure</li>
-                            <li>Moral inference grounded in motion structure</li>
-                        </ul>
-                    </div>
+                    <div class="block fade-in"><h3>Attentional Transplants</h3><ul><li>Attention patterns drive aesthetic disagreement</li><li>Prediction fluency mediates preference</li><li>Same-image specificity matters</li></ul></div>
+                    <div class="block fade-in"><h3>Mischief Project</h3><ul><li>Subtle visual scaffolds signal social intent</li><li>Perception extracts animacy and goal structure</li><li>Moral inference grounded in motion</li></ul></div>
                 </div>
-
-                <div class="project-cards" style="margin-top: var(--space-lg);">
-                    <div class="project-card fade-in stagger-3" data-hover-zone="aesthetics-card-1">
-                        <h3>Gaze Transplants and Aesthetic Experience</h3>
-                        <p>How viewing patterns shape what we find beautiful</p>
-                        <span class="card-link">Read paper →</span>
-                    </div>
-                    <div class="project-card fade-in stagger-4" data-hover-zone="aesthetics-card-2">
-                        <h3>Motion, Mischief, and Moral Perception</h3>
-                        <p>Extracting intent from simple visual motion</p>
-                        <span class="card-link">Read paper →</span>
-                    </div>
+                <div class="study-cards" style="margin-top:var(--space-lg);">
+                    <div class="study-card fade-in"><h3>Gaze Transplants and Aesthetic Experience</h3><p>How viewing patterns shape what we find beautiful</p><span class="card-link">Read paper →</span></div>
+                    <div class="study-card fade-in"><h3>Motion, Mischief, and Moral Perception</h3><p>Extracting intent from simple visual motion</p><span class="card-link">Read paper →</span></div>
                 </div>
             </div>
         </section>
-
-        <!-- Section 4: Games -->
         <section id="games" class="project-section" data-section="games">
             <div class="section-inner">
-                <p class="hero-text">
-                    Games are controlled laboratories<br>
-                    <em>for intuitive physics.</em>
-                </p>
-
-                <div class="narrative fade-in" style="max-width: 580px; margin-bottom: var(--space-lg);">
-                    <p>Game environments let us manipulate perceptual priors in ways the real world cannot. Motion prediction, goal-directed inference, learning via salience manipulation—all become experimentally tractable.</p>
-                </div>
-
+                <p class="hero-text">Games are controlled laboratories<br><em>for intuitive physics.</em></p>
+                <div class="narrative fade-in" style="max-width:580px;margin-bottom:var(--space-lg);"><p>Game environments let us manipulate perceptual priors in ways the real world cannot.</p></div>
                 <div class="concept-sketches">
-                    <div class="sketch fade-in stagger-1" data-hover-zone="games-sketch-1">
-                        <div class="sketch-icon">◐</div>
-                        <h4>Gravity Bias Puzzle</h4>
-                        <p>Manipulating implicit physics expectations</p>
-                    </div>
-                    <div class="sketch fade-in stagger-2" data-hover-zone="games-sketch-2">
-                        <div class="sketch-icon">◎</div>
-                        <h4>Attention Transfer Maze</h4>
-                        <p>Learning navigation through gaze scaffolds</p>
-                    </div>
-                    <div class="sketch fade-in stagger-3" data-hover-zone="games-sketch-3">
-                        <div class="sketch-icon">◈</div>
-                        <h4>Mischief Detection</h4>
-                        <p>Reading intent from motion patterns</p>
-                    </div>
+                    <div class="sketch fade-in"><div class="sketch-icon">◐</div><h4>Gravity Bias Puzzle</h4><p>Implicit physics expectations</p></div>
+                    <div class="sketch fade-in"><div class="sketch-icon">◎</div><h4>Attention Transfer Maze</h4><p>Gaze scaffolds for navigation</p></div>
+                    <div class="sketch fade-in"><div class="sketch-icon">◈</div><h4>Mischief Detection</h4><p>Reading intent from motion</p></div>
                 </div>
             </div>
         </section>
-
-        <!-- Attention Tracking Footer -->
         <section id="attention-footer">
             <h2 class="attention-title">How attention shaped your visit</h2>
-            
-            <div class="heatmap-container">
-                <div class="heatmap-grid">
-                    <div class="heatmap-cell" data-target="forces"><span>Forces</span></div>
-                    <div class="heatmap-cell" data-target="attention"><span>Attention</span></div>
-                    <div class="heatmap-cell" data-target="aesthetics"><span>Aesthetics</span></div>
-                    <div class="heatmap-cell" data-target="games"><span>Games</span></div>
-                </div>
-            </div>
-
-            <p class="personalized-message" id="personalized-message">
-                Explore the page to see what captures your attention...
-            </p>
-
-            <div class="throughline">
-                <p>
-                    Across domains—motion, space, art, social meaning—<br>
-                    perception is not passive.<br>
-                    It predicts, samples, and structures the world<br>
-                    before we know it does.
-                </p>
-            </div>
+            <div class="heatmap-container"><div class="heatmap-grid"><div class="heatmap-cell" data-target="forces"><span>Forces</span></div><div class="heatmap-cell" data-target="attention"><span>Attention</span></div><div class="heatmap-cell" data-target="aesthetics"><span>Aesthetics</span></div><div class="heatmap-cell" data-target="games"><span>Games</span></div></div></div>
+            <p class="personalized-message" id="personalized-message">Explore the page to see what captures your attention...</p>
+            <div class="throughline"><p>Across domains—motion, space, art, social meaning—<br>perception is not passive.<br>It predicts, samples, and structures the world<br>before we know it does.</p></div>
         </section>
-
     </div>
-
-    <!-- Footer (same as rest of site) -->
-    <footer>
-        <p>&copy; 2024 Hong B. Nguyen. All rights reserved.</p>
-    </footer>
-
+    <div id="videoModal" class="video-modal"><div class="video-modal-content"><span class="close-modal" onclick="closeVideoModal()">×</span><p class="video-instruction" id="videoInstruction">Use ← and → to navigate.</p><h4 id="videoTitle"></h4><video id="modalVideo" controls autoplay><source src="" type="video/mp4"></video></div></div>
+    <footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script>
-        // Fullscreen toggle for demo
-        function toggleFullscreen() {
-            const container = document.getElementById('demo-container');
-            
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                }
-            }
-        }
-
-        // Attention Tracking System
-        const attentionData = {
-            forces: { time: 0, hovers: 0 },
-            attention: { time: 0, hovers: 0 },
-            aesthetics: { time: 0, hovers: 0 },
-            games: { time: 0, hovers: 0 }
-        };
-
-        let currentSection = null;
-        let sectionStartTime = null;
-
-        // Track section visibility
-        const sections = document.querySelectorAll('.project-section[data-section]');
-        
-        const observerOptions = {
-            root: null,
-            rootMargin: '-40% 0px -40% 0px',
-            threshold: 0
-        };
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionName = entry.target.dataset.section;
-                    if (currentSection !== sectionName) {
-                        if (currentSection && sectionStartTime) {
-                            attentionData[currentSection].time += Date.now() - sectionStartTime;
-                        }
-                        currentSection = sectionName;
-                        sectionStartTime = Date.now();
-                        updateHeatmap();
-                    }
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => sectionObserver.observe(section));
-
-        // Track hover events
-        document.querySelectorAll('[data-hover-zone]').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                const zone = element.dataset.hoverZone;
-                const section = zone.split('-')[0];
-                if (attentionData[section]) {
-                    attentionData[section].hovers++;
-                    updateHeatmap();
-                }
-            });
-        });
-
-        // Update heatmap
-        function updateHeatmap() {
-            if (currentSection && sectionStartTime) {
-                attentionData[currentSection].time += Date.now() - sectionStartTime;
-                sectionStartTime = Date.now();
-            }
-
-            const maxTime = Math.max(...Object.values(attentionData).map(d => d.time), 1);
-            const maxHovers = Math.max(...Object.values(attentionData).map(d => d.hovers), 1);
-
-            document.querySelectorAll('.heatmap-cell').forEach(cell => {
-                const target = cell.dataset.target;
-                const data = attentionData[target];
-                
-                const timeWeight = data.time / maxTime;
-                const hoverWeight = data.hovers / maxHovers;
-                const intensity = (timeWeight * 0.7) + (hoverWeight * 0.3);
-                
-                const colors = {
-                    forces: `rgba(61, 90, 128, ${0.15 + intensity * 0.85})`,
-                    attention: `rgba(108, 117, 125, ${0.15 + intensity * 0.85})`,
-                    aesthetics: `rgba(139, 115, 85, ${0.15 + intensity * 0.85})`,
-                    games: `rgba(74, 78, 105, ${0.15 + intensity * 0.85})`
-                };
-                
-                cell.style.background = colors[target];
-                cell.style.transform = `scale(${1 + intensity * 0.03})`;
-            });
-
-            updatePersonalizedMessage();
-        }
-
-        function updatePersonalizedMessage() {
-            const sortedSections = Object.entries(attentionData)
-                .sort((a, b) => (b[1].time + b[1].hovers * 1000) - (a[1].time + a[1].hovers * 1000));
-            
-            const topSection = sortedSections[0][0];
-            const topData = sortedSections[0][1];
-            
-            if (topData.time < 1000 && topData.hovers < 1) return;
-
-            const messages = {
-                forces: "You spent the most time on Physical Forces. Invisible structure seems to interest you.",
-                attention: "Attention drew most of your attention. The meta-cognition is not lost on us.",
-                aesthetics: "Aesthetics captured your gaze. You seem drawn to questions of beauty and perception.",
-                games: "Games held your focus. The intersection of play and perception intrigues you."
-            };
-
-            document.getElementById('personalized-message').textContent = messages[topSection];
-        }
-
-        setInterval(updateHeatmap, 2000);
-
-        // Fade in on scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        fadeElements.forEach(el => fadeObserver.observe(el));
-
-        // Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${8 + Math.random() * 12}s`;
-                particle.style.animationDelay = `${Math.random() * 10}s`;
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Smooth scroll
-        document.querySelectorAll('.section-nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        let activeStudy=null,chartsBuilt={gravity:false,friction:false};
+        function toggleStudy(id){const d=document.getElementById(id+'-details'),c=document.querySelector('.study-card[data-study="'+id+'"]');if(activeStudy===id){d.classList.remove('active');c.classList.remove('selected');activeStudy=null}else{document.querySelectorAll('.study-details').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.study-card[data-study]').forEach(e=>e.classList.remove('selected'));d.classList.add('active');c.classList.add('selected');activeStudy=id;if(id==='gravity'&&!chartsBuilt.gravity){setTimeout(buildGravityCharts,100);chartsBuilt.gravity=true}if(id==='friction'&&!chartsBuilt.friction){setTimeout(buildFrictionCharts,100);chartsBuilt.friction=true}setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),100)}}
+        let currentVideoIndex=0,currentVideos=[];
+        function updateVideo(){if(!currentVideos.length)return;document.getElementById('modalVideo').src=currentVideos[currentVideoIndex].src;document.getElementById('videoTitle').textContent=currentVideos[currentVideoIndex].title||'';document.getElementById('videoModal').classList.add('active');const v=document.getElementById('modalVideo');v.play().catch(()=>{});v.onended=function(){this.currentTime=0;this.play().catch(()=>{})}}
+        function closeVideoModal(){document.getElementById('videoModal').classList.remove('active');document.getElementById('modalVideo').pause()}
+        document.addEventListener('keydown',e=>{const m=document.getElementById('videoModal');if(!m.classList.contains('active'))return;if(e.key==='ArrowRight'){currentVideoIndex=(currentVideoIndex+1)%currentVideos.length;updateVideo()}else if(e.key==='ArrowLeft'){currentVideoIndex=(currentVideoIndex-1+currentVideos.length)%currentVideos.length;updateVideo()}else if(e.key==='Escape')closeVideoModal()});
+        function buildGravityCharts(){const t={chart:{backgroundColor:'transparent'},title:{style:{color:'rgba(255,255,255,0.9)',fontSize:'14px'}},xAxis:{labels:{style:{color:'rgba(255,255,255,0.7)'}},lineColor:'rgba(255,255,255,0.2)'},yAxis:{title:{style:{color:'rgba(255,255,255,0.7)'}},labels:{style:{color:'rgba(255,255,255,0.7)'}},gridLineColor:'rgba(255,255,255,0.1)'}};const vids={chart1a:[[{src:'videos/upward_acc.mp4',title:'Upward Acc'}],[{src:'videos/downward_acc.mp4',title:'Downward Acc'}]],chart2a:[[{src:'videos/upward_acc.mp4',title:'Upward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],chart3a:[[{src:'videos/downward_acc.mp4',title:'Downward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],chart4a:[[{src:'videos/upward_dec.mp4',title:'Upward Dec'}],[{src:'videos/downward_dec.mp4',title:'Downward Dec'}]],chart5a:[[{src:'videos/downward_dec.mp4',title:'Downward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]],chart6a:[[{src:'videos/upward_dec.mp4',title:'Upward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]]};const charts=[{id:'chart1a',title:'Exp 1: Up vs Down Acc',cats:['Upward','Downward'],data:[2.27,1.95],colors:['#f89421','#692d8a']},{id:'chart2a',title:'Exp 2: Up vs Horiz Acc',cats:['Upward','Horizontal'],data:[2.93,2.44],colors:['#f7941d','#006738']},{id:'chart3a',title:'Exp 3: Down vs Horiz Acc',cats:['Downward','Horizontal'],data:[2.57,2.37],colors:['#692d8a','#006738']},{id:'chart4a',title:'Exp 4: Up vs Down Dec',cats:['Upward','Downward'],data:[2.30,2.55],colors:['#f89421','#692d8a']},{id:'chart5a',title:'Exp 5: Down vs Horiz Dec',cats:['Downward','Horizontal'],data:[2.96,2.78],colors:['#692d8a','#006738']},{id:'chart6a',title:'Exp 6: Up vs Horiz Dec',cats:['Upward','Horizontal'],data:[2.25,2.95],colors:['#f89421','#006738']}];charts.forEach(c=>{Highcharts.chart(c.id,Highcharts.merge(t,{chart:{type:'column'},title:{text:c.title},xAxis:{categories:c.cats},yAxis:{title:{text:"d'"},min:0,max:4},series:[{data:c.data,colorByPoint:true,colors:c.colors,showInLegend:false}],plotOptions:{column:{pointPadding:0.2,borderWidth:0,point:{events:{mouseOver:function(){const s=vids[this.series.chart.renderTo.id]?.[this.index];if(s?.length){currentVideos=s;currentVideoIndex=0;updateVideo()}}}}}}}))})};
+        function buildFrictionCharts(){const t={chart:{backgroundColor:'transparent'},title:{style:{color:'rgba(255,255,255,0.9)',fontSize:'14px'}},xAxis:{labels:{style:{color:'rgba(255,255,255,0.7)'}}},yAxis:{title:{style:{color:'rgba(255,255,255,0.7)'}},labels:{style:{color:'rgba(255,255,255,0.7)'}},gridLineColor:'rgba(255,255,255,0.1)'}};Highcharts.chart('fchart1a',Highcharts.merge(t,{chart:{type:'column'},title:{text:'Spatial Cueing by Rotation'},xAxis:{categories:['CW→L','CW→R','CCW→L','CCW→R']},yAxis:{title:{text:'RT (ms)'},min:400,max:700},series:[{type:'column',data:[{y:553,color:'#ff6b6b'},{y:509,color:'#4ecdc4'},{y:535,color:'#4ecdc4'},{y:561,color:'#ff6b6b'}],showInLegend:false},{type:'errorbar',data:[[543,560],[499,516],[525,542],[551,568]],color:'rgba(255,255,255,0.5)'}],plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterleft.mp4',title:'CW Left'}],[{src:'videos/clockwise_letterright.mp4',title:'CW Right'}],[{src:'videos/counterclockwise_letterleft.mp4',title:'CCW Left'}],[{src:'videos/counterclockwise_letterright.mp4',title:'CCW Right'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo()}}}}}}));Highcharts.chart('fchart2a',Highcharts.merge(t,{chart:{type:'column'},title:{text:'Surface Contact Effects'},xAxis:{categories:['Floor Touch','Floor Gap','Ceiling Touch','Ceiling Gap']},yAxis:{title:{text:'Effect (ms)'},min:-60,max:60},series:[{type:'column',data:[{y:48,color:'#006738'},{y:7,color:'#999'},{y:-27,color:'#c0392b'},{y:-10,color:'#999'}],showInLegend:false},{type:'errorbar',data:[[45,49],[4,9],[-30,-25],[-13,-8]],color:'rgba(255,255,255,0.5)'}],plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterright_floor.mp4',title:'Floor Touch'}],[{src:'videos/clockwise_letterright_floor_nottouching.mp4',title:'Floor Gap'}],[{src:'videos/clockwise_letterleft_ceiling.mp4',title:'Ceiling Touch'}],[{src:'videos/clockwise_letterleft_ceiling_nottouching.mp4',title:'Ceiling Gap'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo()}}}}}}))};
+        function toggleFullscreen(){const c=document.getElementById('demo-container');if(!document.fullscreenElement){c.requestFullscreen?.()}else{document.exitFullscreen?.()}}
+        const attentionData={forces:{time:0,hovers:0},attention:{time:0,hovers:0},aesthetics:{time:0,hovers:0},games:{time:0,hovers:0}};let currentSection=null,sectionStartTime=null;
+        const sectionObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const n=e.target.dataset.section;if(currentSection!==n){if(currentSection&&sectionStartTime)attentionData[currentSection].time+=Date.now()-sectionStartTime;currentSection=n;sectionStartTime=Date.now();updateHeatmap()}}})},{rootMargin:'-40% 0px -40% 0px'});document.querySelectorAll('.project-section[data-section]').forEach(s=>sectionObserver.observe(s));
+        function updateHeatmap(){if(currentSection&&sectionStartTime){attentionData[currentSection].time+=Date.now()-sectionStartTime;sectionStartTime=Date.now()}const maxT=Math.max(...Object.values(attentionData).map(d=>d.time),1);document.querySelectorAll('.heatmap-cell').forEach(c=>{const t=c.dataset.target,i=attentionData[t].time/maxT;const colors={forces:`rgba(61,90,128,${0.15+i*0.85})`,attention:`rgba(108,117,125,${0.15+i*0.85})`,aesthetics:`rgba(139,115,85,${0.15+i*0.85})`,games:`rgba(74,78,105,${0.15+i*0.85})`};c.style.background=colors[t]});updateMessage()}
+        function updateMessage(){const sorted=Object.entries(attentionData).sort((a,b)=>b[1].time-a[1].time);const top=sorted[0];if(top[1].time<1000)return;const msgs={forces:'You spent the most time on Physical Forces.',attention:'Attention drew most of your attention.',aesthetics:'Aesthetics captured your gaze.',games:'Games held your focus.'};document.getElementById('personalized-message').textContent=msgs[top[0]]}
+        setInterval(updateHeatmap,2000);
+        const fadeObs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(e=>fadeObs.observe(e));
+        (function(){const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=Math.random()*10+'s';c.appendChild(p)}})();
+        document.querySelectorAll('.section-nav a').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})})});
     </script>
-
 </body>
-</html
+</html>
