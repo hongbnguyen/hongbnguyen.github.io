@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perception Research — Hong B</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Projects — Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
+        /* Project page specific styles */
         :root {
             --forces-bg: #0a1628;
             --forces-accent: #3d5a80;
@@ -19,112 +20,103 @@
             --games-accent: #4a4e69;
             
             --text-light: #ffffff;
-            --text-dark: #1a1a1a;
+            --text-dark: #2C2C2C;
             --text-muted: #6c757d;
             
             --serif: 'Cormorant Garamond', Georgia, serif;
-            --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+            --sans: 'Noto Sans', sans-serif;
             
             --space-xs: 0.5rem;
             --space-sm: 1rem;
             --space-md: 2rem;
             --space-lg: 4rem;
-            --space-xl: 8rem;
+            --space-xl: 6rem;
         }
 
-        * {
+        /* Override main layout for project page */
+        body.project-page {
+            background: none;
+        }
+
+        .project-page .main-layout {
+            display: block;
+            max-width: none;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            gap: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--sans);
-            font-weight: 300;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
+        /* Section navigation (sticky below main header) */
+        .section-nav {
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: var(--space-sm) var(--space-md);
+            z-index: 100;
+            background: rgba(47, 43, 66, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
             display: flex;
             justify-content: center;
-            gap: var(--space-lg);
-            background: transparent;
-            transition: background 0.4s ease;
+            gap: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        nav.scrolled {
-            background: rgba(10, 22, 40, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        nav a {
+        .section-nav a {
             font-family: var(--sans);
             font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.15em;
+            font-weight: 600;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.6);
-            padding: var(--space-xs) var(--space-sm);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 6px 12px;
             transition: all 0.3s ease;
             position: relative;
         }
 
-        nav a::after {
+        .section-nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
             width: 0;
             height: 1px;
-            background: currentColor;
+            background: #CBAC1B;
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
 
-        nav a:hover {
-            color: rgba(255, 255, 255, 1);
+        .section-nav a:hover {
+            color: #CBAC1B;
+            text-decoration: none;
         }
 
-        nav a:hover::after {
+        .section-nav a:hover::after {
             width: 100%;
         }
 
-        /* Section base */
-        section {
+        /* Project sections */
+        .project-section {
             min-height: 100vh;
             padding: var(--space-xl) var(--space-md);
             position: relative;
         }
 
         .section-inner {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* Hero text styling */
+        /* Hero text */
         .hero-text {
             font-family: var(--serif);
-            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.6rem);
             font-weight: 400;
-            line-height: 1.4;
-            max-width: 800px;
+            line-height: 1.45;
+            max-width: 750px;
             margin-bottom: var(--space-lg);
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1s ease forwards;
+            transform: translateY(25px);
+            animation: fadeUp 0.8s ease forwards;
         }
 
         .hero-text em {
@@ -155,8 +147,8 @@
 
         .narrative {
             font-family: var(--sans);
-            font-size: 1rem;
-            line-height: 1.9;
+            font-size: 0.95rem;
+            line-height: 1.85;
         }
 
         .narrative p {
@@ -164,45 +156,48 @@
         }
 
         /* Project cards */
-        .cards {
+        .project-cards {
             display: flex;
             flex-direction: column;
             gap: var(--space-md);
         }
 
-        .card {
+        .project-card {
             padding: var(--space-md);
             border-radius: 4px;
             transition: all 0.4s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            background: none;
+            box-shadow: none;
+            margin-bottom: 0;
         }
 
-        .card::before {
+        .project-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 3px;
             height: 100%;
-            background: currentColor;
+            background: #CBAC1B;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .card:hover::before {
-            opacity: 0.5;
+        .project-card:hover::before {
+            opacity: 1;
         }
 
-        .card h3 {
+        .project-card h3 {
             font-family: var(--sans);
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.95rem;
+            font-weight: 700;
             margin-bottom: var(--space-xs);
         }
 
-        .card p {
+        .project-card p {
             font-size: 0.85rem;
             opacity: 0.7;
             margin-bottom: var(--space-sm);
@@ -210,21 +205,22 @@
 
         .card-link {
             font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            opacity: 0.5;
+            color: #CBAC1B;
+            opacity: 0.7;
             transition: opacity 0.3s ease;
         }
 
-        .card:hover .card-link {
+        .project-card:hover .card-link {
             opacity: 1;
         }
 
         /* Demo placeholder */
         .demo-placeholder {
             aspect-ratio: 16/9;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -235,9 +231,66 @@
 
         .demo-placeholder span {
             font-size: 0.75rem;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            opacity: 0.5;
+            opacity: 0.4;
+        }
+
+        /* Demo iframe container */
+        .demo-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 70vh;
+            min-height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 0 auto var(--space-lg);
+            background: #0f0f1a;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .demo-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .demo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+
+        .demo-overlay span {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .demo-container:hover .demo-overlay {
+            opacity: 0;
+        }
+
+        #attention .demo-container {
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+        
+        @media (max-width: 768px) {
+            .demo-container {
+                height: 50vh;
+                min-height: 350px;
+            }
         }
 
         /* ==================== */
@@ -248,15 +301,19 @@
             color: var(--text-light);
         }
 
-        #forces .card {
+        #forces .project-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: var(--text-light);
         }
 
-        #forces .card:hover {
+        #forces .project-card:hover {
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #forces .project-card h3 {
+            color: var(--text-light);
         }
 
         #forces .demo-placeholder {
@@ -264,7 +321,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Particle animation for forces section */
+        /* Particles */
         .particles {
             position: absolute;
             top: 0;
@@ -279,26 +336,16 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 50%;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+            0% { transform: translateY(-10px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
 
         /* ==================== */
@@ -309,13 +356,13 @@
             color: var(--text-dark);
         }
 
-        #attention .card {
+        #attention .project-card {
             background: rgba(0, 0, 0, 0.02);
             border: 1px solid rgba(0, 0, 0, 0.05);
             color: var(--text-dark);
         }
 
-        #attention .card:hover {
+        #attention .project-card:hover {
             background: rgba(0, 0, 0, 0.04);
             border-color: rgba(0, 0, 0, 0.08);
         }
@@ -325,7 +372,7 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Scanline effect */
+        /* Scanline */
         .scanline {
             position: absolute;
             top: 0;
@@ -355,8 +402,8 @@
         .vignette {
             font-family: var(--serif);
             font-style: italic;
-            font-size: 1.1rem;
-            max-width: 600px;
+            font-size: 1.05rem;
+            max-width: 580px;
             margin: var(--space-md) 0 var(--space-lg);
             padding-left: var(--space-md);
             border-left: 2px solid rgba(0, 0, 0, 0.1);
@@ -383,18 +430,19 @@
 
         .concept-panel .number {
             font-family: var(--serif);
-            font-size: 2.5rem;
-            opacity: 0.15;
+            font-size: 2.2rem;
+            opacity: 0.12;
             margin-bottom: var(--space-xs);
         }
 
         .concept-panel h4 {
             font-family: var(--sans);
             font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: var(--space-xs);
+            color: #2f2b42;
         }
 
         .concept-panel p {
@@ -404,13 +452,13 @@
 
         .idea-statement {
             font-family: var(--serif);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             text-align: center;
-            max-width: 700px;
+            max-width: 650px;
             margin: var(--space-lg) auto 0;
             padding: var(--space-md);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         /* ===================== */
@@ -421,13 +469,13 @@
             color: var(--text-dark);
         }
 
-        #aesthetics .card {
+        #aesthetics .project-card {
             background: rgba(139, 115, 85, 0.05);
             border: 1px solid rgba(139, 115, 85, 0.1);
             color: var(--text-dark);
         }
 
-        #aesthetics .card:hover {
+        #aesthetics .project-card:hover {
             background: rgba(139, 115, 85, 0.08);
             border-color: rgba(139, 115, 85, 0.15);
         }
@@ -453,19 +501,22 @@
         .block h3 {
             font-family: var(--sans);
             font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: var(--space-sm);
             opacity: 0.5;
+            color: #2f2b42;
         }
 
         .block ul {
             list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .block li {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             padding: var(--space-xs) 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -478,15 +529,19 @@
             color: var(--text-light);
         }
 
-        #games .card {
+        #games .project-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: var(--text-light);
         }
 
-        #games .card:hover {
+        #games .project-card:hover {
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #games .project-card h3 {
+            color: var(--text-light);
         }
 
         .concept-sketches {
@@ -506,7 +561,7 @@
             aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -524,14 +579,15 @@
         .sketch-icon {
             font-size: 2rem;
             margin-bottom: var(--space-sm);
-            opacity: 0.3;
+            opacity: 0.25;
         }
 
         .sketch h4 {
             font-family: var(--sans);
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             text-align: center;
+            color: var(--text-light);
         }
 
         .sketch p {
@@ -553,13 +609,13 @@
 
         .attention-title {
             font-family: var(--serif);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: var(--space-lg);
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         .heatmap-container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto var(--space-lg);
         }
 
@@ -572,56 +628,54 @@
 
         .heatmap-cell {
             aspect-ratio: 2/1;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.7rem;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             transition: all 0.5s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .heatmap-cell span {
             position: relative;
             z-index: 1;
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         .personalized-message {
             font-family: var(--serif);
             font-style: italic;
-            font-size: 1.1rem;
-            max-width: 500px;
+            font-size: 1.05rem;
+            max-width: 480px;
             margin: 0 auto var(--space-lg);
-            opacity: 0.6;
-            min-height: 3em;
+            opacity: 0.55;
+            min-height: 2.5em;
         }
 
-        /* Throughline */
         .throughline {
-            max-width: 700px;
+            max-width: 650px;
             margin: var(--space-xl) auto 0;
             padding-top: var(--space-lg);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .throughline p {
             font-family: var(--serif);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            opacity: 0.5;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            opacity: 0.45;
         }
 
-        /* Utility */
+        /* Fade animations */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
+            transform: translateY(18px);
+            transition: all 0.7s ease;
         }
 
         .fade-in.visible {
@@ -633,206 +687,232 @@
         .stagger-2 { transition-delay: 0.2s; }
         .stagger-3 { transition-delay: 0.3s; }
         .stagger-4 { transition-delay: 0.4s; }
+
+        /* Override footer for this page */
+        .project-page footer {
+            margin-top: 0;
+        }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav id="main-nav">
+<body class="project-page">
+
+    <!-- Main Header (same as rest of site) -->
+    <header class="main-header">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="publications.html">Publications</a>
+            <a href="projects-new.html">Projects</a>
+            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
+        </nav>
+    </header>
+
+    <!-- Section Navigation -->
+    <nav class="section-nav">
         <a href="#forces">Forces</a>
         <a href="#attention">Attention</a>
         <a href="#aesthetics">Aesthetics</a>
         <a href="#games">Games</a>
     </nav>
 
-    <!-- Section 1: Physical Forces -->
-    <section id="forces" data-section="forces">
-        <div class="particles" id="particles"></div>
-        <div class="section-inner">
-            <p class="hero-text">
-                The visual system does not just see motion.<br>
-                <em>It predicts invisible forces.</em>
-            </p>
+    <!-- Main Layout Container -->
+    <div class="main-layout">
 
-            <div class="demo-placeholder" data-hover-zone="forces-demo">
-                <span>Interactive Demo — Coming Soon</span>
-            </div>
+        <!-- Section 1: Physical Forces -->
+        <section id="forces" class="project-section" data-section="forces">
+            <div class="particles" id="particles"></div>
+            <div class="section-inner">
+                <p class="hero-text">
+                    The visual system does not just see motion.<br>
+                    <em>It predicts invisible forces.</em>
+                </p>
 
-            <div class="content-grid">
-                <div class="narrative fade-in">
-                    <p>Vision encodes implicit priors about gravity. We show enhanced sensitivity to speed changes opposite gravity's direction.</p>
-                    <p>Friction cues bias spatial attention. The visual system encodes invisible forces automatically, before conscious awareness.</p>
+                <div class="demo-placeholder" data-hover-zone="forces-demo">
+                    <span>Interactive Demo — Coming Soon</span>
                 </div>
-                <div class="cards">
-                    <div class="card fade-in stagger-1" data-hover-zone="forces-card-1">
-                        <h3>Gravity Prior in Motion Perception</h3>
-                        <p>Better sensitivity to speed changes opposite gravity direction</p>
+
+                <div class="content-grid">
+                    <div class="narrative fade-in">
+                        <p>Vision encodes implicit priors about gravity. We show enhanced sensitivity to speed changes opposite gravity's direction.</p>
+                        <p>Friction cues bias spatial attention. The visual system encodes invisible forces automatically, before conscious awareness.</p>
+                    </div>
+                    <div class="project-cards">
+                        <div class="project-card fade-in stagger-1" data-hover-zone="forces-card-1">
+                            <h3>Gravity Prior in Motion Perception</h3>
+                            <p>Better sensitivity to speed changes opposite gravity direction</p>
+                            <span class="card-link">Read paper →</span>
+                        </div>
+                        <div class="project-card fade-in stagger-2" data-hover-zone="forces-card-2">
+                            <h3>Friction and Spatial Attention</h3>
+                            <p>Rotating objects cue spatial attention via frictive surface contact</p>
+                            <span class="card-link">Read paper →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Attention -->
+        <section id="attention" class="project-section" data-section="attention">
+            <div class="scanline"></div>
+            <div class="section-inner">
+                <p class="hero-text">
+                    What if navigation design<br>
+                    <em>learned from attention itself?</em>
+                </p>
+
+                <p class="vignette fade-in">
+                    A traveler with a tight connection rushes through an unfamiliar terminal. 
+                    Signage competes with advertisements. Gate numbers blur. 
+                    What if the path forward simply... appeared?
+                </p>
+
+                <div class="demo-container fade-in" data-hover-zone="attention-demo">
+                    <iframe 
+                        src="ar-airport-guided.html" 
+                        class="demo-iframe"
+                        title="AR Airport Navigation Demo"
+                        allowfullscreen>
+                    </iframe>
+                    <div class="demo-overlay">
+                        <span>Click to interact • WASD to move • Mouse to look</span>
+                    </div>
+                </div>
+
+                <div class="concept-panels fade-in">
+                    <div class="concept-panel">
+                        <div class="number">01</div>
+                        <h4>Record</h4>
+                        <p>Capture expert attention patterns in naturalistic environments</p>
+                    </div>
+                    <div class="concept-panel">
+                        <div class="number">02</div>
+                        <h4>Extract</h4>
+                        <p>Identify salient features that guide successful navigation</p>
+                    </div>
+                    <div class="concept-panel">
+                        <div class="number">03</div>
+                        <h4>Enhance</h4>
+                        <p>Subtly modify salience to scaffold novice attention</p>
+                    </div>
+                </div>
+
+                <p class="idea-statement fade-in">
+                    Replace prescriptive signage with empirically learned attentional scaffolds.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Aesthetics -->
+        <section id="aesthetics" class="project-section" data-section="aesthetics">
+            <div class="section-inner">
+                <p class="hero-text">
+                    Beauty is not in the image.<br>
+                    <em>It is in how we look.</em>
+                </p>
+
+                <div class="demo-placeholder fade-in" data-hover-zone="aesthetics-demo">
+                    <span>Gaze Trajectory Viewer — Coming Soon</span>
+                </div>
+
+                <div class="two-blocks">
+                    <div class="block fade-in stagger-1">
+                        <h3>Attentional Transplants</h3>
+                        <ul>
+                            <li>Attention patterns drive aesthetic disagreement</li>
+                            <li>Prediction fluency mediates preference</li>
+                            <li>Same-image specificity matters</li>
+                        </ul>
+                    </div>
+                    <div class="block fade-in stagger-2">
+                        <h3>Mischief Project</h3>
+                        <ul>
+                            <li>Subtle visual scaffolds signal social intent</li>
+                            <li>Perception extracts animacy and goal structure</li>
+                            <li>Moral inference grounded in motion structure</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-cards" style="margin-top: var(--space-lg);">
+                    <div class="project-card fade-in stagger-3" data-hover-zone="aesthetics-card-1">
+                        <h3>Gaze Transplants and Aesthetic Experience</h3>
+                        <p>How viewing patterns shape what we find beautiful</p>
                         <span class="card-link">Read paper →</span>
                     </div>
-                    <div class="card fade-in stagger-2" data-hover-zone="forces-card-2">
-                        <h3>Friction and Spatial Attention</h3>
-                        <p>Rotating objects cue spatial attention via frictive surface contact</p>
+                    <div class="project-card fade-in stagger-4" data-hover-zone="aesthetics-card-2">
+                        <h3>Motion, Mischief, and Moral Perception</h3>
+                        <p>Extracting intent from simple visual motion</p>
                         <span class="card-link">Read paper →</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Section 2: Attention -->
-    <section id="attention" data-section="attention">
-        <div class="scanline"></div>
-        <div class="section-inner">
-            <p class="hero-text">
-                What if navigation design<br>
-                <em>learned from attention itself?</em>
+        <!-- Section 4: Games -->
+        <section id="games" class="project-section" data-section="games">
+            <div class="section-inner">
+                <p class="hero-text">
+                    Games are controlled laboratories<br>
+                    <em>for intuitive physics.</em>
+                </p>
+
+                <div class="narrative fade-in" style="max-width: 580px; margin-bottom: var(--space-lg);">
+                    <p>Game environments let us manipulate perceptual priors in ways the real world cannot. Motion prediction, goal-directed inference, learning via salience manipulation—all become experimentally tractable.</p>
+                </div>
+
+                <div class="concept-sketches">
+                    <div class="sketch fade-in stagger-1" data-hover-zone="games-sketch-1">
+                        <div class="sketch-icon">◐</div>
+                        <h4>Gravity Bias Puzzle</h4>
+                        <p>Manipulating implicit physics expectations</p>
+                    </div>
+                    <div class="sketch fade-in stagger-2" data-hover-zone="games-sketch-2">
+                        <div class="sketch-icon">◎</div>
+                        <h4>Attention Transfer Maze</h4>
+                        <p>Learning navigation through gaze scaffolds</p>
+                    </div>
+                    <div class="sketch fade-in stagger-3" data-hover-zone="games-sketch-3">
+                        <div class="sketch-icon">◈</div>
+                        <h4>Mischief Detection</h4>
+                        <p>Reading intent from motion patterns</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Attention Tracking Footer -->
+        <section id="attention-footer">
+            <h2 class="attention-title">How attention shaped your visit</h2>
+            
+            <div class="heatmap-container">
+                <div class="heatmap-grid">
+                    <div class="heatmap-cell" data-target="forces"><span>Forces</span></div>
+                    <div class="heatmap-cell" data-target="attention"><span>Attention</span></div>
+                    <div class="heatmap-cell" data-target="aesthetics"><span>Aesthetics</span></div>
+                    <div class="heatmap-cell" data-target="games"><span>Games</span></div>
+                </div>
+            </div>
+
+            <p class="personalized-message" id="personalized-message">
+                Explore the page to see what captures your attention...
             </p>
 
-            <p class="vignette fade-in">
-                A traveler with a tight connection rushes through an unfamiliar terminal. 
-                Signage competes with advertisements. Gate numbers blur. 
-                What if the path forward simply... appeared?
-            </p>
-
-            <div class="demo-placeholder fade-in" data-hover-zone="attention-demo">
-               <iframe 
-                    src="ar-airport-guided.html" 
-                    class="demo-iframe"
-                    title="AR Airport Navigation Demo"
-                    allowfullscreen>
-                </iframe>
-                <div class="demo-overlay">
-                    <span>Click to interact • WASD to move • Mouse to look</span>
-                </div>
+            <div class="throughline">
+                <p>
+                    Across domains—motion, space, art, social meaning—<br>
+                    perception is not passive.<br>
+                    It predicts, samples, and structures the world<br>
+                    before we know it does.
+                </p>
             </div>
+        </section>
 
-            <div class="concept-panels fade-in">
-                <div class="concept-panel">
-                    <div class="number">01</div>
-                    <h4>Record</h4>
-                    <p>Capture expert attention patterns in naturalistic environments</p>
-                </div>
-                <div class="concept-panel">
-                    <div class="number">02</div>
-                    <h4>Extract</h4>
-                    <p>Identify salient features that guide successful navigation</p>
-                </div>
-                <div class="concept-panel">
-                    <div class="number">03</div>
-                    <h4>Enhance</h4>
-                    <p>Subtly modify salience to scaffold novice attention</p>
-                </div>
-            </div>
+    </div>
 
-            <p class="idea-statement fade-in">
-                Replace prescriptive signage with empirically learned attentional scaffolds.
-            </p>
-        </div>
-    </section>
-
-    <!-- Section 3: Aesthetics -->
-    <section id="aesthetics" data-section="aesthetics">
-        <div class="section-inner">
-            <p class="hero-text">
-                Beauty is not in the image.<br>
-                <em>It is in how we look.</em>
-            </p>
-
-            <div class="demo-placeholder fade-in" data-hover-zone="aesthetics-demo">
-                <span>Gaze Trajectory Viewer — Coming Soon</span>
-            </div>
-
-            <div class="two-blocks">
-                <div class="block fade-in stagger-1">
-                    <h3>Attentional Transplants</h3>
-                    <ul>
-                        <li>Attention patterns drive aesthetic disagreement</li>
-                        <li>Prediction fluency mediates preference</li>
-                        <li>Same-image specificity matters</li>
-                    </ul>
-                </div>
-                <div class="block fade-in stagger-2">
-                    <h3>Mischief Project</h3>
-                    <ul>
-                        <li>Subtle visual scaffolds signal social intent</li>
-                        <li>Perception extracts animacy and goal structure</li>
-                        <li>Moral inference grounded in motion structure</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="cards" style="margin-top: var(--space-lg);">
-                <div class="card fade-in stagger-3" data-hover-zone="aesthetics-card-1">
-                    <h3>Gaze Transplants and Aesthetic Experience</h3>
-                    <p>How viewing patterns shape what we find beautiful</p>
-                    <span class="card-link">Read paper →</span>
-                </div>
-                <div class="card fade-in stagger-4" data-hover-zone="aesthetics-card-2">
-                    <h3>Motion, Mischief, and Moral Perception</h3>
-                    <p>Extracting intent from simple visual motion</p>
-                    <span class="card-link">Read paper →</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 4: Games -->
-    <section id="games" data-section="games">
-        <div class="section-inner">
-            <p class="hero-text">
-                Games are controlled laboratories<br>
-                <em>for intuitive physics.</em>
-            </p>
-
-            <div class="narrative fade-in" style="max-width: 600px; margin-bottom: var(--space-lg);">
-                <p>Game environments let us manipulate perceptual priors in ways the real world cannot. Motion prediction, goal-directed inference, learning via salience manipulation—all become experimentally tractable.</p>
-            </div>
-
-            <div class="concept-sketches">
-                <div class="sketch fade-in stagger-1" data-hover-zone="games-sketch-1">
-                    <div class="sketch-icon">◐</div>
-                    <h4>Gravity Bias Puzzle</h4>
-                    <p>Manipulating implicit physics expectations</p>
-                </div>
-                <div class="sketch fade-in stagger-2" data-hover-zone="games-sketch-2">
-                    <div class="sketch-icon">◎</div>
-                    <h4>Attention Transfer Maze</h4>
-                    <p>Learning navigation through gaze scaffolds</p>
-                </div>
-                <div class="sketch fade-in stagger-3" data-hover-zone="games-sketch-3">
-                    <div class="sketch-icon">◈</div>
-                    <h4>Mischief Detection</h4>
-                    <p>Reading intent from motion patterns</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Attention Tracking Footer -->
-    <section id="attention-footer">
-        <h2 class="attention-title">How attention shaped your visit</h2>
-        
-        <div class="heatmap-container">
-            <div class="heatmap-grid">
-                <div class="heatmap-cell" data-target="forces"><span>Forces</span></div>
-                <div class="heatmap-cell" data-target="attention"><span>Attention</span></div>
-                <div class="heatmap-cell" data-target="aesthetics"><span>Aesthetics</span></div>
-                <div class="heatmap-cell" data-target="games"><span>Games</span></div>
-            </div>
-        </div>
-
-        <p class="personalized-message" id="personalized-message">
-            Explore the page to see what captures your attention...
-        </p>
-
-        <div class="throughline">
-            <p>
-                Across domains—motion, space, art, social meaning—<br>
-                perception is not passive.<br>
-                It predicts, samples, and structures the world<br>
-                before we know it does.
-            </p>
-        </div>
-    </section>
+    <!-- Footer (same as rest of site) -->
+    <footer>
+        <p>&copy; 2024 Hong B. Nguyen. All rights reserved.</p>
+    </footer>
 
     <script>
         // Attention Tracking System
@@ -845,10 +925,9 @@
 
         let currentSection = null;
         let sectionStartTime = null;
-        let trackingInterval = null;
 
         // Track section visibility
-        const sections = document.querySelectorAll('section[data-section]');
+        const sections = document.querySelectorAll('.project-section[data-section]');
         
         const observerOptions = {
             root: null,
@@ -861,11 +940,9 @@
                 if (entry.isIntersecting) {
                     const sectionName = entry.target.dataset.section;
                     if (currentSection !== sectionName) {
-                        // Save time for previous section
                         if (currentSection && sectionStartTime) {
                             attentionData[currentSection].time += Date.now() - sectionStartTime;
                         }
-                        // Start tracking new section
                         currentSection = sectionName;
                         sectionStartTime = Date.now();
                         updateHeatmap();
@@ -876,7 +953,7 @@
 
         sections.forEach(section => sectionObserver.observe(section));
 
-        // Track hover events on interactive elements
+        // Track hover events
         document.querySelectorAll('[data-hover-zone]').forEach(element => {
             element.addEventListener('mouseenter', () => {
                 const zone = element.dataset.hoverZone;
@@ -888,41 +965,35 @@
             });
         });
 
-        // Update heatmap visualization
+        // Update heatmap
         function updateHeatmap() {
-            // Save current section time
             if (currentSection && sectionStartTime) {
                 attentionData[currentSection].time += Date.now() - sectionStartTime;
                 sectionStartTime = Date.now();
             }
 
-            // Calculate max values for normalization
             const maxTime = Math.max(...Object.values(attentionData).map(d => d.time), 1);
             const maxHovers = Math.max(...Object.values(attentionData).map(d => d.hovers), 1);
 
-            // Update heatmap cells
             document.querySelectorAll('.heatmap-cell').forEach(cell => {
                 const target = cell.dataset.target;
                 const data = attentionData[target];
                 
-                // Combine time and hovers for intensity
                 const timeWeight = data.time / maxTime;
                 const hoverWeight = data.hovers / maxHovers;
                 const intensity = (timeWeight * 0.7) + (hoverWeight * 0.3);
                 
-                // Color based on section theme
                 const colors = {
-                    forces: `rgba(61, 90, 128, ${0.2 + intensity * 0.8})`,
-                    attention: `rgba(108, 117, 125, ${0.2 + intensity * 0.8})`,
-                    aesthetics: `rgba(139, 115, 85, ${0.2 + intensity * 0.8})`,
-                    games: `rgba(74, 78, 105, ${0.2 + intensity * 0.8})`
+                    forces: `rgba(61, 90, 128, ${0.15 + intensity * 0.85})`,
+                    attention: `rgba(108, 117, 125, ${0.15 + intensity * 0.85})`,
+                    aesthetics: `rgba(139, 115, 85, ${0.15 + intensity * 0.85})`,
+                    games: `rgba(74, 78, 105, ${0.15 + intensity * 0.85})`
                 };
                 
                 cell.style.background = colors[target];
-                cell.style.transform = `scale(${1 + intensity * 0.05})`;
+                cell.style.transform = `scale(${1 + intensity * 0.03})`;
             });
 
-            // Update personalized message
             updatePersonalizedMessage();
         }
 
@@ -933,9 +1004,7 @@
             const topSection = sortedSections[0][0];
             const topData = sortedSections[0][1];
             
-            if (topData.time < 1000 && topData.hovers < 1) {
-                return; // Not enough data yet
-            }
+            if (topData.time < 1000 && topData.hovers < 1) return;
 
             const messages = {
                 forces: "You spent the most time on Physical Forces. Invisible structure seems to interest you.",
@@ -947,24 +1016,7 @@
             document.getElementById('personalized-message').textContent = messages[topSection];
         }
 
-        // Update periodically
-        trackingInterval = setInterval(updateHeatmap, 2000);
-
-        // Navigation scroll behavior
-        const nav = document.getElementById('main-nav');
-        let lastScroll = 0;
-
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-            
-            lastScroll = currentScroll;
-        });
+        setInterval(updateHeatmap, 2000);
 
         // Fade in on scroll
         const fadeElements = document.querySelectorAll('.fade-in');
@@ -982,12 +1034,10 @@
 
         fadeElements.forEach(el => fadeObserver.observe(el));
 
-        // Generate particles for forces section
+        // Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < 25; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = `${Math.random() * 100}%`;
@@ -996,35 +1046,19 @@
                 container.appendChild(particle);
             }
         }
-
         createParticles();
 
-        // Update nav link colors based on current section
-        function updateNavColors() {
-            const scrollPos = window.scrollY + window.innerHeight / 2;
-            
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const sectionTop = rect.top + window.scrollY;
-                const sectionBottom = sectionTop + rect.height;
-                
-                if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                    const sectionName = section.dataset.section;
-                    const isDark = sectionName === 'forces' || sectionName === 'games';
-                    
-                    document.querySelectorAll('nav a').forEach(link => {
-                        if (isDark || nav.classList.contains('scrolled')) {
-                            link.style.color = '';
-                        } else {
-                            link.style.color = 'rgba(0, 0, 0, 0.5)';
-                        }
-                    });
+        // Smooth scroll
+        document.querySelectorAll('.section-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        }
-
-        window.addEventListener('scroll', updateNavColors);
-        updateNavColors();
+        });
     </script>
+
 </body>
 </html>
