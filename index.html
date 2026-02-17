@@ -85,15 +85,14 @@
 
         /* Main content wrapper */
         main {
-            max-width: 720px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
-            padding-left: calc(12% + 24px);
+            padding: 0 5%;
         }
 
         @media (max-width: 900px) {
             main {
-                padding-left: 24px;
+                padding: 0 24px;
             }
         }
 
@@ -102,8 +101,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
@@ -112,22 +111,20 @@
         .floating-word {
             position: absolute;
             font-family: var(--serif);
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 400;
             color: var(--text);
             opacity: 0.04;
             transition: transform 0.8s ease-out, opacity 0.3s ease;
             user-select: none;
-            white-space: nowrap;
         }
 
-        /* Spread words across full viewport */
-        .floating-word:nth-child(1) { top: 8%; left: 3%; }
-        .floating-word:nth-child(2) { top: 12%; right: 5%; }
-        .floating-word:nth-child(3) { top: 38%; left: 2%; }
-        .floating-word:nth-child(4) { top: 50%; right: 3%; }
-        .floating-word:nth-child(5) { top: 72%; left: 5%; }
-        .floating-word:nth-child(6) { top: 85%; right: 8%; }
+        .floating-word:nth-child(1) { top: 15%; left: 8%; }
+        .floating-word:nth-child(2) { top: 25%; right: 12%; }
+        .floating-word:nth-child(3) { top: 45%; left: 5%; }
+        .floating-word:nth-child(4) { top: 55%; right: 8%; }
+        .floating-word:nth-child(5) { top: 70%; left: 15%; }
+        .floating-word:nth-child(6) { top: 80%; right: 18%; }
 
         /* Hero Section */
         .hero {
@@ -144,7 +141,7 @@
             line-height: 1.2;
             letter-spacing: -0.02em;
             margin-bottom: 32px;
-            max-width: 680px;
+            max-width: 800px;
         }
 
         .hero h1 em {
@@ -155,7 +152,7 @@
             font-size: 1.1rem;
             line-height: 1.7;
             color: var(--text-muted);
-            max-width: 580px;
+            max-width: 700px;
             margin-bottom: 64px;
         }
 
@@ -190,6 +187,20 @@
             z-index: 1;
         }
 
+        .about-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 800px) {
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
         .section-heading {
             font-family: var(--serif);
             font-size: clamp(1.6rem, 3vw, 2rem);
@@ -210,24 +221,27 @@
 
         /* Photo placement */
         .about-photo-wrapper {
-            float: right;
-            margin: 0 0 32px 48px;
-            max-width: 220px;
-            shape-outside: margin-box;
+            position: sticky;
+            top: 120px;
         }
 
         .about-photo {
             width: 100%;
+            max-width: 300px;
             filter: grayscale(100%);
             border-radius: 2px;
             opacity: 0.9;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
             .about-photo-wrapper {
-                float: none;
-                margin: 0 auto 40px;
-                max-width: 180px;
+                position: relative;
+                top: 0;
+                text-align: center;
+            }
+            
+            .about-photo {
+                max-width: 220px;
             }
         }
 
@@ -258,7 +272,7 @@
         .concept-block p {
             color: var(--text-muted);
             margin-bottom: 16px;
-            max-width: 540px;
+            max-width: 700px;
         }
 
         .concept-link {
@@ -377,7 +391,7 @@
     <nav id="nav">
         <a href="index.html" class="nav-name">Hong B. Nguyen</a>
         <div class="nav-links">
-            <a href="projects-new.html">Projects</a>
+            <a href="project-page.html">Work</a>
             <a href="publications.html">Publications</a>
             <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
             <a href="mailto:hong.nguyen@newschool.edu">Contact</a>
@@ -403,20 +417,22 @@
         <section class="about" id="about">
             <h2 class="section-heading">About</h2>
             
-            <div class="about-photo-wrapper">
-                <img src="img/profile/HN1.png" alt="Hong B. Nguyen" class="about-photo">
-            </div>
-            
-            <div class="about-content">
-                <p class="proximity-target">I study how surprisingly sophisticated implicit knowledge is woven into perception — how the brain encodes invisible forces and social meaning into what looks like simple visual experience.</p>
+            <div class="about-layout">
+                <div class="about-photo-wrapper">
+                    <img src="img/profile/HN1.png" alt="Hong B. Nguyen" class="about-photo">
+                </div>
                 
-                <p class="proximity-target">My work shows that the visual system makes unconscious assumptions about physical forces such as gravity and friction, allowing us to anticipate motion before we explicitly reason about it.</p>
-                
-                <p class="proximity-target">It also demonstrates that we rapidly extract social meaning from minimal cues — seeing animacy, agency, and intention in patterns of movement and facial expression.</p>
-                
-                <p class="proximity-target">A third branch of my research investigates how visual attention and information acquisition shape experience in more complex tasks — from aesthetic judgment to navigation through space.</p>
-                
-                <p class="proximity-target">Overall, my work supports two central claims: that fast, automatic visual processing is more computationally sophisticated than we typically assume, and that seemingly simple acts of looking provide the foundation for higher-level thought.</p>
+                <div class="about-content">
+                    <p class="proximity-target">I study how surprisingly sophisticated implicit knowledge is woven into perception — how the brain encodes invisible forces and social meaning into what looks like simple visual experience.</p>
+                    
+                    <p class="proximity-target">My work shows that the visual system makes unconscious assumptions about physical forces such as gravity and friction, allowing us to anticipate motion before we explicitly reason about it.</p>
+                    
+                    <p class="proximity-target">It also demonstrates that we rapidly extract social meaning from minimal cues — seeing animacy, agency, and intention in patterns of movement and facial expression.</p>
+                    
+                    <p class="proximity-target">A third branch of my research investigates how visual attention and information acquisition shape experience in more complex tasks — from aesthetic judgment to navigation through space.</p>
+                    
+                    <p class="proximity-target">Overall, my work supports two central claims: that fast, automatic visual processing is more computationally sophisticated than we typically assume, and that seemingly simple acts of looking provide the foundation for higher-level thought.</p>
+                </div>
             </div>
         </section>
 
