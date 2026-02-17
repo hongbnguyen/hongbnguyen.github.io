@@ -1,61 +1,536 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hong B. Nguyen</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F7F6F3;
+            --text: #1E1E1E;
+            --text-muted: #5a5a5a;
+            --accent: #B6A469;
+            --accent-hover: #1C2433;
+            --serif: 'Playfair Display', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 18px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5%;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(247, 246, 243, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-name {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Main content wrapper */
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+            padding-left: calc(12% + 24px);
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding-left: 24px;
+            }
+        }
+
+        /* Floating conceptual words */
+        .floating-words {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-word {
+            position: absolute;
+            font-family: var(--serif);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 400;
+            color: var(--text);
+            opacity: 0.04;
+            transition: transform 0.8s ease-out, opacity 0.3s ease;
+            user-select: none;
+        }
+
+        .floating-word:nth-child(1) { top: 15%; left: 8%; }
+        .floating-word:nth-child(2) { top: 25%; right: 12%; }
+        .floating-word:nth-child(3) { top: 45%; left: 5%; }
+        .floating-word:nth-child(4) { top: 55%; right: 8%; }
+        .floating-word:nth-child(5) { top: 70%; left: 15%; }
+        .floating-word:nth-child(6) { top: 80%; right: 18%; }
+
+        /* Hero Section */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 32px;
+            max-width: 680px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin-bottom: 64px;
+        }
+
+        .scroll-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scroll-indicator:hover {
+            opacity: 1;
+        }
+
+        .scroll-indicator span {
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        /* About Section */
+        .about {
+            padding-bottom: 140px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-heading {
+            font-family: var(--serif);
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            font-weight: 400;
+            margin-bottom: 40px;
+            letter-spacing: -0.01em;
+        }
+
+        .about-content p {
+            margin-bottom: 24px;
+            color: var(--text);
+            transition: opacity 0.3s ease;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Photo placement */
+        .about-photo-wrapper {
+            float: right;
+            margin: 0 0 32px 48px;
+            max-width: 220px;
+            shape-outside: margin-box;
+        }
+
+        .about-photo {
+            width: 100%;
+            filter: grayscale(100%);
+            border-radius: 2px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .about-photo-wrapper {
+                float: none;
+                margin: 0 auto 40px;
+                max-width: 180px;
+            }
+        }
+
+        /* Conceptual Blocks */
+        .conceptual-blocks {
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .concept-block {
+            margin-bottom: 100px;
+            transition: opacity 0.3s ease;
+        }
+
+        .concept-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .concept-block h3 {
+            font-family: var(--serif);
+            font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+            font-weight: 400;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .concept-block p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            max-width: 540px;
+        }
+
+        .concept-link {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease, gap 0.3s ease;
+        }
+
+        .concept-link:hover {
+            color: var(--accent-hover);
+            gap: 10px;
+        }
+
+        .concept-link::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .concept-link:hover::after {
+            transform: translateX(2px);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(30, 30, 30, 0.08);
+            padding: 40px 0;
+            margin-top: 160px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        /* Cursor interaction hint */
+        .cursor-hint {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .cursor-hint.visible {
+            opacity: 0.4;
+        }
+
+        /* Proximity brightness effect */
+        .proximity-target {
+            transition: filter 0.4s ease, opacity 0.4s ease;
+        }
+
+        .proximity-target.bright {
+            filter: brightness(1.06);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 80px;
+            }
+
+            .about {
+                padding-bottom: 100px;
+            }
+
+            .concept-block {
+                margin-bottom: 72px;
+            }
+
+            footer {
+                margin-top: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="main-header">
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="publications.html">Publications</a>
-      <a href="project-page.html">Projects</a>
-      <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
-    </nav>
-  </header>
-
-  <!-- Layout -->
-  <div class="main-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="profile-card">
-        <img src="img/profile/HN1.png" alt="Profile Picture of Hong B. Nguyen" class="profile-pic">
-        <h3>Hong B. Nguyen</h3>
-        <p>PhD Candidate, Psychology</p>
-        <p>hong.nguyen [at] newschool.edu</p>
-        <div class="links">
-          <h4>More Sites</h4>
-          <a href="https://scholar.google.com/citations?user=t_Ep51oAAAAJ&hl=en" target="_blank">Google Scholar</a>
-          <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
-        </div>
-
-
-      </div>
-    </aside>
-  
-    <!-- Main Content -->
-    <div class="main-content">
-      <section id="about" class="card">
-        <h2>About</h2>
-        <p>Hi, I'm Hong B. Nguyen, a vision scientist who studies how surprisingly sophisticated implicit knowledge is quietly woven into how we perceive patterns of light landing on our retinas.</p>
-        
-        <p>My work shows that the visual system makes unconscious assumptions about invisible physical forces such as gravity and friction, allowing us to anticipate motion before we explicitly reason about it. I’ve also found that we automatically extract social meaning from movement and facial expressions — seeing animacy, agency, and intention with remarkable speed. A third branch of my research investigates how visual attention and information acquisition interact with cognition in complex tasks, including navigation and aesthetic experience.
-        <p>Overall, my work supports two important conclusions — that fast, automatic visual processing is “smarter” than we typically give it credit for, and that seemingly simple acts of looking and seeing provide a rich foundation for higher-level thought.</p>
-      </section>
-
-      
+    <!-- Floating conceptual words -->
+    <div class="floating-words">
+        <span class="floating-word" data-speed="0.3">Gravity</span>
+        <span class="floating-word" data-speed="0.5">Friction</span>
+        <span class="floating-word" data-speed="0.2">Prediction</span>
+        <span class="floating-word" data-speed="0.4">Agency</span>
+        <span class="floating-word" data-speed="0.35">Salience</span>
+        <span class="floating-word" data-speed="0.45">Mischief</span>
     </div>
-  </div>
-  
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2024 Hong B. Nguyen. All rights reserved.</p>
-  </footer>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <a href="index.html" class="nav-name">Hong B. Nguyen</a>
+        <div class="nav-links">
+            <a href="projects-new.html">Work</a>
+            <a href="publications.html">Publications</a>
+            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
+            <a href="mailto:hong.nguyen@newschool.edu">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="proximity-target">
+                The visual system does not passively record the world.<br>
+                <em>It predicts it.</em>
+            </h1>
+            <p class="hero-description proximity-target">
+                I study how assumptions about gravity, friction, agency, and intention are embedded into early visual processing — shaping what we see long before conscious reasoning begins.
+            </p>
+            <div class="scroll-indicator" onclick="document.querySelector('.about').scrollIntoView({behavior: 'smooth'})">
+                <span>↓</span> Explore
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <h2 class="section-heading">About</h2>
+            
+            <div class="about-photo-wrapper">
+                <img src="img/profile/HN1.png" alt="Hong B. Nguyen" class="about-photo">
+            </div>
+            
+            <div class="about-content">
+                <p class="proximity-target">I study how surprisingly sophisticated implicit knowledge is woven into perception — how the brain encodes invisible forces and social meaning into what looks like simple visual experience.</p>
+                
+                <p class="proximity-target">My work shows that the visual system makes unconscious assumptions about physical forces such as gravity and friction, allowing us to anticipate motion before we explicitly reason about it.</p>
+                
+                <p class="proximity-target">It also demonstrates that we rapidly extract social meaning from minimal cues — seeing animacy, agency, and intention in patterns of movement and facial expression.</p>
+                
+                <p class="proximity-target">A third branch of my research investigates how visual attention and information acquisition shape experience in more complex tasks — from aesthetic judgment to navigation through space.</p>
+                
+                <p class="proximity-target">Overall, my work supports two central claims: that fast, automatic visual processing is more computationally sophisticated than we typically assume, and that seemingly simple acts of looking provide the foundation for higher-level thought.</p>
+            </div>
+        </section>
+
+        <!-- Conceptual Blocks -->
+        <section class="conceptual-blocks">
+            <div class="concept-block proximity-target">
+                <h3>Invisible Structure</h3>
+                <p>The visual system encodes gravity and friction as priors. Sensitivity to motion depends on these assumptions — we detect speed changes that violate expected forces more readily than those consistent with them.</p>
+                <a href="projects-new.html#forces" class="concept-link">Physical Forces</a>
+            </div>
+
+            <div class="concept-block proximity-target">
+                <h3>Attention as Leverage</h3>
+                <p>Where we look determines what we predict and what we prefer. Attention is not passive selection — it is computational strategy. Gaze patterns can be transplanted to reshape aesthetic experience.</p>
+                <a href="projects-new.html#attention" class="concept-link">Attentional Transplants</a>
+            </div>
+
+            <div class="concept-block proximity-target">
+                <h3>Social Meaning in Motion</h3>
+                <p>Minimal visual cues can signal play, mischief, agency. Perception scaffolds abstract social inference from the simplest patterns of movement — long before deliberate interpretation begins.</p>
+                <a href="projects-new.html#aesthetics" class="concept-link">Aesthetics & Social Projects</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© Hong B. Nguyen · New York</p>
+    </footer>
+
+    <!-- Cursor hint -->
+    <div class="cursor-hint" id="cursor-hint">
+        This page quietly responds to where you move your cursor.
+    </div>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Floating words parallax on scroll
+        const floatingWords = document.querySelectorAll('.floating-word');
+        let scrollY = 0;
+
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            floatingWords.forEach(word => {
+                const speed = parseFloat(word.dataset.speed) || 0.3;
+                const yOffset = scrollY * speed * 0.1;
+                word.style.transform = `translateY(${yOffset}px)`;
+            });
+        });
+
+        // Cursor proximity effect
+        const proximityTargets = document.querySelectorAll('.proximity-target');
+        let mouseX = 0, mouseY = 0;
+        let cursorHintShown = false;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Floating words drift
+            floatingWords.forEach((word, i) => {
+                const rect = word.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const distX = (mouseX - centerX) * 0.01;
+                const distY = (mouseY - centerY) * 0.01;
+                const baseY = scrollY * (parseFloat(word.dataset.speed) || 0.3) * 0.1;
+                word.style.transform = `translate(${distX}px, ${baseY + distY}px)`;
+            });
+
+            // Proximity brightness
+            proximityTargets.forEach(target => {
+                const rect = target.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
+                
+                if (distance < 300) {
+                    target.classList.add('bright');
+                } else {
+                    target.classList.remove('bright');
+                }
+            });
+
+            // Show cursor hint after some movement
+            if (!cursorHintShown && (mouseX > 100 || mouseY > 100)) {
+                setTimeout(() => {
+                    document.getElementById('cursor-hint').classList.add('visible');
+                    setTimeout(() => {
+                        document.getElementById('cursor-hint').classList.remove('visible');
+                    }, 4000);
+                }, 3000);
+                cursorHintShown = true;
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
