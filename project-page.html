@@ -29,7 +29,8 @@
         .study-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-top: var(--space-md); }
         @media (max-width: 768px) { .study-cards { grid-template-columns: 1fr; } }
         .study-card { padding: var(--space-md); border-radius: 8px; transition: all 0.4s ease; cursor: pointer; }
-        .study-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: var(--space-sm); transition: opacity 0.3s ease; }
+        .study-card img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-radius: 4px; margin-bottom: var(--space-sm); transition: opacity 0.3s ease; }
+        #aesthetics .study-card img { object-fit: contain; background: transparent; height: 220px; }
         .study-card:hover img { opacity: 0.9; }
         .study-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin-bottom: var(--space-xs); line-height: 1.3; }
         .study-card p { font-family: var(--serif); font-size: 1.1rem; opacity: 0.7; margin-bottom: var(--space-sm); }
@@ -81,7 +82,8 @@
         .vignette { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.6; max-width: 700px; margin: var(--space-sm) 0 var(--space-md); padding-left: var(--space-md); border-left: 3px solid rgba(0, 0, 0, 0.15); color: var(--text-muted); }
         .idea-statement { font-family: var(--serif); font-size: 1.5rem; text-align: center; max-width: 750px; margin: var(--space-md) auto 0; padding: var(--space-md); border-top: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
         #aesthetics { background: linear-gradient(180deg, var(--aesthetics-bg) 0%, #faf7f2 100%); color: var(--text-dark); }
-        #aesthetics .study-card { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
+        #aesthetics .study-card { background: transparent; border: none; box-shadow: none; }
+        #aesthetics .study-card:hover { background: rgba(139, 115, 85, 0.05); }
         #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
         
         /* Gaze Demo Styles */
@@ -207,13 +209,12 @@
         </section>
         <section id="aesthetics" class="project-section" data-section="aesthetics">
             <div class="section-inner">
-                <p class="hero-text">Beauty is not in the image.<br><em>It is in how we attend</em></p>
+                <p class="hero-text">Beauty is not in the image.<br><em>It is in how we look.</em></p>
                 
                 <!-- Gaze Trajectory Demo -->
                 <div class="gaze-demo fade-in">
                     <div class="gaze-demo-header">
                         <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
-                        <p>The same image, viewed differently. Green = most liked viewing path. Red = least liked viewing path.</p>
                     </div>
                     <div class="gaze-videos">
                         <div class="gaze-video-item" onclick="playVideo(this)">
@@ -242,7 +243,7 @@
                 </div>
 
                 <div class="two-blocks">
-                    <div class="block fade-in"><h3>Attentional Transplants</h3><ul><li>Attention drive visual preferences!</li><li>Prediction fluency mediates preference</li><li>Same-image specificity matters</li></ul></div>
+                    <div class="block fade-in"><h3>Attentional Transplants</h3><ul><li>Attention patterns drive aesthetic disagreement</li><li>Prediction fluency mediates preference</li><li>Same-image specificity matters</li></ul></div>
                     <div class="block fade-in"><h3>Mischief Project</h3><ul><li>Subtle visual scaffolds signal social intent</li><li>Perception extracts animacy and goal structure</li><li>Moral inference grounded in motion</li></ul></div>
                 </div>
                 <div class="study-cards" style="margin-top:var(--space-md);">
