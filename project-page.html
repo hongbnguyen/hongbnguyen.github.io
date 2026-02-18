@@ -83,6 +83,20 @@
         #aesthetics { background: linear-gradient(180deg, var(--aesthetics-bg) 0%, #faf7f2 100%); color: var(--text-dark); }
         #aesthetics .study-card { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
         #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
+        
+        /* Gaze Demo Styles */
+        .gaze-demo { margin-bottom: var(--space-lg); }
+        .gaze-demo-header { margin-bottom: var(--space-md); }
+        .gaze-demo-header h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; color: #2f2b42; }
+        .gaze-demo-header p { font-family: var(--serif); font-size: 1.1rem; color: var(--text-muted); }
+        .gaze-videos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+        @media (max-width: 768px) { .gaze-videos { grid-template-columns: 1fr; } }
+        .gaze-video-item { position: relative; border-radius: 8px; overflow: hidden; background: #000; min-height: 400px; }
+        .gaze-video-item video { width: 100%; height: 100%; min-height: 400px; object-fit: contain; display: block; background: #000; }
+        .gaze-label { position: absolute; bottom: 16px; left: 16px; padding: 8px 18px; border-radius: 4px; font-family: var(--serif); font-size: 1.1rem; font-weight: 500; }
+        .gaze-label.best { background: rgba(76, 175, 80, 0.9); color: #fff; }
+        .gaze-label.worst { background: rgba(211, 47, 47, 0.9); color: #fff; }
+        
         .two-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-top: var(--space-md); }
         @media (max-width: 768px) { .two-blocks { grid-template-columns: 1fr; } }
         .block h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: var(--space-sm); color: #2f2b42; }
@@ -188,14 +202,46 @@
         <section id="aesthetics" class="project-section" data-section="aesthetics">
             <div class="section-inner">
                 <p class="hero-text">Beauty is not in the image.<br><em>It is in how we look.</em></p>
-                <div class="demo-placeholder fade-in"><span>Gaze Trajectory Viewer — Coming Soon</span></div>
+                
+                <!-- Gaze Trajectory Demo -->
+                <div class="gaze-demo fade-in">
+                    <div class="gaze-demo-header">
+                        <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
+                        <p>The same image, viewed differently. Green = most liked viewing path. Red = least liked viewing path.</p>
+                    </div>
+                    <div class="gaze-videos">
+                        <div class="gaze-video-item">
+                            <video autoplay loop muted playsinline>
+                                <source src="videos/landscape23_png_best.mp4" type="video/mp4">
+                            </video>
+                            <span class="gaze-label best">Liked it Best</span>
+                        </div>
+                        <div class="gaze-video-item">
+                            <video autoplay loop muted playsinline>
+                                <source src="videos/landscape23_png_worst.mp4" type="video/mp4">
+                            </video>
+                            <span class="gaze-label worst">Liked it Least</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="two-blocks">
                     <div class="block fade-in"><h3>Attentional Transplants</h3><ul><li>Attention patterns drive aesthetic disagreement</li><li>Prediction fluency mediates preference</li><li>Same-image specificity matters</li></ul></div>
                     <div class="block fade-in"><h3>Mischief Project</h3><ul><li>Subtle visual scaffolds signal social intent</li><li>Perception extracts animacy and goal structure</li><li>Moral inference grounded in motion</li></ul></div>
                 </div>
-                <div class="study-cards" style="margin-top:var(--space-lg);">
-                    <div class="study-card fade-in"><h3>Gaze Transplants and Aesthetic Experience</h3><p>How viewing patterns shape what we find beautiful</p><span class="card-link">Read paper →</span></div>
-                    <div class="study-card fade-in"><h3>Motion, Mischief, and Moral Perception</h3><p>Extracting intent from simple visual motion</p><span class="card-link">Read paper →</span></div>
+                <div class="study-cards" style="margin-top:var(--space-md);">
+                    <div class="study-card fade-in">
+                        <img src="img/projects/landscape23_png_trajectories.png" alt="Gaze Trajectories">
+                        <h3>Gaze Transplants and Aesthetic Experience</h3>
+                        <p>How viewing patterns shape what we find beautiful</p>
+                        <span class="card-link">Read paper →</span>
+                    </div>
+                    <div class="study-card fade-in">
+                        <img src="img/projects/smirk_emoji.png" alt="Mischief Project">
+                        <h3>Motion, Mischief, and Moral Perception</h3>
+                        <p>Extracting intent from simple visual motion</p>
+                        <span class="card-link">Read paper →</span>
+                    </div>
                 </div>
             </div>
         </section>
