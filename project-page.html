@@ -210,16 +210,26 @@
                         <p>The same image, viewed differently. Green = most liked viewing path. Red = least liked viewing path.</p>
                     </div>
                     <div class="gaze-videos">
-                        <div class="gaze-video-item">
-                            <video autoplay loop muted playsinline>
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
                                 <source src="videos/landscape23.png_best.mp4" type="video/mp4">
                             </video>
+                            <div class="play-overlay">
+                                <div class="play-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
                             <span class="gaze-label best">Liked it Best</span>
                         </div>
-                        <div class="gaze-video-item">
-                            <video autoplay loop muted playsinline>
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
                                 <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
                             </video>
+                            <div class="play-overlay">
+                                <div class="play-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
                             <span class="gaze-label worst">Liked it Least</span>
                         </div>
                     </div>
