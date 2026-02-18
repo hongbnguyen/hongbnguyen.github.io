@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         :root {
-            --forces-bg: #e8f4fc; --attention-bg: #f8f9fa; --aesthetics-bg: #f5f0e8; --games-bg: #1a1a2e;
+            --forces-bg: #e8f4fc; --attention-bg: #f8f9fa; --aesthetics-bg: #e8f4fc; --games-bg: #f8f9fa;
             --text-light: #ffffff; --text-dark: #2C2C2C; --text-muted: #5a5a5a;
             --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Noto Sans', sans-serif;
             --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem; --space-lg: 3rem; --space-xl: 4rem;
@@ -81,16 +81,16 @@
         @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
         .vignette { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.6; max-width: 700px; margin: var(--space-sm) 0 var(--space-md); padding-left: var(--space-md); border-left: 3px solid rgba(0, 0, 0, 0.15); color: var(--text-muted); }
         .idea-statement { font-family: var(--serif); font-size: 1.5rem; text-align: center; max-width: 750px; margin: var(--space-md) auto 0; padding: var(--space-md); border-top: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
-        #aesthetics { background: linear-gradient(180deg, var(--aesthetics-bg) 0%, #faf7f2 100%); color: var(--text-dark); }
+        #aesthetics { background: linear-gradient(180deg, #e8f4fc 0%, #d0e8f5 100%); color: var(--text-dark); }
         #aesthetics .study-card { background: transparent; border: none; box-shadow: none; }
         #aesthetics .study-card:hover { background: rgba(139, 115, 85, 0.05); }
         #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
         
         /* Gaze Demo Styles */
-        .gaze-demo { margin-bottom: var(--space-lg); }
-        .gaze-demo-header { margin-bottom: var(--space-md); }
-        .gaze-demo-header h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; color: #2f2b42; }
-        .gaze-demo-header p { font-family: var(--serif); font-size: 1.1rem; color: var(--text-muted); }
+        .gaze-demo { margin-bottom: var(--space-md); }
+        .gaze-demo-header { margin-bottom: var(--space-sm); }
+        .gaze-demo-header h3, .gaze-demo-header h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.3rem; color: #2f2b42; }
+        .gaze-demo-header p { font-family: var(--serif); font-size: 1rem; color: var(--text-muted); }
         .gaze-videos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
         @media (max-width: 768px) { .gaze-videos { grid-template-columns: 1fr; } }
         .gaze-video-item { position: relative; border-radius: 8px; overflow: hidden; background: #000; min-height: 400px; cursor: pointer; }
@@ -105,14 +105,48 @@
         .play-btn:hover { transform: scale(1.1); background: #fff; }
         .play-btn svg { width: 32px; height: 32px; margin-left: 4px; fill: #2f2b42; }
         
+        /* Aesthetics Project Layout */
+        .aesthetics-project { margin-bottom: var(--space-md); }
+        .project-header { display: flex; align-items: flex-start; gap: var(--space-md); margin-bottom: var(--space-sm); }
+        .project-avatar { width: 120px; height: 120px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+        .project-info h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 500; margin-bottom: 0.3rem; color: #2f2b42; }
+        .project-info p { font-family: var(--serif); font-size: 1.15rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .project-points { list-style: none; padding: 0; margin: 0 0 var(--space-md) 0; }
+        .project-points li { font-family: var(--serif); font-size: 1.15rem; padding: 0.4rem 0; color: var(--text-dark); opacity: 0.8; }
+        .project-points li::before { content: "•"; margin-right: 10px; color: var(--text-muted); }
+        .section-divider { height: 1px; background: rgba(0, 0, 0, 0.1); margin: var(--space-lg) 0; }
+        @media (max-width: 600px) {
+            .project-header { flex-direction: column; align-items: center; text-align: center; }
+            .project-avatar { width: 100px; height: 100px; }
+        }
+        
         .two-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-top: var(--space-md); }
         @media (max-width: 768px) { .two-blocks { grid-template-columns: 1fr; } }
         .block h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: var(--space-sm); color: #2f2b42; }
         .block ul { list-style: none; padding: 0; }
         .block li { font-family: var(--serif); font-size: 1.15rem; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-        #games { background: linear-gradient(180deg, var(--games-bg) 0%, #0f0f1a 100%); color: var(--text-light); }
-        #games .study-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); }
-        #games .study-card h3 { color: var(--text-light); }
+        #games { background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); color: var(--text-dark); }
+        #games .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); }
+        #games .study-card h3 { color: var(--text-dark); }
+        
+        /* Game Cards */
+        .game-cards { display: flex; flex-direction: column; gap: 0; }
+        .game-card { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-md); padding: var(--space-lg) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); transition: all 0.3s ease; align-items: start; }
+        .game-card:last-child { border-bottom: none; }
+        .game-card:hover { background: rgba(0, 0, 0, 0.02); }
+        .game-card:hover h3 { transform: translateY(-2px); }
+        .game-card:hover .game-question { font-weight: 600; }
+        .game-card-image { width: 180px; height: 140px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+        .game-card-content { }
+        .game-card h3 { font-family: var(--serif); font-size: 2rem; font-weight: 500; color: var(--text-dark); margin-bottom: var(--space-xs); transition: transform 0.3s ease; }
+        .game-question { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; color: var(--text-dark); opacity: 0.85; margin-bottom: var(--space-sm); line-height: 1.5; transition: font-weight 0.3s ease; }
+        .game-summary { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-sm); max-width: 800px; }
+        .game-link { font-family: var(--sans); font-size: 0.9rem; font-weight: 600; color: #2f6690; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s ease; }
+        .game-link:hover { gap: 10px; }
+        @media (max-width: 700px) {
+            .game-card { grid-template-columns: 1fr; }
+            .game-card-image { width: 100%; height: 200px; }
+        }
         .concept-sketches { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
         @media (max-width: 768px) { .concept-sketches { grid-template-columns: 1fr; } }
         .sketch { aspect-ratio: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-md); transition: all 0.4s ease; }
@@ -197,7 +231,7 @@
         <section id="attention" class="project-section" data-section="attention">
             <div class="scanline"></div>
             <div class="section-inner">
-                <p class="hero-text">What if navigation design<br><em>learned from attention itself?</em></p>
+                <p class="hero-text">What if navigation design <em>learned from attention itself?</em></p>
                 <p class="vignette fade-in">A traveler with a tight connection rushes through an unfamiliar terminal. Signage competes with advertisements. What if the path forward simply... appeared?</p>
                 <div class="demo-container fade-in" id="demo-container">
                     <div class="demo-controls"><button class="demo-btn" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Fullscreen</button></div>
@@ -209,67 +243,116 @@
         </section>
         <section id="aesthetics" class="project-section" data-section="aesthetics">
             <div class="section-inner">
-                <p class="hero-text">Beauty is not in the image.<br><em>It is in how we look.</em></p>
+                <p class="hero-text">Beauty is not in the image. <em>It is in how we attend</em></p>
                 
-                <!-- Gaze Trajectory Demo -->
-                <div class="gaze-demo fade-in">
-                    <div class="gaze-demo-header">
-                        <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
-                    </div>
-                    <div class="gaze-videos">
-                        <div class="gaze-video-item" onclick="playVideo(this)">
-                            <video loop muted playsinline>
-                                <source src="videos/landscape23.png_best.mp4" type="video/mp4">
-                            </video>
-                            <div class="play-overlay">
-                                <div class="play-btn">
-                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                </div>
-                            </div>
-                            <span class="gaze-label best">Liked it Best</span>
+                <!-- Attentional Transplants Project -->
+                <div class="aesthetics-project fade-in">
+                    <div class="project-header">
+                        <img src="img/projects/landscape23.png_trajectories.png" alt="Gaze Trajectories" class="project-avatar">
+                        <div class="project-info">
+                            <h3>Attentional Transplants</h3>
+                            <p>How viewing patterns shape what we find beautiful</p>
+                            <span class="card-link">Read paper →</span>
                         </div>
-                        <div class="gaze-video-item" onclick="playVideo(this)">
-                            <video loop muted playsinline>
-                                <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
-                            </video>
-                            <div class="play-overlay">
-                                <div class="play-btn">
-                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <ul class="project-points">
+                        <li>Attention patterns drive aesthetic disagreement</li>
+                        <li>Prediction fluency mediates preference</li>
+                        <li>Same-image specificity matters</li>
+                    </ul>
+                    
+                    <!-- Gaze Trajectory Demo -->
+                    <div class="gaze-demo">
+                        <div class="gaze-demo-header">
+                            <h4>Gaze Trajectories Shape Aesthetic Experience</h4>
+                        </div>
+                        <div class="gaze-videos">
+                            <div class="gaze-video-item" onclick="playVideo(this)">
+                                <video loop muted playsinline>
+                                    <source src="videos/landscape23.png_best.mp4" type="video/mp4">
+                                </video>
+                                <div class="play-overlay">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
                                 </div>
+                                <span class="gaze-label best">Liked it Best</span>
                             </div>
-                            <span class="gaze-label worst">Liked it Least</span>
+                            <div class="gaze-video-item" onclick="playVideo(this)">
+                                <video loop muted playsinline>
+                                    <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
+                                </video>
+                                <div class="play-overlay">
+                                    <div class="play-btn">
+                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                                <span class="gaze-label worst">Liked it Least</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="two-blocks">
-                    <div class="block fade-in"><h3>Attentional Transplants</h3><ul><li>Attention patterns drive aesthetic disagreement</li><li>Prediction fluency mediates preference</li><li>Same-image specificity matters</li></ul></div>
-                    <div class="block fade-in"><h3>Mischief Project</h3><ul><li>Subtle visual scaffolds signal social intent</li><li>Perception extracts animacy and goal structure</li><li>Moral inference grounded in motion</li></ul></div>
-                </div>
-                <div class="study-cards" style="margin-top:var(--space-md);">
-                    <div class="study-card fade-in">
-                        <img src="img/projects/landscape23.png_trajectories.png" alt="Gaze Trajectories">
-                        <h3>Gaze Transplants and Aesthetic Experience</h3>
-                        <p>How viewing patterns shape what we find beautiful</p>
-                        <span class="card-link">Read paper →</span>
+                <div class="section-divider"></div>
+
+                <!-- Mischief Project -->
+                <div class="aesthetics-project fade-in">
+                    <div class="project-header">
+                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project" class="project-avatar">
+                        <div class="project-info">
+                            <h3>Mischief Project</h3>
+                            <p>Extracting intent from simple visual motion</p>
+                            <span class="card-link">Read paper →</span>
+                        </div>
                     </div>
-                    <div class="study-card fade-in">
-                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project">
-                        <h3>Motion, Mischief, and Moral Perception</h3>
-                        <p>Extracting intent from simple visual motion</p>
-                        <span class="card-link">Read paper →</span>
-                    </div>
+                    <ul class="project-points">
+                        <li>Subtle visual scaffolds signal social intent</li>
+                        <li>Perception extracts animacy and goal structure</li>
+                        <li>Moral inference grounded in motion</li>
+                    </ul>
                 </div>
             </div>
         </section>
         <section id="games" class="project-section" data-section="games">
             <div class="section-inner">
-                <p class="hero-text">Games are controlled laboratories<br><em>for intuitive physics.</em></p>
-                <div class="narrative fade-in" style="max-width:580px;margin-bottom:var(--space-lg);"><p>Game environments let us manipulate perceptual priors in ways the real world cannot.</p></div>
-                <div class="concept-sketches">
-                    <div class="sketch fade-in"><div class="sketch-icon">◐</div><h4>Gravity Bias Puzzle</h4><p>Implicit physics expectations</p></div>
-                    <div class="sketch fade-in"><div class="sketch-icon">◎</div><h4>Attention Transfer Maze</h4><p>Gaze scaffolds for navigation</p></div>
-                    <div class="sketch fade-in"><div class="sketch-icon">◈</div><h4>Mischief Detection</h4><p>Reading intent from motion</p></div>
+                <p class="hero-text">Games as laboratories <em>for visual perception.</em></p>
+                <div class="narrative fade-in" style="max-width:750px;margin-bottom:var(--space-lg);">
+                    <p>I use interactive game environments to test whether perceptual biases influence behavior in dynamic, embodied tasks — not just in static displays.</p>
+                </div>
+                
+                <div class="game-cards">
+                    <!-- Tailed Pac-Man -->
+                    <div class="game-card fade-in">
+                        <img src="img/projects/Pacman_H_S_001.png" alt="Tailed Pac-Man" class="game-card-image">
+                        <div class="game-card-content">
+                            <h3>Tailed Pac-Man</h3>
+                            <p class="game-question">Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</p>
+                            <p class="game-summary">In a pursuit game, I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns, suggesting that perceptual cues directly influence survival behavior.</p>
+                            <a href="#" class="game-link">View slides →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Color Pong -->
+                    <div class="game-card fade-in">
+                        <img src="img/projects/Within-subjects_Pong_H_S_001.png" alt="Color Pong" class="game-card-image">
+                        <div class="game-card-content">
+                            <h3>Color Pong</h3>
+                            <p class="game-question">Does color alter not only how a game feels — but how we play it?</p>
+                            <p class="game-summary">I created identical Pong environments that differed only in background color. Color influenced time spent playing, movement patterns, and performance, suggesting that low-level visual properties shape persistence and strategy in dynamic tasks.</p>
+                            <a href="#" class="game-link">View slides →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Maze Width Illusion -->
+                    <div class="game-card fade-in">
+                        <img src="img/projects/4_20_Maze_H_S_copy_001.png" alt="Maze Width Illusion" class="game-card-image">
+                        <div class="game-card-content">
+                            <h3>Maze Width Illusion</h3>
+                            <p class="game-question">If two paths are the same length, can width alone determine which one we choose?</p>
+                            <p class="game-summary">In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and were chosen significantly more often, demonstrating that geometric illusions influence navigation decisions.</p>
+                            <a href="#" class="game-link">View slides →</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
