@@ -82,6 +82,16 @@
         .vignette { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.6; max-width: 700px; margin: var(--space-sm) 0 var(--space-md); padding-left: var(--space-md); border-left: 3px solid rgba(0, 0, 0, 0.15); color: var(--text-muted); }
         .idea-statement { font-family: var(--serif); font-size: 1.5rem; text-align: center; max-width: 750px; margin: var(--space-md) auto 0; padding: var(--space-md); border-top: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
         #aesthetics { background: linear-gradient(180deg, #e8f4fc 0%, #d0e8f5 100%); color: var(--text-dark); }
+        #aesthetics .study-card { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); color: var(--text-dark); box-shadow: 0 4px 20px rgba(0, 80, 150, 0.1); }
+        #aesthetics .study-card:hover { background: #ffffff; border-color: #2f6690; box-shadow: 0 8px 30px rgba(0, 80, 150, 0.15); }
+        #aesthetics .study-card.selected { border-color: #2f6690; background: #f0f7fc; }
+        #aesthetics .study-card h3 { color: #1a3a52; }
+        #aesthetics .study-details { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); box-shadow: 0 4px 30px rgba(0, 80, 150, 0.1); }
+        #aesthetics .study-details h1 { color: #1a3a52; }
+        #aesthetics .study-details h3 { color: #2f6690; }
+        .findings-list { list-style: none; padding: 0; margin: var(--space-md) 0; }
+        .findings-list li { font-family: var(--serif); font-size: 1.15rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .findings-list li::before { content: "→"; margin-right: 12px; color: #2f6690; }
         #aesthetics .study-card { background: transparent; border: none; box-shadow: none; }
         #aesthetics .study-card:hover { background: rgba(139, 115, 85, 0.05); }
         #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
@@ -126,27 +136,18 @@
         .block ul { list-style: none; padding: 0; }
         .block li { font-family: var(--serif); font-size: 1.15rem; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         #games { background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); color: var(--text-dark); }
-        #games .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); }
+        #games .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.08); color: var(--text-dark); }
+        #games .study-card:hover { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.15); }
+        #games .study-card.selected { border-color: #2f6690; background: #f0f7fc; }
         #games .study-card h3 { color: var(--text-dark); }
+        #games .study-details { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08); }
+        #games .study-details h1 { color: var(--text-dark); }
+        #games .study-details h3 { color: #2f6690; }
         
-        /* Game Cards */
-        .game-cards { display: flex; flex-direction: column; gap: 0; }
-        .game-card { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-md); padding: var(--space-lg) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.1); transition: all 0.3s ease; align-items: start; }
-        .game-card:last-child { border-bottom: none; }
-        .game-card:hover { background: rgba(0, 0, 0, 0.02); }
-        .game-card:hover h3 { transform: translateY(-2px); }
-        .game-card:hover .game-question { font-weight: 600; }
-        .game-card-image { width: 180px; height: 140px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-        .game-card-content { }
-        .game-card h3 { font-family: var(--serif); font-size: 2rem; font-weight: 500; color: var(--text-dark); margin-bottom: var(--space-xs); transition: transform 0.3s ease; }
-        .game-question { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; color: var(--text-dark); opacity: 0.85; margin-bottom: var(--space-sm); line-height: 1.5; transition: font-weight 0.3s ease; }
-        .game-summary { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-sm); max-width: 800px; }
-        .game-link { font-family: var(--sans); font-size: 0.9rem; font-weight: 600; color: #2f6690; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s ease; }
-        .game-link:hover { gap: 10px; }
-        @media (max-width: 700px) {
-            .game-card { grid-template-columns: 1fr; }
-            .game-card-image { width: 100%; height: 200px; }
-        }
+        /* Game Embed */
+        .game-embed-container { width: 100%; margin: var(--space-md) 0; border-radius: 12px; overflow: hidden; background: #000; }
+        .game-embed { width: 100%; height: 600px; border: none; }
+        @media (max-width: 768px) { .game-embed { height: 400px; } }
         .concept-sketches { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
         @media (max-width: 768px) { .concept-sketches { grid-template-columns: 1fr; } }
         .sketch { aspect-ratio: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-md); transition: all 0.4s ease; }
@@ -244,68 +245,62 @@
         <section id="aesthetics" class="project-section" data-section="aesthetics">
             <div class="section-inner">
                 <p class="hero-text">Beauty is not in the image. <em>It is in how we look.</em></p>
+                <div class="narrative fade-in"><p>Attention shapes what we find beautiful — and even shapes how we perceive social intent from simple motion.</p></div>
                 
-                <!-- Attentional Transplants Project -->
-                <div class="aesthetics-project fade-in">
-                    <div class="project-header">
-                        <img src="img/projects/landscape23.png_trajectories.png" alt="Gaze Trajectories" class="project-avatar">
-                        <div class="project-info">
-                            <h3>Attentional Transplants</h3>
-                            <p>How viewing patterns shape what we find beautiful</p>
-                            <span class="card-link">Read paper →</span>
-                        </div>
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="transplants" onclick="toggleStudy('transplants')">
+                        <img src="img/projects/landscape23.png_trajectories.png" alt="Attentional Transplants">
+                        <h3>Attentional Transplants</h3>
+                        <p>How viewing patterns shape what we find beautiful.</p>
+                        <span class="card-link">View demos →</span>
                     </div>
-                    <ul class="project-points">
-                        <li>Attention patterns drive aesthetic disagreement</li>
-                        <li>Prediction fluency mediates preference</li>
-                        <li>Same-image specificity matters</li>
-                    </ul>
-                    
-                    <!-- Gaze Trajectory Demo -->
-                    <div class="gaze-demo">
-                        <div class="gaze-demo-header">
-                            <h4>Gaze Trajectories Shape Aesthetic Experience</h4>
+                    <div class="study-card" data-study="mischief" onclick="toggleStudy('mischief')">
+                        <img src="img/projects/smirk_emoji.png" alt="Mischief Project">
+                        <h3>Mischief Project</h3>
+                        <p>Extracting intent from simple visual motion.</p>
+                        <span class="card-link">View demos →</span>
+                    </div>
+                </div>
+                
+                <!-- Attentional Transplants Details -->
+                <div id="transplants-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('transplants')">← Close</div>
+                    <h1>Gaze Transplants and Aesthetic Experience</h1>
+                    <p class="publication-ref">Nguyen, H. B., et al. <strong>Attentional Transplants.</strong><a href="#">PDF</a></p>
+                    <p class="description">We investigated how viewing patterns shape aesthetic experience. By analyzing gaze trajectories, we found that attention patterns drive aesthetic disagreement, prediction fluency mediates preference, and same-image specificity matters.</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
+                    <p class="experiment-text">The same image, viewed differently. Green = most liked viewing path. Red = least liked viewing path.</p>
+                    <div class="gaze-videos" style="margin: var(--space-md) 0 var(--space-lg);">
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
+                                <source src="videos/landscape23.png_best.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                            </div>
+                            <span class="gaze-label best">Liked it Best</span>
                         </div>
-                        <div class="gaze-videos">
-                            <div class="gaze-video-item" onclick="playVideo(this)">
-                                <video loop muted playsinline>
-                                    <source src="videos/landscape23.png_best.mp4" type="video/mp4">
-                                </video>
-                                <div class="play-overlay">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
-                                </div>
-                                <span class="gaze-label best">Liked it Best</span>
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
+                                <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
                             </div>
-                            <div class="gaze-video-item" onclick="playVideo(this)">
-                                <video loop muted playsinline>
-                                    <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
-                                </video>
-                                <div class="play-overlay">
-                                    <div class="play-btn">
-                                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
-                                </div>
-                                <span class="gaze-label worst">Liked it Least</span>
-                            </div>
+                            <span class="gaze-label worst">Liked it Least</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="section-divider"></div>
-
-                <!-- Mischief Project -->
-                <div class="aesthetics-project fade-in">
-                    <div class="project-header">
-                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project" class="project-avatar">
-                        <div class="project-info">
-                            <h3>Mischief Project</h3>
-                            <p>Extracting intent from simple visual motion</p>
-                            <span class="card-link">Read paper →</span>
-                        </div>
-                    </div>
-                    <ul class="project-points">
+                
+                <!-- Mischief Project Details -->
+                <div id="mischief-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('mischief')">← Close</div>
+                    <h1>Motion, Mischief, and Moral Perception</h1>
+                    <p class="publication-ref">Nguyen, H. B., et al. <strong>Mischief Project.</strong><a href="#">PDF</a></p>
+                    <p class="description">We explored how minimal visual cues can signal play, mischief, and agency. Perception scaffolds abstract social inference from the simplest patterns of movement — long before deliberate interpretation begins.</p>
+                    <h2>Key Findings</h2>
+                    <ul class="findings-list">
                         <li>Subtle visual scaffolds signal social intent</li>
                         <li>Perception extracts animacy and goal structure</li>
                         <li>Moral inference grounded in motion</li>
@@ -316,42 +311,64 @@
         <section id="games" class="project-section" data-section="games">
             <div class="section-inner">
                 <p class="hero-text">Games as laboratories <em>for visual perception.</em></p>
-                <div class="narrative fade-in" style="max-width:750px;margin-bottom:var(--space-lg);">
-                    <p>I use interactive game environments to test whether perceptual biases influence behavior in dynamic, embodied tasks — not just in static displays.</p>
+                <div class="narrative fade-in"><p>I use interactive game environments to test whether perceptual biases influence behavior in dynamic, embodied tasks — not just in static displays.</p></div>
+                
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="pacman" onclick="toggleStudy('pacman')">
+                        <img src="img/projects/Pacman_H_S_001.png" alt="Tailed Pac-Man">
+                        <h3>Tailed Pac-Man</h3>
+                        <p>Does a visual appendage change perceived vulnerability?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
+                    <div class="study-card" data-study="pong" onclick="toggleStudy('pong')">
+                        <img src="img/projects/Within-subjects_Pong_H_S_001.png" alt="Color Pong">
+                        <h3>Color Pong</h3>
+                        <p>Does color alter how we play?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
+                </div>
+                <div class="study-cards fade-in" style="margin-top: var(--space-md);">
+                    <div class="study-card" data-study="maze" onclick="toggleStudy('maze')">
+                        <img src="img/projects/4_20_Maze_H_S_copy_001.png" alt="Maze Width Illusion">
+                        <h3>Maze Width Illusion</h3>
+                        <p>Can width alone determine which path we choose?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
                 </div>
                 
-                <div class="game-cards">
-                    <!-- Tailed Pac-Man -->
-                    <div class="game-card fade-in">
-                        <img src="img/projects/Pacman_H&S.001.png" alt="Tailed Pac-Man" class="game-card-image">
-                        <div class="game-card-content">
-                            <h3>Tailed Pac-Man</h3>
-                            <p class="game-question">Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</p>
-                            <p class="game-summary">In a pursuit game, I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns, suggesting that perceptual cues directly influence survival behavior.</p>
-                            <a href="#" class="game-link">View slides →</a>
-                        </div>
+                <!-- Pac-Man Details -->
+                <div id="pacman-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('pacman')">← Close</div>
+                    <h1>Tailed Pac-Man</h1>
+                    <p class="description"><strong>Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</strong></p>
+                    <p class="description">In a pursuit game, I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns, suggesting that perceptual cues directly influence survival behavior.</p>
+                    <h2>Play the Game</h2>
+                    <div class="game-embed-container">
+                        <iframe src="https://hbnguyen.itch.io/pacman-sh" class="game-embed" allowfullscreen></iframe>
                     </div>
-                    
-                    <!-- Color Pong -->
-                    <div class="game-card fade-in">
-                        <img src="img/projects/Within-subjects Pong_H&S.001.png" alt="Color Pong" class="game-card-image">
-                        <div class="game-card-content">
-                            <h3>Color Pong</h3>
-                            <p class="game-question">Does color alter not only how a game feels — but how we play it?</p>
-                            <p class="game-summary">I created identical Pong environments that differed only in background color. Color influenced time spent playing, movement patterns, and performance, suggesting that low-level visual properties shape persistence and strategy in dynamic tasks.</p>
-                            <a href="#" class="game-link">View slides →</a>
-                        </div>
+                </div>
+                
+                <!-- Pong Details -->
+                <div id="pong-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('pong')">← Close</div>
+                    <h1>Color Pong</h1>
+                    <p class="description"><strong>Does color alter not only how a game feels — but how we play it?</strong></p>
+                    <p class="description">I created identical Pong environments that differed only in background color. Color influenced time spent playing, movement patterns, and performance, suggesting that low-level visual properties shape persistence and strategy in dynamic tasks.</p>
+                    <h2>Play the Game</h2>
+                    <div class="game-embed-container">
+                        <iframe src="https://hbnguyen.itch.io/pong-hs" class="game-embed" allowfullscreen></iframe>
                     </div>
-                    
-                    <!-- Maze Width Illusion -->
-                    <div class="game-card fade-in">
-                        <img src="img/projects/4:20 Maze H&S copy.001.png" alt="Maze Width Illusion" class="game-card-image">
-                        <div class="game-card-content">
-                            <h3>Maze Width Illusion</h3>
-                            <p class="game-question">If two paths are the same length, can width alone determine which one we choose?</p>
-                            <p class="game-summary">In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and were chosen significantly more often, demonstrating that geometric illusions influence navigation decisions.</p>
-                            <a href="#" class="game-link">View slides →</a>
-                        </div>
+                </div>
+                
+                <!-- Maze Details -->
+                <div id="maze-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('maze')">← Close</div>
+                    <h1>Maze Width Illusion</h1>
+                    <p class="description"><strong>If two paths are the same length, can width alone determine which one we choose?</strong></p>
+                    <p class="description">In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and were chosen significantly more often, demonstrating that geometric illusions influence navigation decisions.</p>
+                    <h2>Play the Game</h2>
+                    <div class="game-embed-container">
+                        <iframe src="https://hbnguyen.itch.io/maze-dots" class="game-embed" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
