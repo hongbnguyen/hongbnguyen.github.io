@@ -28,7 +28,7 @@
 
         body {
             font-family: var(--sans);
-            background: var(--bg);
+            background: #c8dbe8;
             color: var(--text);
             font-size: 18px;
             line-height: 1.6;
@@ -136,12 +136,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: #c8dbe8;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            padding-left: calc(50vw - 50% + 5%);
-            padding-right: calc(50vw - 50% + 5%);
-            overflow: hidden;
         }
 
         .hero h1 {
@@ -200,15 +194,9 @@
 
         /* About Section */
         .about {
-            padding-top: 80px;
             padding-bottom: 140px;
             position: relative;
             z-index: 1;
-            background: #c8dbe8;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            padding-left: calc(50vw - 50% + 5%);
-            padding-right: calc(50vw - 50% + 5%);
         }
 
         .about-layout {
@@ -338,31 +326,30 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Hero Background Image */
+        /* Hero Background Image - Full Page */
         .hero-bg-image {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
-            object-position: center right;
-            opacity: 0.4;
+            object-position: center;
+            opacity: 0.3;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
             mix-blend-mode: multiply;
         }
 
         @media (max-width: 900px) {
             .hero-bg-image {
-                opacity: 0.5;
-                object-position: center;
+                opacity: 0.25;
             }
         }
 
         @media (max-width: 600px) {
             .hero-bg-image {
-                opacity: 0.4;
+                opacity: 0.2;
             }
         }
 
@@ -451,6 +438,9 @@
 </head>
 <body>
 
+    <!-- Full Page Background Image -->
+    <img src="img/hero-eye.png" alt="" class="hero-bg-image" aria-hidden="true">
+
     <!-- Cursor glow effect -->
     <div class="cursor-glow" id="cursor-glow"></div>
 
@@ -459,8 +449,8 @@
     <nav id="nav">
         <a href="index.html" class="nav-name">Hong B. Nguyen</a>
         <div class="nav-links">
+            <a href="project-page.html">Work</a>
             <a href="publications.html">Publications</a>
-            <a href="project-page.html">Projects</a>
             <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
             <a href="/cdn-cgi/l/email-protection#a7cfc8c9c089c9c0d2dec2c9e7c9c2d0d4c4cfc8c8cb89c2c3d2">Contact</a>
         </div>
@@ -469,7 +459,6 @@
     <main>
         <!-- Hero Section -->
         <section class="hero">
-            <img src="img/hero-eye.png" alt="" class="hero-bg-image" aria-hidden="true">
             <h1 class="proximity-target">
                 Our visual system not only encodes structured knowledge. <em> It also influences how experience unfolds.</em>
             </h1>
