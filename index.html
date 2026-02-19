@@ -329,12 +329,11 @@
         /* Hero Background Image - Full Page */
         .hero-bg-image {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vh;
-            object-fit: contain;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
             object-position: center;
             opacity: 0.2;
             pointer-events: none;
@@ -344,16 +343,12 @@
 
         @media (max-width: 900px) {
             .hero-bg-image {
-                width: 90vw;
-                height: 70vh;
                 opacity: 0.18;
             }
         }
 
         @media (max-width: 600px) {
             .hero-bg-image {
-                width: 95vw;
-                height: 60vh;
                 opacity: 0.15;
             }
         }
