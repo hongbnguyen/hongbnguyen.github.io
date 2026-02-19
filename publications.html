@@ -6,11 +6,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <title>Publications - Hong B. Nguyen</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
     :root {
       --navy: #1e3a5f;
-      --blue: #4a6fa5;
       --pink-hover: #e8c4c4;
       --bg-light: #c8dbe8;
       --text-dark: #1E1E1E;
@@ -19,8 +17,18 @@
       --sans: 'Noto Sans', sans-serif;
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: var(--bg-light);
+      font-family: var(--sans);
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-size: 16px;
     }
 
     /* Main Header */
@@ -40,12 +48,75 @@
       font-family: var(--sans);
       font-size: 0.9rem;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.8);
+      color: #ffffff;
       text-decoration: none;
       transition: color 0.3s ease;
     }
 
     .main-header nav a:hover {
+      color: var(--pink-hover);
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 5%;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--navy);
+      margin-bottom: 40px;
+    }
+
+    /* Publication Section */
+    .pub-section {
+      margin-bottom: 50px;
+    }
+
+    .pub-section-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(30, 58, 95, 0.2);
+    }
+
+    /* Publication List */
+    .publication {
+      list-style: none;
+      padding: 0;
+    }
+
+    .publication li {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      text-indent: -20px;
+      line-height: 1.7;
+    }
+
+    .publication li strong {
+      font-weight: 700;
+    }
+
+    .publication li em {
+      font-style: italic;
+    }
+
+    .publication a {
+      color: #CBAC1B;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .publication a:hover {
       color: var(--pink-hover);
     }
 
@@ -60,72 +131,6 @@
       color: rgba(255, 255, 255, 0.6);
       text-align: center;
       font-size: 0.85rem;
-      margin: 0;
-    }
-
-    /* Main Layout */
-    .main-layout {
-      background: transparent;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
-    .profile-card {
-      background: transparent;
-    }
-
-    .profile-card h3 {
-      font-family: var(--serif);
-      font-size: 1.4rem;
-      color: var(--text-dark);
-    }
-
-    .profile-card p {
-      color: var(--text-muted);
-    }
-
-    .profile-card .links a {
-      color: var(--navy);
-      transition: color 0.3s ease;
-    }
-
-    .profile-card .links a:hover {
-      color: var(--blue);
-    }
-
-    /* Cards */
-    .card {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(30, 58, 95, 0.1);
-    }
-
-    .card h2 {
-      font-family: var(--serif);
-      font-size: 1.6rem;
-      color: var(--navy);
-      border-bottom-color: rgba(30, 58, 95, 0.15);
-    }
-
-    /* Publication list */
-    .publication li {
-      border-bottom-color: rgba(30, 58, 95, 0.08);
-    }
-
-    .publication a {
-      color: var(--navy);
-      transition: color 0.3s ease;
-    }
-
-    .publication a:hover {
-      color: var(--pink-hover);
-    }
-
-    .section-heading h3 {
-      font-family: var(--serif);
-      color: var(--blue);
     }
   </style>
 </head>
@@ -135,44 +140,34 @@
   <header class="main-header">
     <nav>
       <a href="index.html">Home</a>
-      <a href="project-page.html">Projects</a>
       <a href="publications.html">Publications</a>
+      <a href="project-page.html">Projects</a>
       <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
     </nav>
   </header>
 
-  <!-- Layout -->
-  <div class="main-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="profile-card">
-        <img src="img/profile/HN1.png" alt="Profile Picture of Hong B. Nguyen" class="profile-pic">
-        <h3>Hong B. Nguyen</h3>
-        <p>PhD Candidate, Psychology</p>
-        <p>hong.nguyen [at] newschool.edu</p>
-        <div class="links">
-          <h4>More Sites</h4>
-          <a href="https://scholar.google.com/citations?user=t_Ep51oAAAAJ&hl=en" target="_blank">Google Scholar</a>
-          <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
-        </div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <h1 class="section-title">Publications</h1>
+    
+    <div class="pub-section">
+      <h2 class="pub-section-title">Published</h2>
+      <ul id="publications-published" class="publication"></ul>
+    </div>
 
-      </div>
-    </aside>
+    <div class="pub-section">
+      <h2 class="pub-section-title">Submitted</h2>
+      <ul id="publications-submitted" class="publication"></ul>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
+    <div class="pub-section">
+      <h2 class="pub-section-title">In Preparation</h2>
+      <ul id="publications-inprep" class="publication"></ul>
+    </div>
 
-      <div class="card">
-        <h2>Publications</h2>
-        <ul id="publications-list" class="publication"></ul>
-      </div>
-
-      <div class="card">
-        <h2>Conference Presentations</h2>
-        <ul id="conference-list" class="publication"></ul>
-      </div>
-    </main>
-  </div>
+    <h1 class="section-title" style="margin-top: 60px;">Conference Presentations</h1>
+    <ul id="conference-list" class="publication"></ul>
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -186,16 +181,24 @@
       fetch("pub_data.json" + bust)
         .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .then(data => {
-          // Publications: group by status ("Published", "Submitted", "In Preparation")
-          renderList(data.publications || [], "publications-list", { groupByStatus: true });
+          // Publications: group by status
+          const pubs = data.publications || [];
+          
+          const published = pubs.filter(p => p.status === "Published");
+          const submitted = pubs.filter(p => p.status === "Submitted");
+          const inPrep = pubs.filter(p => p.status === "In Preparation");
+          
+          renderItems(published, "publications-published");
+          renderItems(submitted, "publications-submitted");
+          renderItems(inPrep, "publications-inprep");
 
-          // Conference Presentations: flat list (ignore status entirely)
-          renderList(data["conference presentations"] || [], "conference-list", { groupByStatus: false });
+          // Conference Presentations
+          renderItems(data["conference presentations"] || [], "conference-list");
         })
         .catch(e => console.error("Error fetching/parsing pub_data.json:", e));
     });
 
-    function renderList(items, elementId, opts = { groupByStatus: true }) {
+    function renderItems(items, elementId) {
       const listElement = document.getElementById(elementId);
       if (!listElement) return;
 
@@ -209,49 +212,18 @@
         return;
       }
 
-      if (!opts.groupByStatus) {
-        // Flat list: ignore status completely
-        items.forEach(item => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-            <strong>${item.who || ""}</strong> ${item.what || ""}
-            ${item.where ? ` <em>${item.where}</em>` : ""}
-            ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
-            ${item.pdf ? ` <a href="${item.pdf}" target="_blank">[PDF]</a>` : ""}
-          `;
-          listElement.appendChild(li);
-        });
-        return;
-      }
-
-      // Grouped list (for Publications)
-      const grouped = {};
       items.forEach(item => {
-        const key = (item.status || "").toString().trim();
-        if (!key) return; // skip items without a status (no "Other")
-        (grouped[key] ||= []).push(item);
-      });
-
-      Object.keys(grouped).forEach(status => {
-        const headerLi = document.createElement("li");
-        headerLi.className = "section-heading";
-        headerLi.innerHTML = `<h3 style="margin:10px 0 6px 0;">${status}</h3>`;
-        listElement.appendChild(headerLi);
-
-        grouped[status].forEach(item => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-            <strong>${item.who || ""}</strong> ${item.what || ""}
-            ${item.where ? ` <em>${item.where}</em>` : ""}
-            ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
-            ${item.pdf ? ` <a href="${item.pdf}" target="_blank">[PDF]</a>` : ""}
-          `;
-          listElement.appendChild(li);
-        });
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${item.who || ""}</strong> ${item.what || ""}
+          ${item.where ? ` <em>${item.where}</em>` : ""}
+          ${item.link ? ` <a href="${item.link}" target="_blank">[Link]</a>` : ""}
+          ${item.pdf ? ` <a href="${item.pdf}" target="_blank">[PDF]</a>` : ""}
+        `;
+        listElement.appendChild(li);
       });
     }
   </script>
 
 </body>
 </html>
-
