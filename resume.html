@@ -196,6 +196,11 @@
             z-index: 2;
         }
 
+        /* Flipped torn edge (vertically) */
+        .torn-edge.flipped {
+            transform: scaleY(-1);
+        }
+
         /* Alternating backgrounds between sections */
         /* After grey section (odd), background is pink */
         .torn-section:nth-child(odd) .torn-edge {
@@ -547,7 +552,7 @@
                     </div>
                 </div>
             </div>
-            <div class="torn-edge"></div>
+            <div class="torn-edge flipped"></div>
         </div>
 
         
@@ -671,7 +676,7 @@
                     </div>
                 </div>
             </div>
-            <div class="torn-edge"></div>
+            <div class="torn-edge flipped"></div>
         </div>
 
         
