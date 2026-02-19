@@ -170,22 +170,40 @@
         }
 
         .paper-content {
-            background: var(--cream);
             padding: 50px;
             position: relative;
+        }
+
+        /* Alternating colors - odd sections (1, 3, 5) are grey */
+        .torn-section:nth-child(odd) .paper-content {
+            background: #ededed;
+        }
+
+        /* Even sections (2, 4, 6) are pink */
+        .torn-section:nth-child(even) .paper-content {
+            background: #e8c4c4;
         }
 
         /* Bottom torn edge */
         .torn-edge {
             width: 100%;
-            height: 60px;
+            height: 80px;
             background-image: url('img/torn-paper-edge.png');
-            background-size: 100% 200%;
+            background-size: 100% auto;
             background-repeat: no-repeat;
-            background-position: center bottom;
+            background-position: top center;
             position: relative;
             z-index: 2;
             margin-top: -1px;
+        }
+
+        /* Torn edge colors to match next section */
+        .torn-section:nth-child(odd) .torn-edge {
+            filter: brightness(1.0);
+        }
+
+        .torn-section:nth-child(even) .torn-edge {
+            filter: hue-rotate(0deg) saturate(0.5) brightness(1.1);
         }
 
         @media (max-width: 600px) {
@@ -437,7 +455,7 @@
             <a href="index.html">Home</a>
             <a href="publications.html">Publications</a>
             <a href="project-page.html">Projects</a>
-            <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
         </nav>
     </header>
 
@@ -451,11 +469,11 @@
                 <div class="contact-info">
                     <span>📍 New York, NY</span>
                     <span>📞 (917) 227-4513</span>
-                    <a href="mailto:hbnguyen26@gmail.com">✉ hbnguyen26atgmail.com</a>
+                    <a href="mailto:hbnguyen26@gmail.com">✉ hbnguyen26@gmail.com</a>
                     <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
                     <a href="https://scholar.google.com/citations?hl=en&authuser=2&user=t_Ep51oAAAAJ" target="_blank">Google Scholar</a>
                 </div>
-                <a href="Hong Nguyen - resume 2026-feb.pdf" target="_blank" class="download-btn">
+                <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank" class="download-btn">
                     📄 Download Full CV
                 </a>
             </div>
