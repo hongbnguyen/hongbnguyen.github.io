@@ -29,7 +29,7 @@
         .project-section { padding: var(--space-xl) var(--space-md); position: relative; }
         .section-inner { max-width: 1100px; margin: 0 auto; }
         .hero-text { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.3; max-width: 900px; margin-bottom: var(--space-md); opacity: 0; transform: translateY(25px); animation: fadeUp 0.8s ease forwards; }
-        .hero-text em { font-style: italic; background: rgba(182, 164, 105, 0.15); padding: 0 8px; }
+        .hero-text em { font-style: italic; }
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
         .narrative { font-family: var(--serif); font-size: 1.25rem; line-height: 1.7; }
         .narrative p { margin-bottom: var(--space-sm); }
@@ -151,10 +151,33 @@
         #games .study-details h1 { color: var(--text-dark); }
         #games .study-details h3 { color: #2f6690; }
         
-        /* Game Embed */
-        .game-embed-container { width: 100%; margin: var(--space-md) 0; border-radius: 12px; overflow: hidden; background: #000; }
-        .game-embed { width: 100%; height: 600px; border: none; }
-        @media (max-width: 768px) { .game-embed { height: 400px; } }
+        /* Game Play Button */
+        .game-play-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--navy, #1e3a5f);
+            color: #ffffff;
+            font-family: var(--sans);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-top: var(--space-sm);
+        }
+        .game-play-btn:hover {
+            background: #2a4a73;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
+        }
+        .game-play-btn .play-icon {
+            font-size: 1.2rem;
+        }
+        :root {
+            --navy: #1e3a5f;
+        }
         .concept-sketches { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
         @media (max-width: 768px) { .concept-sketches { grid-template-columns: 1fr; } }
         .sketch { aspect-ratio: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-md); transition: all 0.4s ease; }
@@ -351,9 +374,9 @@
                     <p class="description"><strong>Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</strong></p>
                     <p class="description">In a pursuit game, I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns, suggesting that perceptual cues directly influence survival behavior.</p>
                     <h2>Play the Game</h2>
-                    <div class="game-embed-container">
-                        <iframe src="https://hbnguyen.itch.io/pacman-sh" class="game-embed" allowfullscreen></iframe>
-                    </div>
+                    <a href="https://hbnguyen.itch.io/pacman-sh" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Tailed Pac-Man on itch.io
+                    </a>
                 </div>
                 
                 <!-- Pong Details -->
@@ -363,9 +386,9 @@
                     <p class="description"><strong>Does color alter not only how a game feels — but how we play it?</strong></p>
                     <p class="description">I created identical Pong environments that differed only in background color. Color influenced time spent playing, movement patterns, and performance, suggesting that low-level visual properties shape persistence and strategy in dynamic tasks.</p>
                     <h2>Play the Game</h2>
-                    <div class="game-embed-container">
-                        <iframe src="https://hbnguyen.itch.io/pong-hs" class="game-embed" allowfullscreen></iframe>
-                    </div>
+                    <a href="https://hbnguyen.itch.io/pong-hs" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Color Pong on itch.io
+                    </a>
                 </div>
                 
                 <!-- Maze Details -->
@@ -375,9 +398,9 @@
                     <p class="description"><strong>If two paths are the same length, can width alone determine which one we choose?</strong></p>
                     <p class="description">In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and were chosen significantly more often, demonstrating that geometric illusions influence navigation decisions.</p>
                     <h2>Play the Game</h2>
-                    <div class="game-embed-container">
-                        <iframe src="https://hbnguyen.itch.io/maze-dots" class="game-embed" allowfullscreen></iframe>
-                    </div>
+                    <a href="https://hbnguyen.itch.io/maze-dots" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Maze Width Illusion on itch.io
+                    </a>
                 </div>
             </div>
         </section>
