@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume — Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1e3a5f;
+            --navy-light: #2a4a73;
+            --blue-light: #c8dbe8;
+            --blue-lighter: #e8f1f6;
+            --cream: #faf8f5;
+            --cream-dark: #f5f0e8;
+            --red-accent: #8b3a3a;
+            --red-light: #c4787a;
+            --text-dark: #1E1E1E;
+            --text-muted: #5a5a5a;
+            --gold: #CBAC1B;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--blue-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--navy);
+            padding: 16px 5%;
+        }
+
+        .main-header nav {
+            display: flex;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .main-header nav a {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .main-header nav a:hover {
+            color: #e8c4c4;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 60px 5% 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            font-family: var(--serif);
+            font-size: 3rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text .title {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            font-style: italic;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+
+        .hero-text .summary {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 700px;
+            margin: 0 auto 25px;
+            line-height: 1.7;
+        }
+
+        .hero-text .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 25px;
+        }
+
+        .hero-text .contact-info a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .hero-text .contact-info a:hover {
+            color: #e8c4c4;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--red-accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #6d2d2d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(139, 58, 58, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        /* Torn Paper Section */
+        .torn-section {
+            position: relative;
+            margin-top: -30px;
+            margin-bottom: 40px;
+        }
+
+        .torn-paper-top {
+            width: 100%;
+            height: 30px;
+            background-image: url('img/torn-paper-top.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            transform: scaleY(-1);
+        }
+
+        .torn-paper-content {
+            background: var(--cream);
+            padding: 40px 50px;
+            position: relative;
+        }
+
+        .torn-paper-bottom {
+            width: 100%;
+            height: 30px;
+            background-image: url('img/torn-paper-top.png');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        /* Fallback torn edge effect using CSS */
+        .torn-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: 
+                linear-gradient(135deg, var(--blue-light) 25%, transparent 25%),
+                linear-gradient(225deg, var(--blue-light) 25%, transparent 25%);
+            background-size: 20px 20px;
+            background-position: 0 0;
+        }
+
+        .torn-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: 
+                linear-gradient(315deg, var(--blue-light) 25%, transparent 25%),
+                linear-gradient(45deg, var(--blue-light) 25%, transparent 25%);
+            background-size: 20px 20px;
+            background-position: 0 0;
+        }
+
+        .paper-content {
+            background: var(--cream);
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 600px) {
+            .paper-content {
+                padding: 30px 25px;
+            }
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--red-accent);
+            display: inline-block;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--red-accent), var(--navy));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 35px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            background: var(--cream);
+            border: 3px solid var(--red-accent);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .timeline-date {
+            font-family: var(--serif);
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--red-accent);
+            white-space: nowrap;
+        }
+
+        .timeline-subtitle {
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .timeline-description ul {
+            margin-top: 8px;
+            padding-left: 18px;
+        }
+
+        .timeline-description li {
+            margin-bottom: 8px;
+        }
+
+        .timeline-description a {
+            color: var(--navy);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .timeline-description a:hover {
+            color: var(--red-accent);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-category h3 {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 3px solid var(--red-accent);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: var(--blue-lighter);
+            color: var(--navy);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Publications */
+        .pub-item {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .pub-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .pub-item:first-child {
+            padding-top: 0;
+        }
+
+        .pub-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+
+        /* Decorative Elements */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 0;
+        }
+
+        .section-divider span {
+            color: var(--red-accent);
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 30px 5%;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+
+        /* View All Link */
+        .view-all {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .view-all:hover {
+            color: var(--red-accent);
+        }
+
+        .view-all::after {
+            content: ' →';
+        }
+
+        /* Two Column Education */
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .education-item h3 {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .education-item .degree {
+            font-family: var(--serif);
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="publications.html">Publications</a>
+            <a href="project-page.html">Projects</a>
+            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Hong B. Nguyen, PhD</h1>
+                <p class="title">User Experience Researcher · Cognitive Scientist</p>
+                <p class="summary">6 years of experience specialized in human perception, decision-making, and behaviors. Expert in both qualitative and quantitative methods, with proven skills in turning ambiguous queries into actionable insights to drive product designs, including website, XR, and AI interfaces.</p>
+                <div class="contact-info">
+                    <span>📍 New York, NY</span>
+                    <span>📞 (917) 227-4513</span>
+                    <a href="mailto:hbnguyen26@gmail.com">✉ hbnguyen26@gmail.com</a>
+                    <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
+                    <a href="https://scholar.google.com/citations?hl=en&authuser=2&user=t_Ep51oAAAAJ" target="_blank">Google Scholar</a>
+                </div>
+                <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank" class="download-btn">
+                    📄 Download Full CV
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Education Section -->
+        <div class="torn-section">
+            <div class="paper-content">
+                <h2 class="section-title">Education</h2>
+                <div class="education-grid">
+                    <div class="education-item">
+                        <h3>The New School</h3>
+                        <p class="location" style="font-size: 0.9rem; color: var(--text-muted);">New York, NY</p>
+                        <p class="degree">PhD, Cognitive Psychology</p>
+                    </div>
+                    <div class="education-item">
+                        <h3>Manhattan College</h3>
+                        <p class="location" style="font-size: 0.9rem; color: var(--text-muted);">Riverdale, NY</p>
+                        <p class="degree">BS, Psychology</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"><span>✦</span></div>
+
+        <!-- Professional Experience Section -->
+        <div class="torn-section">
+            <div class="paper-content">
+                <h2 class="section-title">Professional Experience</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Student Advisor</div>
+                            <div class="timeline-date">August 2021 — Present</div>
+                        </div>
+                        <div class="timeline-subtitle">The New School</div>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>Advised 300+ MA students. Built risk detection protocols to identify students showing early disengagement signals; coordinated interventions with faculty and registrar, supporting ~12% increase in program retention and consistent enrollment across core courses</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Research Associate</div>
+                            <div class="timeline-date">August 2020 — Present</div>
+                        </div>
+                        <div class="timeline-subtitle">The New School</div>
+                        <div class="timeline-description">
+                            <ul>
+                                <li>Designed and executed human behavioral studies to inform UX design and interface optimization</li>
+                                <li>Led 20 projects (3 published) in visual cognition, adaptive interfaces, and XR systems</li>
+                                <li>Conducted 70+ structured interviews, 100+ UX studies using psychophysics, eye-tracking, and survey to understand human experience with adaptive interfaces</li>
+                                <li>Mentored 20+ undergraduate and MA students in data collection, statistical modeling, and presentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"><span>✦</span></div>
+
+        <!-- Selected Projects Section -->
+        <div class="torn-section">
+            <div class="paper-content">
+                <h2 class="section-title">Selected Projects</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">XR Personalization</div>
+                        <div class="timeline-description">
+                            Built computational models that predicted user preferences with ~75% accuracy, supporting adaptive visualization and personalization for XR systems
+                            <a href="https://ieeexplore.ieee.org/abstract/document/10536359" target="_blank">[Link]</a>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-title">Educational Research</div>
+                        <div class="timeline-description">
+                            Designed math-learning tasks connected to a social issue and conducted heuristic evaluations, interviews, and surveys with students, achieving 85% positive engagement evaluation
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-title">Motion Perception</div>
+                        <div class="timeline-description">
+                            Modeled cognitive biases in motion-rich interfaces, refined predictive attention models, and improved task efficiency by 15% through identification of optimal motion cues
+                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202023%20Better%20sensitivity%20to%20speed%20changes%20opposite%20gravity.pdf" target="_blank">[PDF]</a>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-title">Attention Research</div>
+                        <div class="timeline-description">
+                            Discovered friction-based attentional cueing that reduced participants' response time by 34ms, improving user focus and attention prediction in dynamic visual tasks
+                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202024%20Rotating%20objects%20cue%20spatial%20attention%20via%20the%20perception%20of%20frictive%20surface%20contact.pdf" target="_blank">[PDF]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"><span>✦</span></div>
+
+        <!-- Skills Section -->
+        <div class="torn-section">
+            <div class="paper-content">
+                <h2 class="section-title">Technical Skills</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Qualitative Methods</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Interviews</span>
+                            <span class="skill-tag">Heuristic Evaluation</span>
+                            <span class="skill-tag">Diary Studies</span>
+                            <span class="skill-tag">Focus Groups</span>
+                            <span class="skill-tag">Literature Reviews</span>
+                            <span class="skill-tag">Concept Testing</span>
+                            <span class="skill-tag">Contextual Inquiry</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Quantitative Methods</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Experiment Design</span>
+                            <span class="skill-tag">Survey Design</span>
+                            <span class="skill-tag">Psychophysics</span>
+                            <span class="skill-tag">Eye-tracking</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Data Analysis</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Statistical Modeling</span>
+                            <span class="skill-tag">Multivariate Analysis</span>
+                            <span class="skill-tag">Regression</span>
+                            <span class="skill-tag">ANOVA</span>
+                            <span class="skill-tag">Data Cleaning</span>
+                            <span class="skill-tag">SPSS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Programming</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">R</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">PsychoPy</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">MATLAB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>UX Tools</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">UserTesting</span>
+                            <span class="skill-tag">UserZoom</span>
+                            <span class="skill-tag">Qualtrics</span>
+                            <span class="skill-tag">Unity</span>
+                            <span class="skill-tag">Adobe Illustrator</span>
+                            <span class="skill-tag">Google Workspace</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Collaboration</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Project Management</span>
+                            <span class="skill-tag">People Management</span>
+                            <span class="skill-tag">Presentations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"><span>✦</span></div>
+
+        <!-- Publications Section -->
+        <div class="torn-section">
+            <div class="paper-content">
+                <h2 class="section-title">Publications</h2>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic;">
+                    5 articles in high-impact journals (Cognition, JEP:HPP) on human perception, attention, and learning, using behavioral experiments, eye-tracking, interviews, surveys, heuristic evaluation, and computational modeling.
+                </p>
+                <a href="publications.html" class="view-all">View all publications</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Hong B. Nguyen. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
