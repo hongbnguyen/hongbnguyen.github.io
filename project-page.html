@@ -1,704 +1,451 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume — Hong B. Nguyen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Projects — Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         :root {
-            --navy: #1e3a5f;
-            --navy-light: #2a4a73;
-            --blue-light: #c8dbe8;
-            --blue-lighter: #e8f1f6;
-            --cream: #faf8f5;
-            --cream-dark: #f5f0e8;
-            --red-accent: #8b3a3a;
-            --red-light: #c4787a;
-            --text-dark: #1E1E1E;
-            --text-muted: #5a5a5a;
-            --gold: #CBAC1B;
-            --serif: 'Cormorant Garamond', Georgia, serif;
-            --sans: 'Inter', -apple-system, sans-serif;
+            --forces-bg: #e8f4fc; --attention-bg: #f8f9fa; --aesthetics-bg: #e8f4fc; --games-bg: #f8f9fa;
+            --text-light: #ffffff; --text-dark: #2C2C2C; --text-muted: #5a5a5a;
+            --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Noto Sans', sans-serif;
+            --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem; --space-lg: 3rem; --space-xl: 4rem;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--sans);
-            background: #e8c4c4;
-            color: var(--text-dark);
-            line-height: 1.6;
-            font-size: 16px;
-        }
-
+        body.project-page { background: none; }
+        .project-page .main-layout { display: block; max-width: none; margin: 0; padding: 0; }
+        
         /* Main Header */
-        .main-header {
-            background: var(--navy);
-            padding: 16px 5%;
+        .main-header { background: #1e3a5f; padding: 16px 5%; }
+        .main-header nav { display: flex; gap: 32px; max-width: 1200px; margin: 0 auto; }
+        .main-header nav a { font-family: var(--sans); font-size: 0.9rem; font-weight: 500; color: #ffffff; text-decoration: none; transition: color 0.3s ease; }
+        .main-header nav a:hover { color: #e8c4c4; }
+        
+        .section-nav { position: sticky; top: 0; z-index: 100; background: #1e3a5f; backdrop-filter: blur(10px); padding: 12px 0; display: flex; justify-content: center; gap: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .section-nav a { font-family: var(--sans); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: #ffffff; padding: 6px 12px; transition: all 0.3s ease; }
+        .section-nav a:hover { color: #e8c4c4; text-decoration: none; }
+        .project-section { padding: var(--space-xl) var(--space-md); position: relative; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .hero-text { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.3; max-width: 900px; margin-bottom: var(--space-md); opacity: 0; transform: translateY(25px); animation: fadeUp 0.8s ease forwards; }
+        .hero-text em { font-style: italic; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .narrative { font-family: var(--serif); font-size: 1.25rem; line-height: 1.7; }
+        .narrative p { margin-bottom: var(--space-sm); }
+        .study-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-top: var(--space-md); }
+        @media (max-width: 768px) { .study-cards { grid-template-columns: 1fr; } }
+        .study-card { padding: var(--space-md); border-radius: 8px; transition: all 0.4s ease; cursor: pointer; }
+        .study-card img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-radius: 4px; margin-bottom: var(--space-sm); transition: opacity 0.3s ease; }
+        #aesthetics .study-card img { object-fit: contain; background: transparent; height: 220px; }
+        .study-card:hover img { opacity: 0.9; }
+        .study-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin-bottom: var(--space-xs); line-height: 1.3; }
+        .study-card p { font-family: var(--serif); font-size: 1.1rem; opacity: 0.7; margin-bottom: var(--space-sm); }
+        .study-card .card-link { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #CBAC1B; opacity: 0.8; }
+        .study-card:hover .card-link { opacity: 1; }
+        #forces .study-card { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); color: var(--text-dark); box-shadow: 0 4px 20px rgba(0, 80, 150, 0.1); }
+        #forces .study-card:hover { background: #ffffff; border-color: #2f6690; box-shadow: 0 8px 30px rgba(0, 80, 150, 0.15); }
+        #forces .study-card.selected { border-color: #2f6690; background: #f0f7fc; }
+        #forces .study-card h3 { color: #1a3a52; }
+        .study-details { margin-top: var(--space-lg); padding: var(--space-lg); border-radius: 12px; display: none; }
+        .study-details.active { display: block; animation: slideDown 0.4s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        #forces .study-details { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); box-shadow: 0 4px 30px rgba(0, 80, 150, 0.1); }
+        .study-details .close-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; opacity: 0.6; margin-bottom: var(--space-md); color: inherit; }
+        .study-details .close-btn:hover { opacity: 1; }
+        .study-details h1 { font-family: var(--serif); font-size: 2rem; font-weight: 500; margin-bottom: var(--space-sm); line-height: 1.3; }
+        #forces .study-details h1 { color: #1a3a52; }
+        .study-details .publication-ref { font-family: var(--serif); font-size: 1.1rem; opacity: 0.7; margin-bottom: var(--space-md); padding-bottom: var(--space-md); border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .study-details .publication-ref a { color: #2f6690; margin-left: 8px; font-weight: 600; }
+        .study-details .description { font-family: var(--serif); font-size: 1.2rem; line-height: 1.7; margin-bottom: var(--space-lg); }
+        .study-details h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin: var(--space-lg) 0 var(--space-md); opacity: 0.7; }
+        .study-details h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin: var(--space-lg) 0 var(--space-sm); }
+        #forces .study-details h3 { color: #2f6690; }
+        .study-details .experiment-text { font-family: var(--serif); font-size: 1.15rem; line-height: 1.7; margin-bottom: var(--space-sm); }
+        .chart-container { margin: var(--space-md) 0 var(--space-lg); background: #f5f9fc; border-radius: 8px; padding: var(--space-sm); border: 1px solid rgba(0,80,150,0.1); }
+        .chart { width: 100%; min-height: 350px; }
+        .demo-placeholder { aspect-ratio: 16/9; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); }
+        .demo-placeholder span { font-family: var(--serif); font-size: 1.1rem; opacity: 0.4; }
+        .demo-container { position: relative; width: 100%; max-width: 1100px; height: 70vh; min-height: 500px; border-radius: 12px; overflow: hidden; margin: 0 auto var(--space-md); background: #0f0f1a; border: 2px solid rgba(0, 0, 0, 0.15); box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2); }
+        .demo-iframe { width: 100%; height: 100%; border: none; }
+        .demo-controls { position: absolute; top: 16px; right: 16px; z-index: 10; }
+        .demo-btn { padding: 10px 16px; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #fff; font-family: var(--sans); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .demo-btn:hover { background: rgba(0, 212, 255, 0.2); border-color: #00d4ff; }
+        .demo-btn svg { width: 14px; height: 14px; }
+        .demo-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 24px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); text-align: center; pointer-events: none; }
+        .demo-overlay span { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+        .demo-container:hover .demo-overlay { opacity: 0; transition: opacity 0.3s; }
+        .demo-container:fullscreen { width: 100vw; height: 100vh; max-width: none; border-radius: 0; border: none; }
+        @media (max-width: 768px) { .demo-container { height: 50vh; min-height: 350px; } }
+        #forces { background: linear-gradient(180deg, #e8f4fc 0%, #d0e8f5 100%); color: var(--text-dark); }
+        .particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; width: 2px; height: 2px; background: rgba(47, 102, 144, 0.2); border-radius: 50%; animation: fall linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-10px); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(100vh); opacity: 0; } }
+        #attention { background: linear-gradient(180deg, var(--attention-bg) 0%, #ffffff 100%); color: var(--text-dark); }
+        #attention .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); }
+        .scanline { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .scanline::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent); animation: scan 8s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .vignette { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.6; max-width: 700px; margin: var(--space-sm) 0 var(--space-md); padding-left: var(--space-md); border-left: 3px solid rgba(0, 0, 0, 0.15); color: var(--text-muted); }
+        .idea-statement { font-family: var(--serif); font-size: 1.5rem; text-align: center; max-width: 750px; margin: var(--space-md) auto 0; padding: var(--space-md); border-top: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+        #aesthetics { background: linear-gradient(180deg, #e8f4fc 0%, #d0e8f5 100%); color: var(--text-dark); }
+        #aesthetics .study-card { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); color: var(--text-dark); box-shadow: 0 4px 20px rgba(0, 80, 150, 0.1); }
+        #aesthetics .study-card:hover { background: #ffffff; border-color: #2f6690; box-shadow: 0 8px 30px rgba(0, 80, 150, 0.15); }
+        #aesthetics .study-card.selected { border-color: #2f6690; background: #f0f7fc; }
+        #aesthetics .study-card h3 { color: #1a3a52; }
+        #aesthetics .study-details { background: #ffffff; border: 1px solid rgba(0, 80, 150, 0.15); box-shadow: 0 4px 30px rgba(0, 80, 150, 0.1); }
+        #aesthetics .study-details h1 { color: #1a3a52; }
+        #aesthetics .study-details h3 { color: #2f6690; }
+        .findings-list { list-style: none; padding: 0; margin: var(--space-md) 0; }
+        .findings-list li { font-family: var(--serif); font-size: 1.15rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .findings-list li::before { content: "→"; margin-right: 12px; color: #2f6690; }
+        #aesthetics .study-card { background: transparent; border: none; box-shadow: none; }
+        #aesthetics .study-card:hover { background: rgba(139, 115, 85, 0.05); }
+        #aesthetics .demo-placeholder { background: rgba(139, 115, 85, 0.05); border: 1px solid rgba(139, 115, 85, 0.1); }
+        
+        /* Gaze Demo Styles */
+        .gaze-demo { margin-bottom: var(--space-md); }
+        .gaze-demo-header { margin-bottom: var(--space-sm); }
+        .gaze-demo-header h3, .gaze-demo-header h4 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.3rem; color: #2f2b42; }
+        .gaze-demo-header p { font-family: var(--serif); font-size: 1rem; color: var(--text-muted); }
+        .gaze-videos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+        @media (max-width: 768px) { .gaze-videos { grid-template-columns: 1fr; } }
+        .gaze-video-item { position: relative; border-radius: 8px; overflow: hidden; background: #000; min-height: 400px; cursor: pointer; }
+        .gaze-video-item video { width: 100%; height: 100%; min-height: 400px; object-fit: contain; display: block; background: #000; }
+        .gaze-label { position: absolute; bottom: 16px; left: 16px; padding: 8px 18px; border-radius: 4px; font-family: var(--serif); font-size: 1.1rem; font-weight: 500; z-index: 2; }
+        .gaze-label.best { background: rgba(76, 175, 80, 0.9); color: #fff; }
+        .gaze-label.worst { background: rgba(211, 47, 47, 0.9); color: #fff; }
+        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.3); transition: background 0.3s ease; z-index: 1; }
+        .play-overlay:hover { background: rgba(0, 0, 0, 0.4); }
+        .play-overlay.hidden { display: none; }
+        .play-btn { width: 80px; height: 80px; background: rgba(255, 255, 255, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s ease; }
+        .play-btn:hover { transform: scale(1.1); background: #fff; }
+        .play-btn svg { width: 32px; height: 32px; margin-left: 4px; fill: #2f2b42; }
+        
+        /* Aesthetics Project Layout */
+        .aesthetics-project { margin-bottom: var(--space-md); }
+        .project-header { display: flex; align-items: flex-start; gap: var(--space-md); margin-bottom: var(--space-sm); }
+        .project-avatar { width: 120px; height: 120px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+        .project-info h3 { font-family: var(--serif); font-size: 1.8rem; font-weight: 500; margin-bottom: 0.3rem; color: #2f2b42; }
+        .project-info p { font-family: var(--serif); font-size: 1.15rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .project-points { list-style: none; padding: 0; margin: 0 0 var(--space-md) 0; }
+        .project-points li { font-family: var(--serif); font-size: 1.15rem; padding: 0.4rem 0; color: var(--text-dark); opacity: 0.8; }
+        .project-points li::before { content: "•"; margin-right: 10px; color: var(--text-muted); }
+        .section-divider { height: 1px; background: rgba(0, 0, 0, 0.1); margin: var(--space-lg) 0; }
+        @media (max-width: 600px) {
+            .project-header { flex-direction: column; align-items: center; text-align: center; }
+            .project-avatar { width: 100px; height: 100px; }
         }
-
-        .main-header nav {
-            display: flex;
-            gap: 32px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .main-header nav a {
-            font-family: var(--sans);
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #ffffff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .main-header nav a:hover {
-            color: #e8c4c4;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 60px 5% 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .hero-text h1 {
-            font-family: var(--serif);
-            font-size: 3rem;
-            font-weight: 400;
-            color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-text .title {
-            font-family: var(--serif);
-            font-size: 1.3rem;
-            font-style: italic;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-        }
-
-        .hero-text .summary {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.7);
-            max-width: 700px;
-            margin: 0 auto 25px;
-            line-height: 1.7;
-        }
-
-        .hero-text .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 25px;
-        }
-
-        .hero-text .contact-info a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .hero-text .contact-info a:hover {
-            color: #e8c4c4;
-        }
-
-        .download-btn {
+        
+        .two-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-top: var(--space-md); }
+        @media (max-width: 768px) { .two-blocks { grid-template-columns: 1fr; } }
+        .block h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; margin-bottom: var(--space-sm); color: #2f2b42; }
+        .block ul { list-style: none; padding: 0; }
+        .block li { font-family: var(--serif); font-size: 1.15rem; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        #games { background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); color: var(--text-dark); }
+        #games .study-card { background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.08); color: var(--text-dark); }
+        #games .study-card:hover { background: rgba(0, 0, 0, 0.04); border-color: rgba(0, 0, 0, 0.15); }
+        #games .study-card.selected { border-color: #2f6690; background: #f0f7fc; }
+        #games .study-card h3 { color: var(--text-dark); }
+        #games .study-details { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08); }
+        #games .study-details h1 { color: var(--text-dark); }
+        #games .study-details h3 { color: #2f6690; }
+        
+        /* Game Play Button */
+        .game-play-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: var(--red-accent);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: #6d2d2d;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(139, 58, 58, 0.3);
-        }
-
-        @media (max-width: 600px) {
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
-        }
-
-        /* Main Content */
-        .main-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 5%;
-            position: relative;
-        }
-
-        /* Torn Paper Section */
-        .torn-section {
-            position: relative;
-            margin-bottom: 0;
-        }
-
-        .torn-section:first-child {
-            margin-top: -50px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .paper-content {
-            padding: 50px;
-            position: relative;
-        }
-
-        /* Alternating colors - odd sections (1, 3, 5) are grey */
-        .torn-section:nth-child(odd) .paper-content {
-            background: #ededed;
-        }
-
-        /* Even sections (2, 4, 6) are pink */
-        .torn-section:nth-child(even) .paper-content {
-            background: #e8c4c4;
-        }
-
-        /* Bottom torn edge - centered */
-        .torn-edge {
-            width: 100%;
-            height: 100px;
-            background-image: url('img/torn-paper-edge.png');
-            background-size: 100% auto;
-            background-repeat: no-repeat;
-            background-position: center center;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Flipped torn edge (vertically) */
-        .torn-edge.flipped {
-            transform: scaleY(-1);
-        }
-
-        /* Alternating backgrounds between sections */
-        /* After grey section (odd), background is pink */
-        .torn-section:nth-child(odd) .torn-edge {
-            background-color: #e8c4c4;
-        }
-
-        /* After pink section (even), background is grey */
-        .torn-section:nth-child(even) .torn-edge {
-            background-color: #ededed;
-        }
-
-        /* Last section - match body background */
-        .torn-section:last-child .torn-edge {
-            background-color: #e8c4c4;
-        }
-
-        @media (max-width: 600px) {
-            .paper-content {
-                padding: 30px 25px;
-            }
-        }
-
-        /* Section Title */
-        .section-title {
-            font-family: var(--serif);
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: var(--navy);
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--red-accent);
-            display: inline-block;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 35px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 5px;
-            bottom: 5px;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--red-accent), var(--navy));
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 35px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -35px;
-            top: 6px;
-            width: 14px;
-            height: 14px;
-            background: var(--cream);
-            border: 3px solid var(--red-accent);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .timeline-title {
-            font-family: var(--serif);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--navy);
-        }
-
-        .timeline-date {
-            font-family: var(--serif);
-            font-size: 0.9rem;
-            font-style: italic;
-            color: var(--red-accent);
-            white-space: nowrap;
-        }
-
-        .timeline-subtitle {
-            font-family: var(--serif);
-            font-size: 1rem;
-            font-style: italic;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .timeline-description {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            line-height: 1.7;
-        }
-
-        .timeline-description ul {
-            margin-top: 8px;
-            padding-left: 18px;
-        }
-
-        .timeline-description li {
-            margin-bottom: 8px;
-        }
-
-        .timeline-description a {
-            color: var(--navy);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .timeline-description a:hover {
-            color: var(--red-accent);
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-
-        .skill-category h3 {
-            font-family: var(--serif);
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--navy, #1e3a5f);
+            color: #ffffff;
+            font-family: var(--sans);
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 12px;
-            padding-left: 12px;
-            border-left: 3px solid var(--red-accent);
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-tag {
-            background: var(--blue-lighter);
-            color: var(--navy);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Publications */
-        .pub-item {
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-        }
-
-        .pub-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .pub-item:first-child {
-            padding-top: 0;
-        }
-
-        .pub-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text-dark);
-        }
-
-        /* Decorative Elements */
-        .section-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 0;
-        }
-
-        .section-divider span {
-            color: var(--red-accent);
-            font-size: 1.2rem;
-            opacity: 0.6;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--navy);
-            padding: 30px 5%;
-            margin-top: 60px;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
-        }
-
-        /* View All Link */
-        .view-all {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--navy);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-top: var(--space-sm);
         }
-
-        .view-all:hover {
-            color: var(--red-accent);
+        .game-play-btn:hover {
+            background: #2a4a73;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(30, 58, 95, 0.3);
         }
-
-        .view-all::after {
-            content: ' →';
+        .game-play-btn .play-icon {
+            font-size: 1.2rem;
         }
-
-        /* Two Column Education */
-        .education-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+        :root {
+            --navy: #1e3a5f;
         }
-
-        @media (max-width: 600px) {
-            .education-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .education-item h3 {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 5px;
-        }
-
-        .education-item .degree {
-            font-family: var(--serif);
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
+        .concept-sketches { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-top: var(--space-md); }
+        @media (max-width: 768px) { .concept-sketches { grid-template-columns: 1fr; } }
+        .sketch { aspect-ratio: 1; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-md); transition: all 0.4s ease; }
+        .sketch:hover { background: rgba(255, 255, 255, 0.04); transform: translateY(-4px); }
+        .sketch-icon { font-size: 2.5rem; opacity: 0.25; }
+        .sketch h4 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; text-align: center; color: var(--text-light); margin-top: var(--space-sm); }
+        .sketch p { font-family: var(--serif); font-size: 1rem; opacity: 0.5; text-align: center; }
+        #attention-footer { background: #1e3a5f; color: #ffffff; padding: var(--space-xl) var(--space-md); text-align: center; }
+        .attention-title { font-family: var(--serif); font-size: 1.6rem; margin-bottom: var(--space-lg); color: rgba(255, 255, 255, 0.6); }
+        .heatmap-container { max-width: 700px; margin: 0 auto var(--space-lg); }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+        .heatmap-cell { aspect-ratio: 2/1; background: rgba(74, 111, 165, 0.3); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.5s ease; color: #ffffff; }
+        .heatmap-cell span { opacity: 0.6; }
+        .personalized-message { font-family: var(--serif); font-style: italic; font-size: 1.2rem; max-width: 500px; margin: var(--space-md) auto var(--space-lg); color: rgba(255, 255, 255, 0.55); min-height: 2.5em; }
+        .throughline { max-width: 650px; margin: var(--space-xl) auto 0; padding-top: var(--space-lg); border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .throughline p { font-family: var(--serif); font-size: 1.2rem; line-height: 1.75; color: rgba(255, 255, 255, 0.45); }
+        .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: none; align-items: center; justify-content: center; }
+        .video-modal.active { display: flex; }
+        .video-modal-content { background: #1a1a2e; border-radius: 12px; padding: var(--space-md); max-width: 600px; width: 90%; position: relative; }
+        .video-modal .close-modal { position: absolute; top: -40px; right: 0; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.7; }
+        .video-modal h4 { font-family: var(--serif); font-size: 1.2rem; color: #fff; margin-bottom: var(--space-sm); }
+        .video-modal video { width: 100%; border-radius: 8px; }
+        .video-modal .video-instruction { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: var(--space-sm); }
+        .fade-in { opacity: 0; transform: translateY(18px); transition: all 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .project-page footer { margin-top: 0; background: #1e3a5f; padding: 24px 0; }
+        .project-page footer p { color: rgba(255, 255, 255, 0.6); text-align: center; font-size: 0.85rem; }
     </style>
 </head>
-<body>
-
-    <!-- Header -->
-    <header class="main-header">
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="publications.html">Publications</a>
-            <a href="project-page.html">Projects</a>
-            <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Hong B. Nguyen, PhD</h1>
-                <p class="title">User Experience Researcher · Cognitive Scientist</p>
-                <p class="summary">6 years of experience specialized in human perception, decision-making, and behaviors. Expert in both qualitative and quantitative methods, with proven skills in turning ambiguous queries into actionable insights to drive product designs, including website, XR, and AI interfaces.</p>
-                <div class="contact-info">
-                    <span>📍 New York, NY</span>
-                    <span>📞 (917) 227-4513</span>
-                    <a href="mailto:hbnguyen26@gmail.com">✉ hbnguyen26@gmail.com</a>
-                    <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
-                    <a href="https://scholar.google.com/citations?hl=en&authuser=2&user=t_Ep51oAAAAJ" target="_blank">Google Scholar</a>
+<body class="project-page">
+    <header class="main-header"><nav><a href="index.html">Home</a><a href="publications.html">Publications</a><a href="projects-new.html">Projects</a><a href="resume.html">Resume</a><a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a></nav></header>
+    <nav class="section-nav"><a href="#forces">Forces</a><a href="#attention">Attention</a><a href="#aesthetics">Aesthetics</a><a href="#games">Games</a></nav>
+    <div class="main-layout">
+        <section id="forces" class="project-section" data-section="forces">
+            <div class="particles" id="particles"></div>
+            <div class="section-inner">
+                <p class="hero-text">The visual system does not just see motion.<br><em>It predicts invisible forces.</em></p>
+                <div class="narrative fade-in"><p>Vision encodes implicit priors about gravity and friction. We show enhanced sensitivity to speed changes opposite gravity's direction, and automatic spatial orienting based on frictive surface contact.</p></div>
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="gravity" onclick="toggleStudy('gravity')"><img src="img/projects/icon_force2.png" alt="Gravity Study"><h3>Prioritization of Speed Changes Opposite Gravity</h3><p>Better detection of acceleration in upwardly moving objects.</p><span class="card-link">View experiments →</span></div>
+                    <div class="study-card" data-study="friction" onclick="toggleStudy('friction')"><img src="img/projects/wheel.jpg" alt="Friction Study"><h3>Friction & Spatial Attention</h3><p>An implicit model of friction drives spatial orienting.</p><span class="card-link">View experiments →</span></div>
                 </div>
-                <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank" class="download-btn">
-                    📄 Download Full CV
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-
-        <!-- Education Section -->
-        <div class="torn-section">
-            <div class="paper-content">
-                <h2 class="section-title">Education</h2>
-                <div class="education-grid">
-                    <div class="education-item">
-                        <h3>The New School</h3>
-                        <p class="location" style="font-size: 0.9rem; color: var(--text-muted);">New York, NY</p>
-                        <p class="degree">PhD, Cognitive Psychology</p>
-                    </div>
-                    <div class="education-item">
-                        <h3>Manhattan College</h3>
-                        <p class="location" style="font-size: 0.9rem; color: var(--text-muted);">Riverdale, NY</p>
-                        <p class="degree">BS, Psychology</p>
-                    </div>
+                <div id="gravity-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('gravity')">← Close</div>
+                    <h1>May the Force be against you: Better sensitivity to speed changes opposite gravity</h1>
+                    <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2023). <strong>May the Force be against you.</strong> <em>JEP:HPP, 49, 1016-1030.</em><a href="#">PDF</a></p>
+                    <p class="description">We hypothesized that observers would be more sensitive to an object's speed changes if those speed changes were opposite to natural gravitational acceleration. Across six experiments, we found enhanced sensitivity to accelerations opposite to gravity.</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Experiment 1 — Acceleration (Upward vs. Downward)</h3>
+                    <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Downward-moving objects.</p>
+                    <div class="chart-container"><div id="chart1a" class="chart"></div></div>
+                    <h3>Experiment 2 — Acceleration (Upward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart2a" class="chart"></div></div>
+                    <h3>Experiment 3 — Acceleration (Downward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were worse at detecting acceleration for Downward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart3a" class="chart"></div></div>
+                    <h3>Experiment 4 — Deceleration (Upward vs. Downward)</h3>
+                    <p class="experiment-text">Observers were better at detecting decelerations for Downward-moving objects than Upward-moving objects.</p>
+                    <div class="chart-container"><div id="chart4a" class="chart"></div></div>
+                    <h3>Experiment 5 — Deceleration (Downward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were better at detecting deceleration for Downward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart5a" class="chart"></div></div>
+                    <h3>Experiment 6 — Deceleration (Upward vs. Horizontal)</h3>
+                    <p class="experiment-text">Observers were worse at detecting deceleration for Upward-moving objects than Horizontally-moving objects.</p>
+                    <div class="chart-container"><div id="chart6a" class="chart"></div></div>
+                </div>
+                <div id="friction-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('friction')">← Close</div>
+                    <h1>Rotating objects cue spatial attention via frictive surface contact</h1>
+                    <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2024). <strong>Rotating objects cue spatial attention.</strong> <em>Cognition, 242, 105655.</em><a href="#">PDF</a></p>
+                    <p class="description">We report a new attentional cueing effect showing how attention models friction. Clockwise rotation causes rightward movement when in frictive contact with a floor. Is this encoded in spatial orienting?</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Experiment 1 — Rotating objects cue spatial attention</h3>
+                    <p class="experiment-text">Clockwise rotation produced faster responses to targets on the right, counterclockwise to the left.</p>
+                    <div class="chart-container"><div id="fchart1a" class="chart"></div></div>
+                    <h3>Experiment 2 — Reversal by ceiling contact</h3>
+                    <p class="experiment-text">Floor-touching showed cueing, floor-not-touching abolished it, ceiling-touching reversed it!</p>
+                    <div class="chart-container"><div id="fchart2a" class="chart"></div></div>
                 </div>
             </div>
-            <div class="torn-edge"></div>
-        </div>
-
-        
-
-        <!-- Professional Experience Section -->
-        <div class="torn-section">
-            <div class="paper-content">
-                <h2 class="section-title">Professional Experience</h2>
+        </section>
+        <section id="attention" class="project-section" data-section="attention">
+            <div class="scanline"></div>
+            <div class="section-inner">
+                <p class="hero-text">What if navigation design <em>learned from attention itself?</em></p>
+                <p class="vignette fade-in">A traveler with a tight connection rushes through an unfamiliar terminal. Signage competes with advertisements. What if the path forward simply... appeared?</p>
+                <div class="demo-container fade-in" id="demo-container">
+                    <div class="demo-controls"><button class="demo-btn" onclick="toggleFullscreen()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>Fullscreen</button></div>
+                    <iframe src="ar-airport-guided.html" class="demo-iframe" allowfullscreen></iframe>
+                    <div class="demo-overlay"><span>Click to interact • WASD to move • Mouse to look</span></div>
+                </div>
+                <p class="idea-statement fade-in">Replace prescriptive signage with empirically learned attentional scaffolds.</p>
+            </div>
+        </section>
+        <section id="aesthetics" class="project-section" data-section="aesthetics">
+            <div class="section-inner">
+                <p class="hero-text">Beauty is not in the image. <em>It is in how we look.</em></p>
+                <div class="narrative fade-in"><p>Attention shapes what we find beautiful — and even shapes how we perceive social intent from simple motion.</p></div>
                 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-header">
-                            <div class="timeline-title">Student Advisor</div>
-                            <div class="timeline-date">August 2021 — Present</div>
-                        </div>
-                        <div class="timeline-subtitle">The New School</div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>Advised 300+ MA students. Built risk detection protocols to identify students showing early disengagement signals; coordinated interventions with faculty and registrar, supporting ~12% increase in program retention and consistent enrollment across core courses</li>
-                            </ul>
-                        </div>
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="transplants" onclick="toggleStudy('transplants')">
+                        <img src="img/projects/landscape23.png_trajectories.png" alt="Attentional Transplants">
+                        <h3>Attentional Transplants</h3>
+                        <p>How viewing patterns shape what we find beautiful.</p>
+                        <span class="card-link">View demos →</span>
                     </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-header">
-                            <div class="timeline-title">Research Associate</div>
-                            <div class="timeline-date">August 2020 — Present</div>
-                        </div>
-                        <div class="timeline-subtitle">The New School</div>
-                        <div class="timeline-description">
-                            <ul>
-                                <li>Designed and executed human behavioral studies to inform UX design and interface optimization</li>
-                                <li>Led 20 projects (3 published) in visual cognition, adaptive interfaces, and XR systems</li>
-                                <li>Conducted 70+ structured interviews, 100+ UX studies using psychophysics, eye-tracking, and survey to understand human experience with adaptive interfaces</li>
-                                <li>Mentored 20+ undergraduate and MA students in data collection, statistical modeling, and presentation</li>
-                            </ul>
-                        </div>
+                    <div class="study-card" data-study="mischief" onclick="toggleStudy('mischief')">
+                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project">
+                        <h3>Mischief Project</h3>
+                        <p>Extracting intent from simple visual motion.</p>
+                        <span class="card-link">View demos →</span>
                     </div>
                 </div>
-            </div>
-            <div class="torn-edge flipped"></div>
-        </div>
-
-        
-
-        <!-- Selected Projects Section -->
-        <div class="torn-section">
-            <div class="paper-content">
-                <h2 class="section-title">Selected Projects</h2>
                 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-title">XR Personalization</div>
-                        <div class="timeline-description">
-                            Built computational models that predicted user preferences with ~75% accuracy, supporting adaptive visualization and personalization for XR systems
-                            <a href="https://ieeexplore.ieee.org/abstract/document/10536359" target="_blank">[Link]</a>
+                <!-- Attentional Transplants Details -->
+                <div id="transplants-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('transplants')">← Close</div>
+                    <h1>Gaze Transplants and Aesthetic Experience</h1>
+                    <p class="publication-ref">Nguyen, H. B., et al. <strong>Attentional Transplants.</strong><a href="#">PDF</a></p>
+                    <p class="description">We investigated how viewing patterns shape aesthetic experience. By analyzing gaze trajectories, we found that attention patterns drive aesthetic disagreement, prediction fluency mediates preference, and same-image specificity matters.</p>
+                    <h2>Demonstrations</h2>
+                    <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
+                    <p class="experiment-text">The same image, viewed differently. </p>
+                    <div class="gaze-videos" style="margin: var(--space-md) 0 var(--space-lg);">
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
+                                <source src="videos/landscape23.png_best.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                            </div>
+                            <span class="gaze-label best">Liked it Best</span>
                         </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Educational Research</div>
-                        <div class="timeline-description">
-                            Designed math-learning tasks connected to a social issue and conducted heuristic evaluations, interviews, and surveys with students, achieving 85% positive engagement evaluation
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Motion Perception</div>
-                        <div class="timeline-description">
-                            Modeled cognitive biases in motion-rich interfaces, refined predictive attention models, and improved task efficiency by 15% through identification of optimal motion cues
-                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202023%20Better%20sensitivity%20to%20speed%20changes%20opposite%20gravity.pdf" target="_blank">[PDF]</a>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Attention Research</div>
-                        <div class="timeline-description">
-                            Discovered friction-based attentional cueing that reduced participants' response time by 34ms, improving user focus and attention prediction in dynamic visual tasks
-                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202024%20Rotating%20objects%20cue%20spatial%20attention%20via%20the%20perception%20of%20frictive%20surface%20contact.pdf" target="_blank">[PDF]</a>
+                        <div class="gaze-video-item" onclick="playVideo(this)">
+                            <video loop muted playsinline>
+                                <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                            </div>
+                            <span class="gaze-label worst">Liked it Least</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="torn-edge"></div>
-        </div>
-
-        
-
-        <!-- Skills Section -->
-        <div class="torn-section">
-            <div class="paper-content">
-                <h2 class="section-title">Technical Skills</h2>
                 
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>Qualitative Methods</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Interviews</span>
-                            <span class="skill-tag">Heuristic Evaluation</span>
-                            <span class="skill-tag">Diary Studies</span>
-                            <span class="skill-tag">Focus Groups</span>
-                            <span class="skill-tag">Literature Reviews</span>
-                            <span class="skill-tag">Concept Testing</span>
-                            <span class="skill-tag">Contextual Inquiry</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Quantitative Methods</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Experiment Design</span>
-                            <span class="skill-tag">Survey Design</span>
-                            <span class="skill-tag">Psychophysics</span>
-                            <span class="skill-tag">Eye-tracking</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Data Analysis</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Statistical Modeling</span>
-                            <span class="skill-tag">Multivariate Analysis</span>
-                            <span class="skill-tag">Regression</span>
-                            <span class="skill-tag">ANOVA</span>
-                            <span class="skill-tag">Data Cleaning</span>
-                            <span class="skill-tag">SPSS</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Programming</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">R</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Pandas</span>
-                            <span class="skill-tag">Matplotlib</span>
-                            <span class="skill-tag">PsychoPy</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">MATLAB</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>UX Tools</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">UserTesting</span>
-                            <span class="skill-tag">UserZoom</span>
-                            <span class="skill-tag">Qualtrics</span>
-                            <span class="skill-tag">Unity</span>
-                            <span class="skill-tag">Adobe Illustrator</span>
-                            <span class="skill-tag">Google Workspace</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3>Collaboration</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Project Management</span>
-                            <span class="skill-tag">People Management</span>
-                            <span class="skill-tag">Presentations</span>
-                        </div>
-                    </div>
+                <!-- Mischief Project Details -->
+                <div id="mischief-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('mischief')">← Close</div>
+                    <h1>Motion, Mischief, and Moral Perception</h1>
+                    <p class="publication-ref">Nguyen, H. B., et al. <strong>Mischief Project.</strong><a href="#">PDF</a></p>
+                    <p class="description">We explored how minimal visual cues can signal play, mischief, and agency. Perception scaffolds abstract social inference from the simplest patterns of movement — long before deliberate interpretation begins.</p>
+                    <h2>Key Findings</h2>
+                    <ul class="findings-list">
+                        <li>Subtle visual scaffolds signal social intent</li>
+                        <li>Perception extracts animacy and goal structure</li>
+                        <li>Moral inference grounded in motion</li>
+                    </ul>
                 </div>
             </div>
-            <div class="torn-edge flipped"></div>
-        </div>
-
-        
-
-        <!-- Publications Section -->
-        <div class="torn-section">
-            <div class="paper-content">
-                <h2 class="section-title">Publications</h2>
-                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; font-style: italic;">
-                    5 articles in high-impact journals (Cognition, JEP:HPP) on human perception, attention, and learning, using behavioral experiments, eye-tracking, interviews, surveys, heuristic evaluation, and computational modeling.
-                </p>
-                <a href="publications.html" class="view-all">View all publications</a>
+        </section>
+        <section id="games" class="project-section" data-section="games">
+            <div class="section-inner">
+                <p class="hero-text">Games as laboratories <em>for visual perception.</em></p>
+                <div class="narrative fade-in"><p>I use interactive game environments to test whether perceptual biases influence behavior in dynamic, embodied tasks — not just in static displays.</p></div>
+                
+                <div class="study-cards fade-in">
+                    <div class="study-card" data-study="pacman" onclick="toggleStudy('pacman')">
+                        <img src="img/projects/Pacman_H_S_001.png" alt="Tailed Pac-Man">
+                        <h3>Tailed Pac-Man</h3>
+                        <p>Does a visual appendage change perceived vulnerability?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
+                    <div class="study-card" data-study="pong" onclick="toggleStudy('pong')">
+                        <img src="img/projects/Within-subjects_Pong_H_S_001.png" alt="Color Pong">
+                        <h3>Color Pong</h3>
+                        <p>Does color alter how we play?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
+                </div>
+                <div class="study-cards fade-in" style="margin-top: var(--space-md);">
+                    <div class="study-card" data-study="maze" onclick="toggleStudy('maze')">
+                        <img src="img/projects/4_20_Maze_H_S_copy_001.png" alt="Maze Width Illusion">
+                        <h3>Maze Width Illusion</h3>
+                        <p>Can width alone determine which path we choose?</p>
+                        <span class="card-link">Play game →</span>
+                    </div>
+                </div>
+                
+                <!-- Pac-Man Details -->
+                <div id="pacman-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('pacman')">← Close</div>
+                    <h1>Tailed Pac-Man</h1>
+                    <p class="description"><strong>Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</strong></p>
+                    <p class="description">In a pursuit game, I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns, suggesting that perceptual cues directly influence survival behavior.</p>
+                    <h2>Play the Game</h2>
+                    <a href="https://hbnguyen.itch.io/pacman-sh" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Tailed Pac-Man on itch.io
+                    </a>
+                </div>
+                
+                <!-- Pong Details -->
+                <div id="pong-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('pong')">← Close</div>
+                    <h1>Color Pong</h1>
+                    <p class="description"><strong>Does color alter not only how a game feels — but how we play it?</strong></p>
+                    <p class="description">I created identical Pong environments that differed only in background color. Color influenced time spent playing, movement patterns, and performance, suggesting that low-level visual properties shape persistence and strategy in dynamic tasks.</p>
+                    <h2>Play the Game</h2>
+                    <a href="https://hbnguyen.itch.io/pong-hs" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Color Pong on itch.io
+                    </a>
+                </div>
+                
+                <!-- Maze Details -->
+                <div id="maze-details" class="study-details">
+                    <div class="close-btn" onclick="toggleStudy('maze')">← Close</div>
+                    <h1>Maze Width Illusion</h1>
+                    <p class="description"><strong>If two paths are the same length, can width alone determine which one we choose?</strong></p>
+                    <p class="description">In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and were chosen significantly more often, demonstrating that geometric illusions influence navigation decisions.</p>
+                    <h2>Play the Game</h2>
+                    <a href="https://hbnguyen.itch.io/maze-dots" target="_blank" class="game-play-btn">
+                        <span class="play-icon">▶</span> Play Maze Width Illusion on itch.io
+                    </a>
+                </div>
             </div>
-            <div class="torn-edge"></div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Hong B. Nguyen. All rights reserved.</p>
-    </footer>
-
+        </section>
+        <section id="attention-footer">
+            <h2 class="attention-title">How attention shaped your visit</h2>
+            <div class="heatmap-container"><div class="heatmap-grid"><div class="heatmap-cell" data-target="forces"><span>Forces</span></div><div class="heatmap-cell" data-target="attention"><span>Attention</span></div><div class="heatmap-cell" data-target="aesthetics"><span>Aesthetics</span></div><div class="heatmap-cell" data-target="games"><span>Games</span></div></div></div>
+            <p class="personalized-message" id="personalized-message">Explore the page to see what captures your attention...</p>
+            <div class="throughline"><p>Across domains—motion, space, art, social meaning—<br>perception is not passive.<br>It predicts, samples, and structures the world<br>before we know it does.</p></div>
+        </section>
+    </div>
+    <div id="videoModal" class="video-modal"><div class="video-modal-content"><span class="close-modal" onclick="closeVideoModal()">×</span><p class="video-instruction" id="videoInstruction">Use ← and → to navigate.</p><h4 id="videoTitle"></h4><video id="modalVideo" controls autoplay><source src="" type="video/mp4"></video></div></div>
+    <footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script>
+        // Play video function for gaze demos
+        function playVideo(container) {
+            const video = container.querySelector('video');
+            const overlay = container.querySelector('.play-overlay');
+            if (video.paused) {
+                video.play();
+                overlay.classList.add('hidden');
+            } else {
+                video.pause();
+                overlay.classList.remove('hidden');
+            }
+        }
+        
+        let activeStudy=null,chartsBuilt={gravity:false,friction:false};
+        function toggleStudy(id){const d=document.getElementById(id+'-details'),c=document.querySelector('.study-card[data-study="'+id+'"]');if(activeStudy===id){d.classList.remove('active');c.classList.remove('selected');activeStudy=null}else{document.querySelectorAll('.study-details').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.study-card[data-study]').forEach(e=>e.classList.remove('selected'));d.classList.add('active');c.classList.add('selected');activeStudy=id;if(id==='gravity'&&!chartsBuilt.gravity){setTimeout(buildGravityCharts,100);chartsBuilt.gravity=true}if(id==='friction'&&!chartsBuilt.friction){setTimeout(buildFrictionCharts,100);chartsBuilt.friction=true}setTimeout(()=>d.scrollIntoView({behavior:'smooth',block:'start'}),100)}}
+        let currentVideoIndex=0,currentVideos=[];
+        function updateVideo(){if(!currentVideos.length)return;document.getElementById('modalVideo').src=currentVideos[currentVideoIndex].src;document.getElementById('videoTitle').textContent=currentVideos[currentVideoIndex].title||'';document.getElementById('videoModal').classList.add('active');const v=document.getElementById('modalVideo');v.play().catch(()=>{});v.onended=function(){this.currentTime=0;this.play().catch(()=>{})}}
+        function closeVideoModal(){document.getElementById('videoModal').classList.remove('active');document.getElementById('modalVideo').pause()}
+        document.addEventListener('keydown',e=>{const m=document.getElementById('videoModal');if(!m.classList.contains('active'))return;if(e.key==='ArrowRight'){currentVideoIndex=(currentVideoIndex+1)%currentVideos.length;updateVideo()}else if(e.key==='ArrowLeft'){currentVideoIndex=(currentVideoIndex-1+currentVideos.length)%currentVideos.length;updateVideo()}else if(e.key==='Escape')closeVideoModal()});
+        function buildGravityCharts(){const t={chart:{backgroundColor:'transparent'},title:{style:{color:'#1a3a52',fontSize:'14px'}},xAxis:{labels:{style:{color:'#2C2C2C'}},lineColor:'#ccc'},yAxis:{title:{style:{color:'#2C2C2C'}},labels:{style:{color:'#2C2C2C'}},gridLineColor:'#e0e0e0'}};const vids={chart1a:[[{src:'videos/upward_acc.mp4',title:'Upward Acc'}],[{src:'videos/downward_acc.mp4',title:'Downward Acc'}]],chart2a:[[{src:'videos/upward_acc.mp4',title:'Upward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],chart3a:[[{src:'videos/downward_acc.mp4',title:'Downward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],chart4a:[[{src:'videos/upward_dec.mp4',title:'Upward Dec'}],[{src:'videos/downward_dec.mp4',title:'Downward Dec'}]],chart5a:[[{src:'videos/downward_dec.mp4',title:'Downward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]],chart6a:[[{src:'videos/upward_dec.mp4',title:'Upward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]]};const charts=[{id:'chart1a',title:'Exp 1: Up vs Down Acc',cats:['Upward','Downward'],data:[2.27,1.95],colors:['#f89421','#692d8a']},{id:'chart2a',title:'Exp 2: Up vs Horiz Acc',cats:['Upward','Horizontal'],data:[2.93,2.44],colors:['#f7941d','#006738']},{id:'chart3a',title:'Exp 3: Down vs Horiz Acc',cats:['Downward','Horizontal'],data:[2.57,2.37],colors:['#692d8a','#006738']},{id:'chart4a',title:'Exp 4: Up vs Down Dec',cats:['Upward','Downward'],data:[2.30,2.55],colors:['#f89421','#692d8a']},{id:'chart5a',title:'Exp 5: Down vs Horiz Dec',cats:['Downward','Horizontal'],data:[2.96,2.78],colors:['#692d8a','#006738']},{id:'chart6a',title:'Exp 6: Up vs Horiz Dec',cats:['Upward','Horizontal'],data:[2.25,2.95],colors:['#f89421','#006738']}];charts.forEach(c=>{Highcharts.chart(c.id,Highcharts.merge(t,{chart:{type:'column'},title:{text:c.title},xAxis:{categories:c.cats},yAxis:{title:{text:"d'"},min:0,max:4},series:[{data:c.data,colorByPoint:true,colors:c.colors,showInLegend:false}],plotOptions:{column:{pointPadding:0.2,borderWidth:0,point:{events:{mouseOver:function(){const s=vids[this.series.chart.renderTo.id]?.[this.index];if(s?.length){currentVideos=s;currentVideoIndex=0;updateVideo()}}}}}}}))})};
+        function buildFrictionCharts(){const t={chart:{backgroundColor:'transparent'},title:{style:{color:'#1a3a52',fontSize:'14px'}},xAxis:{labels:{style:{color:'#2C2C2C'}}},yAxis:{title:{style:{color:'#2C2C2C'}},labels:{style:{color:'#2C2C2C'}},gridLineColor:'#e0e0e0'}};Highcharts.chart('fchart1a',Highcharts.merge(t,{chart:{type:'column'},title:{text:'Spatial Cueing by Rotation'},xAxis:{categories:['CW→L','CW→R','CCW→L','CCW→R']},yAxis:{title:{text:'RT (ms)'},min:400,max:700},series:[{type:'column',data:[{y:553,color:'#ff6b6b'},{y:509,color:'#4ecdc4'},{y:535,color:'#4ecdc4'},{y:561,color:'#ff6b6b'}],showInLegend:false},{type:'errorbar',data:[[543,560],[499,516],[525,542],[551,568]],color:'#666'}],plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterleft.mp4',title:'CW Left'}],[{src:'videos/clockwise_letterright.mp4',title:'CW Right'}],[{src:'videos/counterclockwise_letterleft.mp4',title:'CCW Left'}],[{src:'videos/counterclockwise_letterright.mp4',title:'CCW Right'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo()}}}}}}));Highcharts.chart('fchart2a',Highcharts.merge(t,{chart:{type:'column'},title:{text:'Surface Contact Effects'},xAxis:{categories:['Floor Touch','Floor Gap','Ceiling Touch','Ceiling Gap']},yAxis:{title:{text:'Effect (ms)'},min:-60,max:60},series:[{type:'column',data:[{y:48,color:'#006738'},{y:7,color:'#999'},{y:-27,color:'#c0392b'},{y:-10,color:'#999'}],showInLegend:false},{type:'errorbar',data:[[45,49],[4,9],[-30,-25],[-13,-8]],color:'#666'}],plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterright_floor.mp4',title:'Floor Touch'}],[{src:'videos/clockwise_letterright_floor_nottouching.mp4',title:'Floor Gap'}],[{src:'videos/clockwise_letterleft_ceiling.mp4',title:'Ceiling Touch'}],[{src:'videos/clockwise_letterleft_ceiling_nottouching.mp4',title:'Ceiling Gap'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo()}}}}}}))};
+        function toggleFullscreen(){const c=document.getElementById('demo-container');if(!document.fullscreenElement){c.requestFullscreen?.()}else{document.exitFullscreen?.()}}
+        const attentionData={forces:{time:0,hovers:0},attention:{time:0,hovers:0},aesthetics:{time:0,hovers:0},games:{time:0,hovers:0}};let currentSection=null,sectionStartTime=null;
+        const sectionObserver=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const n=e.target.dataset.section;if(currentSection!==n){if(currentSection&&sectionStartTime)attentionData[currentSection].time+=Date.now()-sectionStartTime;currentSection=n;sectionStartTime=Date.now();updateHeatmap()}}})},{rootMargin:'-40% 0px -40% 0px'});document.querySelectorAll('.project-section[data-section]').forEach(s=>sectionObserver.observe(s));
+        function updateHeatmap(){if(currentSection&&sectionStartTime){attentionData[currentSection].time+=Date.now()-sectionStartTime;sectionStartTime=Date.now()}const maxT=Math.max(...Object.values(attentionData).map(d=>d.time),1);document.querySelectorAll('.heatmap-cell').forEach(c=>{const t=c.dataset.target,i=attentionData[t].time/maxT;const colors={forces:`rgba(30,58,95,${0.3+i*0.7})`,attention:`rgba(74,111,165,${0.3+i*0.7})`,aesthetics:`rgba(30,58,95,${0.3+i*0.7})`,games:`rgba(74,111,165,${0.3+i*0.7})`};c.style.background=colors[t]});updateMessage()}
+        function updateMessage(){const sorted=Object.entries(attentionData).sort((a,b)=>b[1].time-a[1].time);const top=sorted[0];if(top[1].time<1000)return;const msgs={forces:'You spent the most time on Physical Forces.',attention:'Attention drew most of your attention.',aesthetics:'Aesthetics captured your gaze.',games:'Games held your focus.'};document.getElementById('personalized-message').textContent=msgs[top[0]]}
+        setInterval(updateHeatmap,2000);
+        const fadeObs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:0.1});document.querySelectorAll('.fade-in').forEach(e=>fadeObs.observe(e));
+        (function(){const c=document.getElementById('particles');for(let i=0;i<25;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=Math.random()*10+'s';c.appendChild(p)}})();
+        document.querySelectorAll('.section-nav a').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})})});
+    </script>
 </body>
 </html>
