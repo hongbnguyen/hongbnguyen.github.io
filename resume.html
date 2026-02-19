@@ -30,7 +30,7 @@
 
         body {
             font-family: var(--sans);
-            background: var(--blue-light);
+            background: #e8c4c4;
             color: var(--text-dark);
             line-height: 1.6;
             font-size: 16px;
@@ -184,26 +184,32 @@
             background: #e8c4c4;
         }
 
-        /* Bottom torn edge */
+        /* Bottom torn edge - centered */
         .torn-edge {
             width: 100%;
-            height: 80px;
+            height: 100px;
             background-image: url('img/torn-paper-edge.png');
             background-size: 100% auto;
             background-repeat: no-repeat;
-            background-position: top center;
+            background-position: center center;
             position: relative;
             z-index: 2;
-            margin-top: -1px;
         }
 
-        /* Torn edge colors to match next section */
+        /* Alternating backgrounds between sections */
+        /* After grey section (odd), background is pink */
         .torn-section:nth-child(odd) .torn-edge {
-            filter: brightness(1.0);
+            background-color: #e8c4c4;
         }
 
+        /* After pink section (even), background is grey */
         .torn-section:nth-child(even) .torn-edge {
-            filter: hue-rotate(0deg) saturate(0.5) brightness(1.1);
+            background-color: #ededed;
+        }
+
+        /* Last section - match body background */
+        .torn-section:last-child .torn-edge {
+            background-color: #e8c4c4;
         }
 
         @media (max-width: 600px) {
