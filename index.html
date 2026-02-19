@@ -73,7 +73,7 @@
             font-family: var(--sans);
             font-size: 0.85rem;
             font-weight: 500;
-            color: var(--text-muted);
+            color: var(--text);
             text-decoration: none;
             transition: color 0.3s ease;
             letter-spacing: 0.01em;
@@ -136,7 +136,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: #bdd2db;
+            background: #c8dbe8;
             margin-left: calc(-50vw + 50%);
             margin-right: calc(-50vw + 50%);
             padding-left: calc(50vw - 50% + 5%);
@@ -150,8 +150,10 @@
             line-height: 1.2;
             letter-spacing: -0.02em;
             margin-bottom: 32px;
-            max-width: 650px;
+            max-width: 750px;
             text-align: left;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 em {
@@ -165,6 +167,8 @@
             max-width: 600px;
             margin-bottom: 64px;
             text-align: left;
+            position: relative;
+            z-index: 2;
         }
 
         .scroll-indicator {
@@ -176,6 +180,8 @@
             opacity: 0.6;
             transition: opacity 0.3s ease;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
         }
 
         .scroll-indicator:hover {
@@ -193,9 +199,15 @@
 
         /* About Section */
         .about {
+            padding-top: 80px;
             padding-bottom: 140px;
             position: relative;
             z-index: 1;
+            background: #c8dbe8;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding-left: calc(50vw - 50% + 5%);
+            padding-right: calc(50vw - 50% + 5%);
         }
 
         .about-layout {
@@ -329,30 +341,31 @@
         .hero-bg-image {
             position: absolute;
             top: 50%;
-            right: 5%;
+            right: 0;
             transform: translateY(-50%);
-            width: 55%;
-            max-width: 700px;
+            width: 60%;
+            max-width: 750px;
             height: auto;
-            opacity: 0.5;
+            opacity: 0.7;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
+            mix-blend-mode: multiply;
         }
 
         @media (max-width: 900px) {
             .hero-bg-image {
-                width: 50%;
-                right: 0;
-                opacity: 0.4;
+                width: 55%;
+                right: -5%;
+                opacity: 0.6;
             }
         }
 
         @media (max-width: 600px) {
             .hero-bg-image {
-                width: 70%;
-                top: 30%;
-                right: -10%;
-                opacity: 0.3;
+                width: 80%;
+                top: 35%;
+                right: -15%;
+                opacity: 0.5;
             }
         }
 
@@ -449,8 +462,8 @@
     <nav id="nav">
         <a href="index.html" class="nav-name">Hong B. Nguyen</a>
         <div class="nav-links">
+            <a href="project-page.html">Work</a>
             <a href="publications.html">Publications</a>
-            <a href="project-page.html">Projects</a>
             <a href="Hong%20B.%20Nguyen_CV.pdf" target="_blank">CV</a>
             <a href="/cdn-cgi/l/email-protection#a7cfc8c9c089c9c0d2dec2c9e7c9c2d0d4c4cfc8c8cb89c2c3d2">Contact</a>
         </div>
