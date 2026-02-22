@@ -330,6 +330,166 @@
             color: var(--red-accent);
         }
 
+        /* Book-style Project Cards */
+        .project-books {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .book-container {
+            position: relative;
+            text-decoration: none;
+            perspective: 1000px;
+        }
+
+        .book {
+            position: relative;
+            width: 220px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
+        .book-container:hover .book {
+            transform: rotateY(-25deg);
+        }
+
+        .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, #c41e3a 0%, #8b1428 100%);
+            transform: rotateY(90deg) translateX(-10px);
+            transform-origin: left;
+            border-radius: 2px 0 0 2px;
+        }
+
+        .book-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 0 8px 8px 0;
+            box-shadow: 
+                0 2px 10px rgba(0,0,0,0.1),
+                inset -2px 0 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transform-origin: left;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .book-container:hover .book-cover {
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.2),
+                inset -2px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .book-content {
+            padding: 24px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-label {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: #c41e3a;
+            margin-bottom: 12px;
+        }
+
+        .book-content h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .book-content p {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .book-content p strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        /* Popup card on hover */
+        .book-popup {
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%) translateX(10px);
+            background: #c41e3a;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        .book-container:hover .book-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .popup-text {
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        .popup-arrow {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-books {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .book {
+                width: 260px;
+                height: 280px;
+            }
+            
+            .book-popup {
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: -50px;
+                transform: translateX(-50%) translateY(10px);
+            }
+            
+            .book-container:hover .book-popup {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         /* Skills Grid */
         .skills-grid {
             display: grid;
@@ -480,7 +640,7 @@
                 <div class="contact-info">
                     <span>📍 New York, NY</span>
                     <span>📞 (917) 227-4513</span>
-                    <a href="mailto:hbnguyen26@gmail.com">✉ hbnguyen26@gmail.com</a>
+                    <a href="/cdn-cgi/l/email-protection#f59d979b92808c909bc7c3b59298949c99db969a98">✉ <span class="__cf_email__" data-cfemail="b2dad0dcd5c7cbd7dc8084f2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>
                     <a href="https://www.linkedin.com/in/hong-b-nguyen/" target="_blank">LinkedIn</a>
                     <a href="https://scholar.google.com/citations?hl=en&authuser=2&user=t_Ep51oAAAAJ" target="_blank">Google Scholar</a>
                 </div>
@@ -562,37 +722,60 @@
             <div class="paper-content">
                 <h2 class="section-title">Selected Projects</h2>
                 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-title">XR Personalization</div>
-                        <div class="timeline-description">
-                            Built computational models that predicted user preferences with ~75% accuracy, supporting adaptive visualization and personalization for XR systems
-                            <a href="https://ieeexplore.ieee.org/abstract/document/10536359" target="_blank">[Link]</a>
+                <div class="project-books">
+                    <!-- XR Personalization -->
+                    <a href="https://www.nssrperception.com/Hong/Nguyen%20&%20van%20Buren%20Attentional%20dynamics%20drive%20aesthetic%20preferences%20for%20scenes%20-%20Evidence%20from%20'attentional%20transplants'.pdf" target="_blank" class="book-container">
+                        <div class="book">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <div class="book-content">
+                                    <span class="book-label">CASE STUDY</span>
+                                    <h3>XR Personalization</h3>
+                                    <p>Built computational models that predicted user preferences with <strong>~75% accuracy</strong>, supporting adaptive visualization for XR systems.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Educational Research</div>
-                        <div class="timeline-description">
-                            Designed math-learning tasks connected to a social issue and conducted heuristic evaluations, interviews, and surveys with students, achieving 85% positive engagement evaluation
+                        <div class="book-popup">
+                            <span class="popup-text">CLICK TO READ</span>
+                            <span class="popup-arrow">→</span>
                         </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Motion Perception</div>
-                        <div class="timeline-description">
-                            Modeled cognitive biases in motion-rich interfaces, refined predictive attention models, and improved task efficiency by 15% through identification of optimal motion cues
-                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202023%20Better%20sensitivity%20to%20speed%20changes%20opposite%20gravity.pdf" target="_blank">[PDF]</a>
+                    </a>
+
+                    <!-- Motion Perception -->
+                    <a href="project-page.html#gravity" class="book-container">
+                        <div class="book">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <div class="book-content">
+                                    <span class="book-label">CASE STUDY</span>
+                                    <h3>Motion Perception</h3>
+                                    <p>Modeled cognitive biases in motion-rich interfaces, improved task efficiency by <strong>15%</strong> through optimal motion cues.</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-title">Attention Research</div>
-                        <div class="timeline-description">
-                            Discovered friction-based attentional cueing that reduced participants' response time by 34ms, improving user focus and attention prediction in dynamic visual tasks
-                            <a href="https://www.nssrperception.com/docs/Nguyen%20&%20van%20Buren%202024%20Rotating%20objects%20cue%20spatial%20attention%20via%20the%20perception%20of%20frictive%20surface%20contact.pdf" target="_blank">[PDF]</a>
+                        <div class="book-popup">
+                            <span class="popup-text">CLICK TO READ</span>
+                            <span class="popup-arrow">→</span>
                         </div>
-                    </div>
+                    </a>
+
+                    <!-- Attention Research -->
+                    <a href="project-page.html#friction" class="book-container">
+                        <div class="book">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <div class="book-content">
+                                    <span class="book-label">CASE STUDY</span>
+                                    <h3>Attention Research</h3>
+                                    <p>Discovered friction-based attentional cueing that reduced response time by <strong>34ms</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-popup">
+                            <span class="popup-text">CLICK TO READ</span>
+                            <span class="popup-arrow">→</span>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="torn-edge"></div>
@@ -692,13 +875,3 @@
             </div>
             <div class="torn-edge"></div>
         </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Hong B. Nguyen. All rights reserved.</p>
-    </footer>
-
-</body>
-</html>
