@@ -46,17 +46,17 @@
         /* ── PAGE HERO ── */
         .page-hero { padding: 5rem 5% 3.5rem; max-width: 1100px; margin: 0 auto; }
         .page-hero .eyebrow { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
-        .page-hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.2; font-weight: 400; margin-bottom: 1.4rem; color: var(--text-dark); }
-        .page-hero h1 em { font-style: italic; color: var(--muted); }
-        .page-hero p { color: var(--muted); max-width: 580px; font-size: 1.15rem; line-height: 1.8; font-family: var(--serif); }
+        .page-hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.2; font-weight: 400; margin-bottom: 1.4rem; color: var(--text-dark); white-space: nowrap; }
+        .page-hero h1 em { font-style: italic; color: var(--text-dark); }
+        .page-hero p { color: var(--text-dark); max-width: 580px; font-size: 1.15rem; line-height: 1.8; font-family: var(--serif); }
 
         /* ── THEME SECTION WRAPPER ── */
         .theme-section { margin: 0; padding: 0; }
 
-        /* ── SECTION INTRO BAND (dark, centered) ── */
+        /* ── SECTION INTRO BAND (navy, centered) ── */
         .theme-header {
             padding: 4rem 5%;
-            background: var(--text-dark);
+            background: var(--navy);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -97,7 +97,7 @@
         .project-card.consolidated .card-meta { border-color: rgba(255,255,255,0.15); color: rgba(245,242,237,0.4); }
         .project-card.consolidated:hover { background: #2a4a73; }
 
-        /* ── SECTION OUTRO BAND (dark, centered) ── */
+        /* ── SECTION OUTRO BAND (black, centered) ── */
         .section-note {
             background: var(--text-dark);
             color: #ffffff;
@@ -230,7 +230,7 @@
         ════════════════════════════════════ -->
         <div class="page-hero fade-in">
             <div class="eyebrow">Research Projects</div>
-            <h1>Perception predicts<br><em>before we know it does.</em></h1>
+            <h1>Perception predicts <em>before we know it does.</em></h1>
             <p>Across motion, space, art, and social meaning — the visual system is not a passive recorder but an active predictor. These projects map the surprising sophistication hidden inside everyday seeing.</p>
         </div>
 
@@ -246,8 +246,8 @@
                 <p class="theme-desc">How does attentional cognition shape — and get shaped by — the interfaces, environments, and interactive contexts we navigate daily? These projects bridge basic perceptual science with UX, design, and digital experience.</p>
             </div>
 
-            <!-- Three main cards -->
-            <div class="cards-grid fade-in">
+            <!-- Top row: 2 cards -->
+            <div class="cards-grid two-col fade-in">
 
                 <!-- Attentional Transplants -->
                 <button class="project-card" data-study="transplants" onclick="toggleStudy('transplants')">
@@ -276,6 +276,10 @@
                         <span class="card-arrow">↗</span>
                     </div>
                 </button>
+            </div>
+
+            <!-- Bottom row: 2 cards -->
+            <div class="cards-grid two-col fade-in">
 
                 <!-- Pitch-gloss -->
                 <button class="project-card" data-study="pitchgloss" onclick="toggleStudy('pitchgloss')">
@@ -290,14 +294,15 @@
                         <span class="card-arrow">↗</span>
                     </div>
                 </button>
-            </div>
 
-            <!-- Games consolidated card -->
-            <div class="cards-grid one-col fade-in">
+                <!-- Games -->
                 <button class="project-card" data-study="games-lab" onclick="toggleStudy('games-lab')">
                     <div class="card-tag">Research platform · In development</div>
+                    <div class="card-img-wrap" style="background: var(--paper-dark); font-family: var(--serif); font-size:1rem; color:var(--muted); font-style:italic;">
+                        Games as labs
+                    </div>
                     <div class="card-title">Games as laboratories for visual cognition</div>
-                    <div class="card-desc" style="max-width:720px;">Classic arcade games — Pac-Man, Pong, maze navigation — modified to isolate perceptual variables. Part of the <em>Perception in Virtual Worlds</em> curriculum I helped develop. These are case studies in using interactive media to test how perceptual biases play out in embodied, dynamic tasks.</div>
+                    <div class="card-desc">Classic arcade games — Pac-Man, Pong, maze navigation — modified to isolate perceptual variables. Part of the <em>Perception in Virtual Worlds</em> curriculum I helped develop.</div>
                     <div class="card-meta">
                         <span>Tailed Pac-Man · Color Pong · Maze Width Illusion</span>
                         <span class="card-arrow">↗</span>
@@ -489,7 +494,7 @@
                 <a href="project-gravity.html" class="project-card" style="text-decoration:none;">
                     <div class="card-tag">Published · JEP:HPP 2023</div>
                     <div class="card-img-wrap" style="background: #e8f0f8;">
-                        <img src="img/projects/icon_force2.png" alt="Gravity Study">
+                        <img src="img/projects/icon_force2.png" alt="Gravity Study" style="object-fit: cover;">
                     </div>
                     <div class="card-title">Visual prioritization of speed changes opposite gravity</div>
                     <div class="card-desc">Observers are more sensitive to acceleration in upward-moving objects — because upward acceleration violates what gravity predicts. The visual system imputes gravitational force to anticipate motion, then flags deviations from that prediction.</div>
