@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -64,9 +64,9 @@
             gap: 1.2rem;
         }
         .theme-number { font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-light); margin: 0; }
-        .theme-title { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 400; line-height: 1.15; color: #fff; margin: 0; }
-        .theme-title em { font-style: italic; color: rgba(255,255,255,0.5); }
-        .theme-desc { font-family: var(--serif); font-size: 1.15rem; color: rgba(255,255,255,0.6); line-height: 1.8; max-width: 560px; margin: 0; }
+        .theme-title { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 400; line-height: 1.15; color: #ffffff; margin: 0; }
+        .theme-title em { font-style: italic; color: rgba(255,255,255,0.6); }
+        .theme-desc { font-family: var(--serif); font-size: 1.15rem; color: #ffffff; line-height: 1.8; max-width: 560px; margin: 0; }
 
         /* ── CARDS GRID ── */
         .cards-grid { padding: 0 5%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; background: var(--paper); }
@@ -85,7 +85,7 @@
         .card-img-wrap img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(15%); transition: filter 0.3s; }
         .project-card:hover .card-img-wrap img { filter: grayscale(0%); }
         .card-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.75rem; color: var(--text-dark); }
-        .card-desc { font-family: var(--serif); font-size: 1rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
+        .card-desc { font-family: var(--serif); font-size: 1rem; color: var(--text-dark); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
         .card-meta { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.06em; color: #888; border-top: 1px solid var(--divider); padding-top: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
         .card-arrow { font-size: 1rem; transition: transform 0.2s; }
 
@@ -100,7 +100,7 @@
         /* ── SECTION OUTRO BAND (dark, centered) ── */
         .section-note {
             background: var(--text-dark);
-            color: rgba(255,255,255,0.72);
+            color: #ffffff;
             padding: 3.5rem 5%;
             font-family: var(--serif);
             font-size: clamp(1.15rem, 1.8vw, 1.45rem);
@@ -241,10 +241,8 @@
             <div class="particles" id="particles"></div>
 
             <div class="theme-header fade-in">
-                <div>
-                    <div class="theme-number">01 — Most recent work</div>
-                    <h2 class="theme-title">Attention in interactive<br><em>systems & games</em></h2>
-                </div>
+                <div class="theme-number">01 — Most recent work</div>
+                <h2 class="theme-title">Attention in interactive systems &amp; games</h2>
                 <p class="theme-desc">How does attentional cognition shape — and get shaped by — the interfaces, environments, and interactive contexts we navigate daily? These projects bridge basic perceptual science with UX, design, and digital experience.</p>
             </div>
 
@@ -281,14 +279,14 @@
 
                 <!-- Pitch-gloss -->
                 <button class="project-card" data-study="pitchgloss" onclick="toggleStudy('pitchgloss')">
-                    <div class="card-tag">Pilot · Crossmodal perception</div>
+                    <div class="card-tag">Published · Crossmodal perception</div>
                     <div class="card-img-wrap" style="background:#e4dcd4; font-family: var(--serif); font-size:1rem; color:var(--muted); font-style:italic;">
                         Sound × gloss
                     </div>
                     <div class="card-title">High-pitched sounds make objects look shinier</div>
-                    <div class="card-desc">A crossmodal correspondence between pitch and perceived gloss — with implications for how digital interfaces can use sound to direct attention and shape perceptual experience in online environments.</div>
+                    <div class="card-desc">Smooth surfaces squeak when rubbed. We found that this ecological link runs deep — concurrent high-pitched sounds automatically make objects look glossier, even when task-irrelevant. Two experiments, 300+ participants.</div>
                     <div class="card-meta">
-                        <span>Pilot study · Online exhibits</span>
+                        <span>Nguyen & van Buren · Crossmodal perception</span>
                         <span class="card-arrow">↗</span>
                     </div>
                 </button>
@@ -296,7 +294,7 @@
 
             <!-- Games consolidated card -->
             <div class="cards-grid one-col fade-in">
-                <button class="project-card consolidated" data-study="games-lab" onclick="toggleStudy('games-lab')">
+                <button class="project-card" data-study="games-lab" onclick="toggleStudy('games-lab')">
                     <div class="card-tag">Research platform · In development</div>
                     <div class="card-title">Games as laboratories for visual cognition</div>
                     <div class="card-desc" style="max-width:720px;">Classic arcade games — Pac-Man, Pong, maze navigation — modified to isolate perceptual variables. Part of the <em>Perception in Virtual Worlds</em> curriculum I helped develop. These are case studies in using interactive media to test how perceptual biases play out in embodied, dynamic tasks.</div>
@@ -352,9 +350,18 @@
             <!-- Pitch-gloss details -->
             <div id="pitchgloss-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('pitchgloss')">← Close</button>
-                <h1>High-Pitched Sounds Make Objects Look Shinier in Online Exhibits</h1>
-                <p class="description">A crossmodal correspondence between auditory pitch and visual gloss perception. When objects are accompanied by higher-pitched sounds, observers rate them as appearing shinier — suggesting that low-level auditory properties can shape visual material perception in digital contexts.</p>
-                <p class="description">This has implications for the design of online exhibits and e-commerce interfaces, where sound design may serve as an unappreciated channel for shaping how objects appear.</p>
+                <h1>The Sound of Shininess: Crossmodal Influence of Auditory Pitch on the Perception of Gloss</h1>
+                <p class="publication-ref">Nguyen & van Buren · <strong>Crossmodal perception of gloss.</strong> <em>Preregistered · OSF: osf.io/ceypg</em></p>
+                <p class="description">Smooth surfaces tend to squeak when rubbed — a physical regularity that the visual system has apparently learned to exploit. We show that concurrent high-pitched sounds automatically make objects look glossier, even when observers are told to ignore the sound and even when visual information alone is sufficient to make the judgment.</p>
+                <h2>Key Findings</h2>
+                <ul class="findings-list">
+                    <li><strong>Experiment 1:</strong> Jewelry items rated as significantly glossier when paired with high-pitched bell sounds vs. low-pitched — replicated with pure sine wave tones (d = 0.49, 0.27)</li>
+                    <li><strong>Experiment 2:</strong> Observers more accurately discriminated glossier objects when the glossier one was paired with a high-pitched sound — even under forced-choice conditions (d = 0.24, 0.27)</li>
+                    <li>Effect held across materials (metal, wood, leather) and two different sound types</li>
+                    <li>Likely reflects ecological co-occurrence of smooth surfaces and high-pitched sounds, alongside shared arousal/intensity mappings</li>
+                </ul>
+                <p class="description">These findings reveal a new channel through which auditory information shapes visual material judgments — with potential applications in VR, e-commerce, and online exhibit design, where physical inspection is unavailable.</p>
+                <a href="https://osf.io/ceypg/" target="_blank" class="game-play-btn" style="display:inline-flex; margin-top:1rem;">↗ See full study on OSF</a>
             </div>
 
             <!-- Games lab details -->
@@ -382,10 +389,8 @@
         <section id="minds" class="theme-section" data-section="minds">
 
             <div class="theme-header fade-in">
-                <div>
-                    <div class="theme-number">02 — Social perception</div>
-                    <h2 class="theme-title">Seeing<br><em>minds</em></h2>
-                </div>
+                <div class="theme-number">02 — Social perception</div>
+                <h2 class="theme-title">Seeing minds</h2>
                 <p class="theme-desc">How does the visual system extract social meaning — intention, agency, mischief — from surprisingly minimal cues? These projects ask what perception contributes to our understanding of other minds.</p>
             </div>
 
@@ -438,8 +443,16 @@
             <!-- Intentional motion details -->
             <div id="intentional-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('intentional')">← Close</button>
-                <h1>The Efficiency of Perceiving the Intentions Behind Others' Movements</h1>
-                <p class="description">We examined how efficiently observers can detect goal-directed motion from simple animated shapes. The visual system extracts animacy and intentionality rapidly and automatically — with surprisingly fine-grained precision — suggesting that social cognition is grounded in low-level visual processing well before deliberate reasoning begins.</p>
+                <h1>Perceiving Goal-Directed Movement in Simple Shapes: From Prediction to Preferences</h1>
+                <p class="description">We often attribute mental states — beliefs, goals, desires — to simple moving shapes. This project tests whether this isn't just a cognitive quirk, but a genuine computational advantage: seeing goal-directed movement may allow the visual system to predict behavior more efficiently than tracking raw physical motion.</p>
+                <h2>Key Findings</h2>
+                <ul class="findings-list">
+                    <li>Observers were better at predicting the future orientation of shapes that appeared to be "chasing" another shape than closely matched inanimate controls</li>
+                    <li>Goal-directed displays received more positive implicit and explicit evaluations — suggesting processing fluency drives aesthetic preference</li>
+                    <li>Results rule out low-level explanations (symmetry, motion complexity) and hold across 10 experiments</li>
+                    <li>Goal-directed shapes were preferred even over animate-looking shapes that appeared aimless — it's goal-directedness specifically, not mere animacy, that drives the effect</li>
+                </ul>
+                <p class="description">We conclude that perceiving simple shapes in intentional terms allows us to predict their behavior more efficiently — and that this efficiency advantage is what drives our strong, automatic tendency to see purpose in motion.</p>
             </div>
 
             <p class="section-note"><span class="section-note-inner">Social cognition doesn't start where perception ends. These projects show that the visual system already performs surprisingly abstract inferences about other minds — long before deliberate reasoning begins.</span></p>
@@ -451,10 +464,8 @@
         <section id="forces" class="theme-section" data-section="forces" style="position: relative;">
 
             <div class="theme-header fade-in">
-                <div>
-                    <div class="theme-number">03 — Physical cognition</div>
-                    <h2 class="theme-title">Seeing<br><em>forces</em></h2>
-                </div>
+                <div class="theme-number">03 — Physical cognition</div>
+                <h2 class="theme-title">Seeing forces</h2>
                 <p class="theme-desc">Vision encodes implicit models of physics — gravity, friction, contact — not by seeing forces directly, but by building predictive models that minimize surprise when objects move. These projects reveal the causal structure hidden inside visual motion.</p>
             </div>
 
