@@ -28,7 +28,7 @@
 
         body {
             font-family: var(--sans);
-            background: #c8dbe8;
+            background: #ddedf5;
             color: var(--text);
             font-size: 18px;
             line-height: 1.6;
@@ -46,12 +46,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 24px 5%;
-            background: transparent;
+            background: rgba(221, 237, 245, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
             transition: background 0.3s ease;
         }
 
         nav.scrolled {
-            background: rgba(247, 246, 243, 0.95);
+            background: rgba(221, 237, 245, 0.97);
             backdrop-filter: blur(10px);
         }
 
@@ -194,9 +196,24 @@
 
         /* About Section */
         .about {
+            padding-top: 120px;
             padding-bottom: 140px;
             position: relative;
             z-index: 1;
+        }
+
+        /* Inline hyperlinks */
+        .inline-link {
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: rgba(30, 58, 95, 0.45);
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1px;
+            transition: color 0.2s, text-decoration-color 0.2s;
+        }
+        .inline-link:hover {
+            color: #1e3a5f;
+            text-decoration-color: #1e3a5f;
         }
 
         .about-layout {
@@ -468,7 +485,7 @@
                 <div class="about-content">
                     <p class="proximity-target">Hi, I’m Hong B. Nguyen —  a cognitive scientist studying how surprisingly sophisticated implicit knowledge is woven into ordinary perception.</p>
                    
-                    <p class="proximity-target">My research shows that the visual system makes rapid, unconscious assumptions about invisible physical forces like gravity and friction in order to predict how objects will move. I also study how we automatically extract social meaning from motion and faces — for example, instantly seeing chasing, intention, or mischief in simple shapes. A third line of my work examines how visual attention and information sampling shape higher-level tasks, from navigating digital spaces to engaging with art.</p>
+                    <p class="proximity-target">My research shows that the visual system makes rapid, unconscious assumptions about invisible physical forces like <a href="project-gravity.html" class="inline-link">gravity</a> and <a href="project-friction.html" class="inline-link">friction</a> in order to predict how objects will move. I study how we automatically extract social meaning from others’ faces and movements — for example, instantly seeing another person’s smile as subtly <a href="project-page-new.html#minds" class="inline-link">mischievous</a>, or their movements as intended to reach a <a href="project-page-new.html#minds" class="inline-link">goal</a>. A third line of my work examines how visual attention and information sampling shape higher-level tasks, from navigating <a href="project-page-new.html#interactive" class="inline-link">digital spaces</a> to engaging with <a href="project-page-new.html#interactive" class="inline-link">art</a>.</p>
                    
                     <p class="proximity-target">Across these projects, I argue that fast visual processing is far “smarter” than we typically give it credit for — and that seeing is already doing much of the work we call thinking.</p>
                     
