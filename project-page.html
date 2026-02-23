@@ -70,8 +70,8 @@
         .project-card:hover { background: var(--paper-dark); }
         .project-card:hover .card-arrow { transform: translate(3px, -3px); }
         .card-tag { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; }
-        .card-img-wrap { width: 100%; height: 170px; object-fit: cover; margin-bottom: 1.4rem; background: var(--paper-dark); display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 3px; }
-        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); transition: filter 0.3s; }
+        .card-img-wrap { width: 100%; height: 240px; object-fit: cover; margin-bottom: 1.4rem; background: var(--paper-dark); display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 3px; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(15%); transition: filter 0.3s; }
         .project-card:hover .card-img-wrap img { filter: grayscale(0%); }
         .card-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.75rem; color: var(--text-dark); }
         .card-desc { font-family: var(--serif); font-size: 1rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
@@ -244,7 +244,7 @@
                     </div>
                 </button>
 
-                <!-- Airport / Attentional navigation -->
+                <!-- Airport -->
                 <button class="project-card" data-study="airport" onclick="toggleStudy('airport')">
                     <div class="card-tag">Applied research · Navigation</div>
                     <div class="card-img-wrap" style="background:#dde4ec; font-family: var(--serif); font-size:1rem; color:var(--muted); font-style:italic;">
@@ -287,38 +287,30 @@
             </div>
 
             <!-- Transplants details -->
-            <div id="transplants-details" class="study-details fade-in">
+            <div id="transplants-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('transplants')">← Close</button>
                 <h1>Gaze Transplants and Aesthetic Experience</h1>
-                <p class="publication-ref">Nguyen & van Buren <strong>Attentional dynamics drive aesthetic preferences for scenes - Evidence from 'attentional transplants'.</strong><a href="https://www.nssrperception.com/Hong/Nguyen%20&%20van%20Buren%20Attentional%20dynamics%20drive%20aesthetic%20preferences%20for%20scenes%20-%20Evidence%20from%20'attentional%20transplants'.pdf" target="_blank">PDF</a></p>
+                <p class="publication-ref">Nguyen & van Buren <strong>Attentional dynamics drive aesthetic preferences for scenes — Evidence from 'attentional transplants'.</strong><a href="https://www.nssrperception.com/Hong/Nguyen%20&%20van%20Buren%20Attentional%20dynamics%20drive%20aesthetic%20preferences%20for%20scenes%20-%20Evidence%20from%20'attentional%20transplants'.pdf" target="_blank">PDF</a></p>
                 <p class="description">We investigated how viewing patterns shape aesthetic experience. By analyzing gaze trajectories, we found that attention patterns drive aesthetic disagreement, prediction fluency mediates preference, and same-image specificity matters.</p>
                 <h2>Demonstrations</h2>
                 <h3>Gaze Trajectories Shape Aesthetic Experience</h3>
-                <p class="experiment-text">The same image, viewed differently.</p>
+                <p class="experiment-text">The same image, viewed differently. Click to play.</p>
                 <div class="gaze-videos">
                     <div class="gaze-video-item" onclick="playVideo(this)">
-                        <video loop muted playsinline>
-                            <source src="videos/landscape23.png_best.mp4" type="video/mp4">
-                        </video>
-                        <div class="play-overlay">
-                            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                        </div>
+                        <video loop muted playsinline><source src="videos/landscape23.png_best.mp4" type="video/mp4"></video>
+                        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
                         <span class="gaze-label best">Liked it Best</span>
                     </div>
                     <div class="gaze-video-item" onclick="playVideo(this)">
-                        <video loop muted playsinline>
-                            <source src="videos/landscape23.png_worst.mp4" type="video/mp4">
-                        </video>
-                        <div class="play-overlay">
-                            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-                        </div>
+                        <video loop muted playsinline><source src="videos/landscape23.png_worst.mp4" type="video/mp4"></video>
+                        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
                         <span class="gaze-label worst">Liked it Least</span>
                     </div>
                 </div>
             </div>
 
             <!-- Airport details -->
-            <div id="airport-details" class="study-details fade-in">
+            <div id="airport-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('airport')">← Close</button>
                 <h1>Attentional Transplants: A Data-Driven Attentional Guide Improves UX and Navigation Performance</h1>
                 <p class="description">What if navigation design learned from attention itself? A traveler with a tight connection rushes through an unfamiliar terminal. Signage competes with advertisements. What if the path forward simply... appeared?</p>
@@ -332,12 +324,12 @@
                         </button>
                     </div>
                     <iframe src="ar-airport-guided.html" class="demo-iframe" allowfullscreen></iframe>
-                    <div class="demo-overlay"><span>Click to interact • WASD to move • Mouse to look</span></div>
+                    <div class="demo-overlay"><span>Click to interact · WASD to move · Mouse to look</span></div>
                 </div>
             </div>
 
             <!-- Pitch-gloss details -->
-            <div id="pitchgloss-details" class="study-details fade-in">
+            <div id="pitchgloss-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('pitchgloss')">← Close</button>
                 <h1>High-Pitched Sounds Make Objects Look Shinier in Online Exhibits</h1>
                 <p class="description">A crossmodal correspondence between auditory pitch and visual gloss perception. When objects are accompanied by higher-pitched sounds, observers rate them as appearing shinier — suggesting that low-level auditory properties can shape visual material perception in digital contexts.</p>
@@ -345,19 +337,16 @@
             </div>
 
             <!-- Games lab details -->
-            <div id="games-lab-details" class="study-details fade-in">
+            <div id="games-lab-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('games-lab')">← Close</button>
                 <h1>Games as Laboratories for Visual Cognition Research</h1>
                 <p class="description">I helped develop <em>Perception in Virtual Worlds</em>, a curriculum using game environments as a platform for perception research and teaching experimental design. Below are case studies — not completed experiments, but examples of how classic arcade games can isolate perceptual variables in dynamic, embodied contexts.</p>
-
                 <h3>Tailed Pac-Man</h3>
                 <p class="experiment-text"><strong>Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</strong> I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns.</p>
                 <a href="https://hbnguyen.itch.io/pacman-sh" target="_blank" class="game-play-btn"><span class="play-icon">▶</span> Play Tailed Pac-Man on itch.io</a>
-
                 <h3>Color Pong</h3>
                 <p class="experiment-text"><strong>Does color alter not only how a game feels — but how we play it?</strong> Identical Pong environments differing only in background color. Color influenced time spent playing, movement patterns, and performance.</p>
                 <a href="https://hbnguyen.itch.io/pong-hs" target="_blank" class="game-play-btn"><span class="play-icon">▶</span> Play Color Pong on itch.io</a>
-
                 <h3>Maze Width Illusion</h3>
                 <p class="experiment-text"><strong>If two paths are the same length, can width alone determine which one we choose?</strong> In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and chosen significantly more often.</p>
                 <a href="https://hbnguyen.itch.io/maze-dots" target="_blank" class="game-play-btn"><span class="play-icon">▶</span> Play Maze Width Illusion on itch.io</a>
@@ -369,7 +358,7 @@
         <!-- ═══════════════════════════════════
              SECTION 2 · SEEING MINDS
         ════════════════════════════════════ -->
-        <section id="minds" class="theme-section" data-section="minds">
+        <section id="minds" class="theme-section" data-section="minds" style="background: var(--paper);">
 
             <div class="theme-header fade-in">
                 <div>
@@ -384,8 +373,8 @@
                 <!-- Mischief -->
                 <button class="project-card" data-study="mischief" onclick="toggleStudy('mischief')">
                     <div class="card-tag">Published · Social perception</div>
-                    <div class="card-img-wrap">
-                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project" style="object-fit: contain; background: #f0ebe3;">
+                    <div class="card-img-wrap" style="background: var(--paper);">
+                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project">
                     </div>
                     <div class="card-title">The face of mischief: a signal for play aggression</div>
                     <div class="card-desc">A distinctive facial expression — asymmetric, fleeting — that signals playful rather than hostile intent. Its right-side asymmetry appears cross-culturally, and may help children learn to distinguish play from real aggression.</div>
@@ -398,7 +387,7 @@
                 <!-- Intentional motion -->
                 <button class="project-card" data-study="intentional" onclick="toggleStudy('intentional')">
                     <div class="card-tag">Published · Animacy perception</div>
-                    <div class="card-img-wrap" style="background:#ddeae0; font-family:var(--serif); font-size:1rem; color:var(--muted); font-style:italic;">
+                    <div class="card-img-wrap" style="background: var(--paper); font-family:var(--serif); font-size:1rem; color:var(--muted); font-style:italic;">
                         Motion trajectories
                     </div>
                     <div class="card-title">A 'visual' intentional strategy: reading minds through motion</div>
@@ -411,21 +400,22 @@
             </div>
 
             <!-- Mischief details -->
-            <div id="mischief-details" class="study-details fade-in">
+            <div id="mischief-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('mischief')">← Close</button>
                 <h1>Motion, Mischief, and Moral Perception</h1>
-                <p class="publication-ref">Nguyen, H. B., et al. <strong>Mischief Project.</strong><a href="https://www.nssrperception.com/Hong/Nguyen%20EtAl%20The%20face%20of%20mischief%20-%20A%20facial%20expression%20signaling%20play%20aggression.pdf" target="_blank">PDF</a></p>
-                <p class="description">We explored how minimal visual cues can signal play, mischief, and agency. Perception scaffolds abstract social inference from the simplest patterns of movement — long before deliberate interpretation begins.</p>
+                <p class="publication-ref">Nguyen, H. B., et al. <strong>The face of mischief.</strong><a href="https://www.nssrperception.com/Hong/Nguyen%20EtAl%20The%20face%20of%20mischief%20-%20A%20facial%20expression%20signaling%20play%20aggression.pdf" target="_blank">PDF</a></p>
+                <p class="description">We explored how minimal visual cues can signal play, mischief, and agency. A distinctive facial expression — asymmetric, weighted to the right side — signals playful rather than hostile intent. This expression may help children learn to distinguish play aggression from real aggression, and its right-side asymmetry appears cross-culturally, even in emoji design.</p>
                 <h2>Key Findings</h2>
                 <ul class="findings-list">
                     <li>Subtle visual scaffolds signal social intent</li>
-                    <li>Perception extracts animacy and goal structure</li>
-                    <li>Moral inference grounded in motion</li>
+                    <li>Perception extracts animacy and goal structure from minimal cues</li>
+                    <li>Moral inference is grounded in low-level perceptual processing</li>
+                    <li>The mischievous expression is right-asymmetric and cross-culturally consistent</li>
                 </ul>
             </div>
 
             <!-- Intentional motion details -->
-            <div id="intentional-details" class="study-details fade-in">
+            <div id="intentional-details" class="study-details">
                 <button class="close-btn" onclick="toggleStudy('intentional')">← Close</button>
                 <h1>The Efficiency of Perceiving the Intentions Behind Others' Movements</h1>
                 <p class="description">We examined how efficiently observers can detect goal-directed motion from simple animated shapes. The visual system extracts animacy and intentionality rapidly and automatically — with surprisingly fine-grained precision — suggesting that social cognition is grounded in low-level visual processing well before deliberate reasoning begins.</p>
@@ -450,7 +440,7 @@
             <div class="cards-grid two-col fade-in">
 
                 <!-- Friction -->
-                <button class="project-card" data-study="friction" onclick="toggleStudy('friction')">
+                <a href="project-friction.html" class="project-card" style="text-decoration:none;">
                     <div class="card-tag">Published · Cognition 2024</div>
                     <div class="card-img-wrap">
                         <img src="img/projects/wheel.jpg" alt="Friction Study">
@@ -461,13 +451,13 @@
                         <span>Nguyen & van Buren · Cognition 2024</span>
                         <span class="card-arrow">↗</span>
                     </div>
-                </button>
+                </a>
 
                 <!-- Gravity -->
-                <button class="project-card" data-study="gravity" onclick="toggleStudy('gravity')">
+                <a href="project-gravity.html" class="project-card" style="text-decoration:none;">
                     <div class="card-tag">Published · JEP:HPP 2023</div>
-                    <div class="card-img-wrap">
-                        <img src="img/projects/icon_force2.png" alt="Gravity Study" style="object-fit: contain; background: #e8f0f8;">
+                    <div class="card-img-wrap" style="background: #e8f0f8;">
+                        <img src="img/projects/icon_force2.png" alt="Gravity Study">
                     </div>
                     <div class="card-title">Visual prioritization of speed changes opposite gravity</div>
                     <div class="card-desc">Observers are more sensitive to acceleration in upward-moving objects — because upward acceleration violates what gravity predicts. The visual system imputes gravitational force to anticipate motion, then flags deviations from that prediction.</div>
@@ -475,49 +465,7 @@
                         <span>Nguyen & van Buren · JEP:HPP 2023</span>
                         <span class="card-arrow">↗</span>
                     </div>
-                </button>
-            </div>
-
-            <!-- Friction details -->
-            <div id="friction-details" class="study-details fade-in">
-                <button class="close-btn" onclick="toggleStudy('friction')">← Close</button>
-                <h1>Rotating objects cue spatial attention via frictive surface contact</h1>
-                <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2024). <strong>Rotating objects cue spatial attention.</strong> <em>Cognition, 242, 105655.</em><a href="Nguyen & van Buren 2024 Friction in attention.pdf">PDF</a></p>
-                <p class="description">We report a new attentional cueing effect showing how attention models friction. Clockwise rotation causes rightward movement when in frictive contact with a floor. Is this encoded in spatial orienting?</p>
-                <h2>Demonstrations</h2>
-                <h3>Experiment 1 — Rotating objects cue spatial attention</h3>
-                <p class="experiment-text">Clockwise rotation produced faster responses to targets on the right, counterclockwise to the left.</p>
-                <div class="chart-container"><div id="fchart1a" class="chart"></div></div>
-                <h3>Experiment 2 — Reversal by ceiling contact</h3>
-                <p class="experiment-text">Floor-touching showed cueing, floor-not-touching abolished it, ceiling-touching reversed it!</p>
-                <div class="chart-container"><div id="fchart2a" class="chart"></div></div>
-            </div>
-
-            <!-- Gravity details -->
-            <div id="gravity-details" class="study-details fade-in">
-                <button class="close-btn" onclick="toggleStudy('gravity')">← Close</button>
-                <h1>May the Force be against you: Better sensitivity to speed changes opposite gravity</h1>
-                <p class="publication-ref">Nguyen, H. B., and van Buren, B. (2023). <strong>May the Force be against you.</strong> <em>JEP:HPP, 49, 1016-1030.</em><a href="Nguyen & van Buren 2023 Better sensitivity to speed changes opposite gravity.pdf">PDF</a></p>
-                <p class="description">We hypothesized that observers would be more sensitive to an object's speed changes if those speed changes were opposite to natural gravitational acceleration. Across six experiments, we found enhanced sensitivity to accelerations opposite to gravity.</p>
-                <h2>Demonstrations</h2>
-                <h3>Experiment 1 — Acceleration (Upward vs. Downward)</h3>
-                <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Downward-moving objects.</p>
-                <div class="chart-container"><div id="chart1a" class="chart"></div></div>
-                <h3>Experiment 2 — Acceleration (Upward vs. Horizontal)</h3>
-                <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Horizontally-moving objects.</p>
-                <div class="chart-container"><div id="chart2a" class="chart"></div></div>
-                <h3>Experiment 3 — Acceleration (Downward vs. Horizontal)</h3>
-                <p class="experiment-text">Observers were worse at detecting acceleration for Downward-moving objects than Horizontally-moving objects.</p>
-                <div class="chart-container"><div id="chart3a" class="chart"></div></div>
-                <h3>Experiment 4 — Deceleration (Upward vs. Downward)</h3>
-                <p class="experiment-text">Observers were better at detecting decelerations for Downward-moving objects than Upward-moving objects.</p>
-                <div class="chart-container"><div id="chart4a" class="chart"></div></div>
-                <h3>Experiment 5 — Deceleration (Downward vs. Horizontal)</h3>
-                <p class="experiment-text">Observers were better at detecting deceleration for Downward-moving objects than Horizontally-moving objects.</p>
-                <div class="chart-container"><div id="chart5a" class="chart"></div></div>
-                <h3>Experiment 6 — Deceleration (Upward vs. Horizontal)</h3>
-                <p class="experiment-text">Observers were worse at detecting deceleration for Upward-moving objects than Horizontally-moving objects.</p>
-                <div class="chart-container"><div id="chart6a" class="chart"></div></div>
+                </a>
             </div>
 
             <p class="section-note">These findings suggest that perceptual systems don't just track motion — they maintain internal models of the causal structure of the physical world, allowing them to predict, and be surprised by, the invisible forces that govern how things move.</p>
