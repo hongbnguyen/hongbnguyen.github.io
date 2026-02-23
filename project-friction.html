@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friction & Spatial Attention — Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --serif:'Cormorant Garamond',Georgia,serif; --sans:'Noto Sans',sans-serif; --navy:#1e3a5f; --paper:#f5f2ed; --rule:#d4c8b4; --accent:#c04a1a; --muted:#6e6258; --text-dark:#2C2C2C; }
+        * { box-sizing:border-box; }
+        body { background:var(--paper); margin:0; font-family:var(--serif); color:var(--text-dark); }
+        .main-header { background:var(--navy); padding:16px 5%; }
+        .main-header nav { display:flex; gap:32px; max-width:1200px; margin:0 auto; }
+        .main-header nav a { font-family:var(--sans); font-size:1rem; font-weight:500; color:#fff; text-decoration:none; }
+        .main-header nav a:hover { color:#e8c4c4; }
+        .back-bar { padding:1.2rem 5%; border-bottom:1px solid var(--rule); }
+        .back-bar a { font-family:var(--sans); font-size:0.85rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); text-decoration:none; }
+        .back-bar a:hover { text-decoration:underline; }
+        .project-wrap { max-width:860px; margin:0 auto; padding:4rem 5% 6rem; }
+        .eyebrow { font-family:var(--sans); font-size:0.74rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+        h1 { font-family:var(--serif); font-size:clamp(1.9rem,3.5vw,2.8rem); font-weight:400; line-height:1.2; margin-bottom:1rem; }
+        .pub-ref { font-size:1.1rem; color:var(--muted); margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:1px solid var(--rule); }
+        .pub-ref a { color:var(--navy); font-weight:600; margin-left:8px; }
+        .description { font-size:1.2rem; line-height:1.8; margin-bottom:2rem; }
+        h2 { font-family:var(--serif); font-size:1.5rem; font-weight:500; margin:3rem 0 1rem; opacity:0.7; }
+        h3 { font-family:var(--serif); font-size:1.4rem; font-weight:500; margin:2.5rem 0 0.6rem; color:#2f6690; }
+        .experiment-text { font-size:1.15rem; line-height:1.75; margin-bottom:1rem; }
+        .chart-container { margin:1rem 0 2.5rem; background:#f5f9fc; border-radius:8px; padding:1rem; border:1px solid rgba(0,80,150,0.1); }
+        .chart { width:100%; min-height:350px; }
+        footer { background:var(--navy); padding:20px 0; }
+        footer p { color:rgba(255,255,255,0.6); text-align:center; font-size:0.85rem; font-family:var(--sans); margin:0; }
+        .video-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; align-items:center; justify-content:center; }
+        .video-modal.active { display:flex; }
+        .video-modal-content { background:#1a1a2e; border-radius:12px; padding:2rem; max-width:600px; width:90%; position:relative; }
+        .video-modal .close-modal { position:absolute; top:-38px; right:0; font-size:2rem; color:#fff; cursor:pointer; opacity:0.7; background:none; border:none; }
+        .video-modal h4 { font-family:var(--serif); font-size:1.2rem; color:#fff; margin-bottom:1rem; }
+        .video-modal video { width:100%; border-radius:8px; }
+        .video-modal .video-instruction { font-size:0.85rem; color:rgba(255,255,255,0.5); margin-bottom:1rem; font-family:var(--sans); }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="publications.html">Publications</a>
+            <a href="project-page-new.html">Projects</a>
+            <a href="resume.html">Resume</a>
+            <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+        </nav>
+    </header>
+    <div class="back-bar"><a href="project-page-new.html">← Back to Projects</a></div>
+
+    <div class="project-wrap">
+        <div class="eyebrow">Seeing Forces · Published · Cognition 2024</div>
+        <h1>Rotating objects cue spatial attention via frictive surface contact</h1>
+        <p class="pub-ref">Nguyen, H. B., and van Buren, B. (2024). <strong>Rotating objects cue spatial attention.</strong> <em>Cognition, 242, 105655.</em><a href="Nguyen & van Buren 2024 Friction in attention.pdf">PDF</a></p>
+        <p class="description">We report a new attentional cueing effect showing how attention models friction. A clockwise-rotating wheel on the floor would roll to the right — does the visual system encode this, and does it automatically shift attention rightward in anticipation? We found that it does: clockwise rotation cues rightward attention, counterclockwise cues leftward. And when the wheel touches a ceiling instead, the effect fully reverses.</p>
+
+        <h2>Demonstrations</h2>
+
+        <h3>Experiment 1 — Rotating objects cue spatial attention</h3>
+        <p class="experiment-text">Clockwise rotation produced faster responses to targets on the right, counterclockwise to the left.</p>
+        <div class="chart-container"><div id="fchart1a" class="chart"></div></div>
+
+        <h3>Experiment 2 — Reversal by ceiling contact</h3>
+        <p class="experiment-text">Floor-touching showed cueing, floor-not-touching abolished it, ceiling-touching reversed it!</p>
+        <div class="chart-container"><div id="fchart2a" class="chart"></div></div>
+    </div>
+
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal" onclick="closeVideoModal()">×</button>
+            <p class="video-instruction">Use ← and → to navigate.</p>
+            <h4 id="videoTitle"></h4>
+            <video id="modalVideo" controls autoplay><source src="" type="video/mp4"></video>
+        </div>
+    </div>
+
+    <footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script>
+        let currentVideoIndex = 0, currentVideos = [];
+        function updateVideo() {
+            if (!currentVideos.length) return;
+            document.getElementById('modalVideo').src = currentVideos[currentVideoIndex].src;
+            document.getElementById('videoTitle').textContent = currentVideos[currentVideoIndex].title || '';
+            document.getElementById('videoModal').classList.add('active');
+            const v = document.getElementById('modalVideo');
+            v.play().catch(() => {});
+            v.onended = function () { this.currentTime = 0; this.play().catch(() => {}); };
+        }
+        function closeVideoModal() { document.getElementById('videoModal').classList.remove('active'); document.getElementById('modalVideo').pause(); }
+        document.addEventListener('keydown', e => {
+            const m = document.getElementById('videoModal');
+            if (!m.classList.contains('active')) return;
+            if (e.key==='ArrowRight'){currentVideoIndex=(currentVideoIndex+1)%currentVideos.length;updateVideo();}
+            else if(e.key==='ArrowLeft'){currentVideoIndex=(currentVideoIndex-1+currentVideos.length)%currentVideos.length;updateVideo();}
+            else if(e.key==='Escape')closeVideoModal();
+        });
+
+        window.addEventListener('load', function () {
+            const t = { chart:{backgroundColor:'transparent'}, title:{style:{color:'#1a3a52',fontSize:'14px'}}, xAxis:{labels:{style:{color:'#2C2C2C'}}}, yAxis:{title:{style:{color:'#2C2C2C'}},labels:{style:{color:'#2C2C2C'}},gridLineColor:'#e0e0e0'} };
+            Highcharts.chart('fchart1a', Highcharts.merge(t, {
+                chart:{type:'column'}, title:{text:'Spatial Cueing by Rotation'},
+                xAxis:{categories:['CW→L','CW→R','CCW→L','CCW→R']}, yAxis:{title:{text:'RT (ms)'},min:400,max:700},
+                series:[{type:'column',data:[{y:553,color:'#ff6b6b'},{y:509,color:'#4ecdc4'},{y:535,color:'#4ecdc4'},{y:561,color:'#ff6b6b'}],showInLegend:false},{type:'errorbar',data:[[543,560],[499,516],[525,542],[551,568]],color:'#666'}],
+                plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterleft.mp4',title:'CW Left'}],[{src:'videos/clockwise_letterright.mp4',title:'CW Right'}],[{src:'videos/counterclockwise_letterleft.mp4',title:'CCW Left'}],[{src:'videos/counterclockwise_letterright.mp4',title:'CCW Right'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo();}}}}}
+            }));
+            Highcharts.chart('fchart2a', Highcharts.merge(t, {
+                chart:{type:'column'}, title:{text:'Surface Contact Effects'},
+                xAxis:{categories:['Floor Touch','Floor Gap','Ceiling Touch','Ceiling Gap']}, yAxis:{title:{text:'Effect (ms)'},min:-60,max:60},
+                series:[{type:'column',data:[{y:48,color:'#006738'},{y:7,color:'#999'},{y:-27,color:'#c0392b'},{y:-10,color:'#999'}],showInLegend:false},{type:'errorbar',data:[[45,49],[4,9],[-30,-25],[-13,-8]],color:'#666'}],
+                plotOptions:{column:{point:{events:{mouseOver:function(){const sets=[[{src:'videos/clockwise_letterright_floor.mp4',title:'Floor Touch'}],[{src:'videos/clockwise_letterright_floor_nottouching.mp4',title:'Floor Gap'}],[{src:'videos/clockwise_letterleft_ceiling.mp4',title:'Ceiling Touch'}],[{src:'videos/clockwise_letterleft_ceiling_nottouching.mp4',title:'Ceiling Gap'}]];currentVideos=sets[this.index]||[];currentVideoIndex=0;updateVideo();}}}}}
+            }));
+        });
+    </script>
+</body>
+</html>

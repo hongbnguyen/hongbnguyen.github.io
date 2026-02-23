@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Prioritization of Speed Changes Opposite Gravity — Hong B. Nguyen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --serif:'Cormorant Garamond',Georgia,serif; --sans:'Noto Sans',sans-serif; --navy:#1e3a5f; --paper:#f5f2ed; --paper-dark:#ece7df; --rule:#d4c8b4; --accent:#c04a1a; --muted:#6e6258; --text-dark:#2C2C2C; }
+        * { box-sizing:border-box; }
+        body { background:var(--paper); margin:0; font-family:var(--serif); color:var(--text-dark); }
+        .main-header { background:var(--navy); padding:16px 5%; }
+        .main-header nav { display:flex; gap:32px; max-width:1200px; margin:0 auto; }
+        .main-header nav a { font-family:var(--sans); font-size:1rem; font-weight:500; color:#fff; text-decoration:none; }
+        .main-header nav a:hover { color:#e8c4c4; }
+        .back-bar { padding:1.2rem 5%; border-bottom:1px solid var(--rule); }
+        .back-bar a { font-family:var(--sans); font-size:0.85rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent); text-decoration:none; }
+        .back-bar a:hover { text-decoration:underline; }
+        .project-wrap { max-width:860px; margin:0 auto; padding:4rem 5% 6rem; }
+        .eyebrow { font-family:var(--sans); font-size:0.74rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+        h1 { font-family:var(--serif); font-size:clamp(1.9rem,3.5vw,2.8rem); font-weight:400; line-height:1.2; margin-bottom:1rem; }
+        .pub-ref { font-size:1.1rem; color:var(--muted); margin-bottom:2.5rem; padding-bottom:2rem; border-bottom:1px solid var(--rule); }
+        .pub-ref a { color:var(--navy); font-weight:600; margin-left:8px; }
+        .description { font-size:1.2rem; line-height:1.8; margin-bottom:2rem; }
+        h2 { font-family:var(--serif); font-size:1.5rem; font-weight:500; margin:3rem 0 1rem; opacity:0.7; }
+        h3 { font-family:var(--serif); font-size:1.4rem; font-weight:500; margin:2.5rem 0 0.6rem; color:#2f6690; }
+        .experiment-text { font-size:1.15rem; line-height:1.75; margin-bottom:1rem; }
+        .chart-container { margin:1rem 0 2.5rem; background:#f5f9fc; border-radius:8px; padding:1rem; border:1px solid rgba(0,80,150,0.1); }
+        .chart { width:100%; min-height:350px; }
+        footer { background:var(--navy); padding:20px 0; }
+        footer p { color:rgba(255,255,255,0.6); text-align:center; font-size:0.85rem; font-family:var(--sans); margin:0; }
+        .video-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; display:none; align-items:center; justify-content:center; }
+        .video-modal.active { display:flex; }
+        .video-modal-content { background:#1a1a2e; border-radius:12px; padding:2rem; max-width:600px; width:90%; position:relative; }
+        .video-modal .close-modal { position:absolute; top:-38px; right:0; font-size:2rem; color:#fff; cursor:pointer; opacity:0.7; background:none; border:none; }
+        .video-modal h4 { font-family:var(--serif); font-size:1.2rem; color:#fff; margin-bottom:1rem; }
+        .video-modal video { width:100%; border-radius:8px; }
+        .video-modal .video-instruction { font-size:0.85rem; color:rgba(255,255,255,0.5); margin-bottom:1rem; font-family:var(--sans); }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="publications.html">Publications</a>
+            <a href="project-page-new.html">Projects</a>
+            <a href="resume.html">Resume</a>
+            <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+        </nav>
+    </header>
+    <div class="back-bar"><a href="project-page-new.html">← Back to Projects</a></div>
+
+    <div class="project-wrap">
+        <div class="eyebrow">Seeing Forces · Published · JEP:HPP 2023</div>
+        <h1>May the Force be against you: Better sensitivity to speed changes opposite gravity</h1>
+        <p class="pub-ref">Nguyen, H. B., and van Buren, B. (2023). <strong>May the Force be against you.</strong> <em>JEP:HPP, 49, 1016-1030.</em><a href="Nguyen & van Buren 2023 Better sensitivity to speed changes opposite gravity.pdf">PDF</a></p>
+        <p class="description">We hypothesized that observers would be more sensitive to an object's speed changes if those speed changes were opposite to natural gravitational acceleration. Across six experiments, we found enhanced sensitivity to accelerations opposite to gravity. The visual system imputes gravitational force in order to anticipate how objects will move — and flags deviations from that prediction with heightened perceptual sensitivity.</p>
+
+        <h2>Demonstrations</h2>
+
+        <h3>Experiment 1 — Acceleration (Upward vs. Downward)</h3>
+        <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Downward-moving objects.</p>
+        <div class="chart-container"><div id="chart1a" class="chart"></div></div>
+
+        <h3>Experiment 2 — Acceleration (Upward vs. Horizontal)</h3>
+        <p class="experiment-text">Observers were better at detecting acceleration for Upward-moving objects than Horizontally-moving objects.</p>
+        <div class="chart-container"><div id="chart2a" class="chart"></div></div>
+
+        <h3>Experiment 3 — Acceleration (Downward vs. Horizontal)</h3>
+        <p class="experiment-text">Observers were worse at detecting acceleration for Downward-moving objects than Horizontally-moving objects.</p>
+        <div class="chart-container"><div id="chart3a" class="chart"></div></div>
+
+        <h3>Experiment 4 — Deceleration (Upward vs. Downward)</h3>
+        <p class="experiment-text">Observers were better at detecting decelerations for Downward-moving objects than Upward-moving objects.</p>
+        <div class="chart-container"><div id="chart4a" class="chart"></div></div>
+
+        <h3>Experiment 5 — Deceleration (Downward vs. Horizontal)</h3>
+        <p class="experiment-text">Observers were better at detecting deceleration for Downward-moving objects than Horizontally-moving objects.</p>
+        <div class="chart-container"><div id="chart5a" class="chart"></div></div>
+
+        <h3>Experiment 6 — Deceleration (Upward vs. Horizontal)</h3>
+        <p class="experiment-text">Observers were worse at detecting deceleration for Upward-moving objects than Horizontally-moving objects.</p>
+        <div class="chart-container"><div id="chart6a" class="chart"></div></div>
+    </div>
+
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal" onclick="closeVideoModal()">×</button>
+            <p class="video-instruction">Use ← and → to navigate.</p>
+            <h4 id="videoTitle"></h4>
+            <video id="modalVideo" controls autoplay><source src="" type="video/mp4"></video>
+        </div>
+    </div>
+
+    <footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script>
+        let currentVideoIndex = 0, currentVideos = [];
+        function updateVideo() {
+            if (!currentVideos.length) return;
+            document.getElementById('modalVideo').src = currentVideos[currentVideoIndex].src;
+            document.getElementById('videoTitle').textContent = currentVideos[currentVideoIndex].title || '';
+            document.getElementById('videoModal').classList.add('active');
+            const v = document.getElementById('modalVideo');
+            v.play().catch(() => {});
+            v.onended = function () { this.currentTime = 0; this.play().catch(() => {}); };
+        }
+        function closeVideoModal() { document.getElementById('videoModal').classList.remove('active'); document.getElementById('modalVideo').pause(); }
+        document.addEventListener('keydown', e => {
+            const m = document.getElementById('videoModal');
+            if (!m.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') { currentVideoIndex = (currentVideoIndex + 1) % currentVideos.length; updateVideo(); }
+            else if (e.key === 'ArrowLeft') { currentVideoIndex = (currentVideoIndex - 1 + currentVideos.length) % currentVideos.length; updateVideo(); }
+            else if (e.key === 'Escape') closeVideoModal();
+        });
+
+        window.addEventListener('load', function () {
+            const t = { chart:{backgroundColor:'transparent'}, title:{style:{color:'#1a3a52',fontSize:'14px'}}, xAxis:{labels:{style:{color:'#2C2C2C'}},lineColor:'#ccc'}, yAxis:{title:{style:{color:'#2C2C2C'}},labels:{style:{color:'#2C2C2C'}},gridLineColor:'#e0e0e0'} };
+            const vids = {
+                chart1a:[[{src:'videos/upward_acc.mp4',title:'Upward Acc'}],[{src:'videos/downward_acc.mp4',title:'Downward Acc'}]],
+                chart2a:[[{src:'videos/upward_acc.mp4',title:'Upward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],
+                chart3a:[[{src:'videos/downward_acc.mp4',title:'Downward'}],[{src:'videos/hori_acc.mp4',title:'Horizontal'}]],
+                chart4a:[[{src:'videos/upward_dec.mp4',title:'Upward Dec'}],[{src:'videos/downward_dec.mp4',title:'Downward Dec'}]],
+                chart5a:[[{src:'videos/downward_dec.mp4',title:'Downward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]],
+                chart6a:[[{src:'videos/upward_dec.mp4',title:'Upward'}],[{src:'videos/hori_dec.mp4',title:'Horizontal'}]]
+            };
+            const charts = [
+                {id:'chart1a',title:'Exp 1: Up vs Down Acc',cats:['Upward','Downward'],data:[2.27,1.95],colors:['#f89421','#692d8a']},
+                {id:'chart2a',title:'Exp 2: Up vs Horiz Acc',cats:['Upward','Horizontal'],data:[2.93,2.44],colors:['#f7941d','#006738']},
+                {id:'chart3a',title:'Exp 3: Down vs Horiz Acc',cats:['Downward','Horizontal'],data:[2.57,2.37],colors:['#692d8a','#006738']},
+                {id:'chart4a',title:'Exp 4: Up vs Down Dec',cats:['Upward','Downward'],data:[2.30,2.55],colors:['#f89421','#692d8a']},
+                {id:'chart5a',title:'Exp 5: Down vs Horiz Dec',cats:['Downward','Horizontal'],data:[2.96,2.78],colors:['#692d8a','#006738']},
+                {id:'chart6a',title:'Exp 6: Up vs Horiz Dec',cats:['Upward','Horizontal'],data:[2.25,2.95],colors:['#f89421','#006738']}
+            ];
+            charts.forEach(c => {
+                Highcharts.chart(c.id, Highcharts.merge(t, {
+                    chart:{type:'column'}, title:{text:c.title},
+                    xAxis:{categories:c.cats}, yAxis:{title:{text:"d'"},min:0,max:4},
+                    series:[{data:c.data,colorByPoint:true,colors:c.colors,showInLegend:false}],
+                    plotOptions:{column:{pointPadding:0.2,borderWidth:0,point:{events:{mouseOver:function(){const s=vids[this.series.chart.renderTo.id]?.[this.index];if(s?.length){currentVideos=s;currentVideoIndex=0;updateVideo();}}}}}}
+                }));
+            });
+        });
+    </script>
+</body>
+</html>
