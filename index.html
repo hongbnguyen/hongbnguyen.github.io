@@ -1,600 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hong B. Nguyen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #F7F6F3;
-            --text: #1E1E1E;
-            --text-muted: #5a5a5a;
-            --accent: #B6A469;
-            --accent-hover: #1C2433;
-            --serif: 'Playfair Display', Georgia, serif;
-            --sans: 'Inter', -apple-system, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hong B. Nguyen</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #fafaf8;
+    --ink: #1a1a18;
+    --ink-faint: rgba(26,26,24,0.15);
+    --ink-mid: rgba(26,26,24,0.55);
+    --red: #c04a1a;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:100%; height:100%; background:var(--white); color:var(--ink); font-family:var(--serif); overflow:hidden; cursor:none; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  #cursor { position:fixed; width:8px; height:8px; background:var(--ink); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s,background .2s; }
+  #cursor.hover { width:36px; height:36px; background:transparent; border:1px solid var(--ink); opacity:.45; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+  #logo { position:absolute; top:20vh; left:50vw; z-index:100; display:flex; flex-direction:column; align-items:center; text-decoration:none; }
+  #logo img { width:92px; height:92px; object-fit:contain; opacity:.9; filter:saturate(.85); transition:opacity .3s,filter .3s; }
+  #logo:hover img { opacity:1; filter:saturate(1); }
+  #logo-name { font-family:var(--mono); font-size:.6rem; letter-spacing:.16em; color:var(--ink); text-transform:uppercase; margin-top:3px; }
 
-        body {
-            font-family: var(--sans);
-            background: #ddedf5;
-            color: var(--text);
-            font-size: 18px;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+  #nav { position:fixed; top:50px; right:48px; z-index:100; display:flex; gap:36px; }
+  #nav a { font-family:var(--mono); font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); text-decoration:none; opacity:.55; transition:opacity .2s; }
+  #nav a:hover { opacity:1; }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 5%;
-            background: rgba(221, 237, 245, 0.92);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            transition: background 0.3s ease;
-        }
+  #space { position:fixed; inset:0; }
+  .obj { position:absolute; cursor:none; user-select:none; }
+  .obj.dragging { transition:none; z-index:500 !important; }
 
-        nav.scrolled {
-            background: rgba(221, 237, 245, 0.97);
-            backdrop-filter: blur(10px);
-        }
+  #obj-letter { top:3vh; left:-1vw; z-index:1; pointer-events:none; }
+  #obj-letter span { font-family:var(--serif); font-size:clamp(14vw,22vw,28vw); font-weight:400; font-style:italic; color:var(--ink); opacity:.028; line-height:1; display:block; white-space:nowrap; }
 
-        .nav-name {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
+  #obj-ring { top:26vh; left:37vw; z-index:3; pointer-events:none; }
+  #obj-ring svg { width:210px; height:210px; opacity:.05; animation:spin 44s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
+  .rule-line { position:absolute; background:var(--ink-faint); pointer-events:none; z-index:2; }
+  #line-h { width:1px; height:36vh; top:16vh; left:50vw; opacity:.3; }
+  #line-v { height:1px; width:20vw; top:57vh; left:38vw; opacity:.2; }
 
-        .nav-links a {
-            font-family: var(--sans);
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            letter-spacing: 0.01em;
-        }
+  /* NAME */
+  #obj-name { top:12vh; left:13vw; z-index:10; }
+  #obj-name a { text-decoration:none; display:block; cursor:none; }
+  #obj-name h1 { font-family:var(--serif); font-size:clamp(3.4rem,6.2vw,6.2rem); font-weight:400; line-height:1.06; letter-spacing:-.02em; color:var(--ink); transition:opacity .2s; }
+  #obj-name h1 em { font-style:italic; }
+  #obj-name a:hover h1 { opacity:.6; }
+  #obj-name .role { font-family:var(--mono); font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); opacity:.55; margin-top:14px; }
+  #obj-name .hint { font-family:var(--mono); font-size:.85rem; letter-spacing:.08em; color:var(--ink); opacity:.8; margin-top:10px; transition:opacity .2s, color .2s; }
+  #obj-name a:hover .hint { opacity:1; color:var(--red); }
 
-        .nav-links a:hover {
-            color: var(--accent-hover);
-        }
+  /* TAGLINE removed */
 
-        /* Main content wrapper */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5%;
-        }
+  /* NODES */
+  .research-node { z-index:9; }
+  .research-node .node-label { font-family:var(--mono); font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); opacity:.28; margin-bottom:6px; transition:opacity .3s, color .3s; }
+  .research-node:hover .node-label { opacity:1; color:var(--red); }
+  .research-node .node-title { font-family:var(--serif); font-size:1.18rem; font-weight:400; color:var(--ink); line-height:1.35; opacity:.85; transition:opacity .3s; text-decoration:none; display:block; }
+  .research-node:hover .node-title { opacity:1; }
+  .research-node .node-line { width:24px; height:1px; background:var(--ink-faint); margin-bottom:10px; transition:width .3s, background .3s; }
+  .research-node:hover .node-line { width:44px; background:var(--red); }
 
-        @media (max-width: 900px) {
-            main {
-                padding: 0 24px;
-            }
-        }
+  #node-gravity  { top:60vh; left:57vw; }
+  #node-friction { top:71vh; left:63vw; }
+  #node-gaze     { top:52vh; left:71vw; }
+  #node-minds    { top:77vh; left:45vw; }
+  #node-games    { top:67vh; left:35vw; }
 
-        /* Floating conceptual words */
-        .floating-words {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
+  #obj-status { bottom:40px; left:48px; z-index:10; }
+  #obj-status p { font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; color:var(--ink); opacity:.38; line-height:1.9; }
+  .status-dot { display:inline-block; width:5px; height:5px; background:#4caf50; border-radius:50%; margin-right:7px; vertical-align:middle; animation:pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-        .floating-word {
-            position: absolute;
-            font-family: var(--serif);
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 400;
-            color: var(--text);
-            opacity: 0.04;
-            transition: transform 0.8s ease-out, opacity 0.3s ease;
-            user-select: none;
-        }
+  #obj-coords { bottom:40px; right:48px; z-index:10; text-align:right; }
+  #obj-coords p { font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; color:var(--ink); opacity:.38; line-height:1.9; }
 
-        .floating-word:nth-child(1) { top: 15%; left: 8%; }
-        .floating-word:nth-child(2) { top: 25%; right: 12%; }
-        .floating-word:nth-child(3) { top: 45%; left: 5%; }
-        .floating-word:nth-child(4) { top: 55%; right: 8%; }
-        .floating-word:nth-child(5) { top: 70%; left: 15%; }
-        .floating-word:nth-child(6) { top: 80%; right: 18%; }
+  #tooltip { position:fixed; pointer-events:none; z-index:9000; font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; color:var(--ink); opacity:0; transition:opacity .2s; transform:translate(18px,-50%); }
+  #tooltip.show { opacity:.5; }
 
-        /* Hero Section */
-        .hero {
-            padding-top: 160px;
-            padding-bottom: 120px;
-            position: relative;
-            z-index: 1;
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+  #drag-hint { position:fixed; bottom:88px; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; color:var(--ink); opacity:0; animation:fadeHint 6s ease 2.5s forwards; pointer-events:none; z-index:200; }
+  @keyframes fadeHint { 0%{opacity:0} 15%{opacity:.28} 70%{opacity:.28} 100%{opacity:0} }
 
-        .hero h1 {
-            font-family: var(--serif);
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 400;
-            line-height: 1.25;
-            letter-spacing: -0.02em;
-            margin-bottom: 32px;
-            max-width: 700px;
-            text-align: left;
-            position: relative;
-            z-index: 2;
-        }
+  .obj { opacity:0; animation:arrive .9s ease forwards; }
+  #obj-letter  { animation-delay:0s;    animation-name:fadeIn; }
+  #obj-ring    { animation-delay:.1s;   animation-name:fadeIn; }
+  #line-h,#line-v { animation-delay:.4s; animation-name:fadeIn; }
+  #obj-name    { animation-delay:.3s; }
+  #obj-tagline { animation-delay:.5s; }
+  #node-gravity   { animation-delay:.68s; }
+  #node-friction  { animation-delay:.76s; }
+  #node-gaze      { animation-delay:.72s; }
+  #node-minds     { animation-delay:.82s; }
+  #node-games     { animation-delay:.88s; }
+  #obj-status  { animation-delay:1s; }
+  #obj-coords  { animation-delay:1s; }
 
-        .hero h1 em {
-            font-style: italic;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text);
-            max-width: 600px;
-            margin-bottom: 64px;
-            text-align: left;
-            position: relative;
-            z-index: 2;
-        }
-
-        .scroll-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-
-        .scroll-indicator:hover {
-            opacity: 1;
-        }
-
-        .scroll-indicator span {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(4px); }
-        }
-
-        /* About Section */
-        .about {
-            padding-top: 120px;
-            padding-bottom: 140px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Inline hyperlinks */
-        .inline-link {
-            color: var(--text);
-            text-decoration: underline;
-            text-decoration-color: rgba(30, 58, 95, 0.45);
-            text-underline-offset: 3px;
-            text-decoration-thickness: 1px;
-            transition: color 0.2s, text-decoration-color 0.2s;
-        }
-        .inline-link:hover {
-            color: #1e3a5f;
-            text-decoration-color: #1e3a5f;
-        }
-
-        .about-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        @media (max-width: 800px) {
-            .about-layout {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-        }
-
-        .section-heading {
-            font-family: var(--serif);
-            font-size: clamp(1.6rem, 3vw, 2rem);
-            font-weight: 400;
-            margin-bottom: 40px;
-            letter-spacing: -0.01em;
-        }
-
-        .about-content p {
-            margin-bottom: 24px;
-            color: var(--text);
-            transition: opacity 0.3s ease;
-        }
-
-        .about-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Photo placement */
-        .about-photo-wrapper {
-            position: sticky;
-            top: 120px;
-        }
-
-        .about-photo {
-            width: 100%;
-            max-width: 300px;
-            filter: grayscale(100%);
-            border-radius: 2px;
-            opacity: 0.9;
-        }
-
-        @media (max-width: 800px) {
-            .about-photo-wrapper {
-                position: relative;
-                top: 0;
-                text-align: center;
-            }
-            
-            .about-photo {
-                max-width: 220px;
-            }
-        }
-
-        /* Conceptual Blocks */
-        .conceptual-blocks {
-            padding-bottom: 100px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .concept-block {
-            margin-bottom: 100px;
-            transition: opacity 0.3s ease;
-        }
-
-        .concept-block:last-child {
-            margin-bottom: 0;
-        }
-
-        .concept-block h3 {
-            font-family: var(--serif);
-            font-size: clamp(1.4rem, 2.5vw, 1.75rem);
-            font-weight: 400;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-
-        .concept-block p {
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            max-width: 700px;
-        }
-
-        .concept-link {
-            font-family: var(--sans);
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.3s ease, gap 0.3s ease;
-        }
-
-        .concept-link:hover {
-            color: var(--accent-hover);
-            gap: 10px;
-        }
-
-        .concept-link::after {
-            content: '→';
-            transition: transform 0.3s ease;
-        }
-
-        .concept-link:hover::after {
-            transform: translateX(2px);
-        }
-
-        /* Footer */
-        footer {
-            background: #1e3a5f;
-            padding: 40px 0;
-            margin-top: 160px;
-            text-align: center;
-        }
-
-        footer p {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Hero Background Image - Full Page */
-        .hero-bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            object-position: center;
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: 0;
-            mix-blend-mode: multiply;
-        }
-
-        @media (max-width: 900px) {
-            .hero-bg-image {
-                opacity: 0.18;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero-bg-image {
-                opacity: 0.15;
-            }
-        }
-
-        /* Cursor interaction hint */
-        .cursor-hint {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        .cursor-hint.visible {
-            opacity: 0.4;
-        }
-
-        /* Cursor glow effect */
-        .cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            background: radial-gradient(
-                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(182, 164, 105, 0.08),
-                rgba(255, 255, 255, 0.04) 30%,
-                transparent 60%
-            );
-        }
-
-        .cursor-glow.active {
-            opacity: 1;
-        }
-
-        /* Proximity brightness effect */
-        .proximity-target {
-            transition: filter 0.4s ease, opacity 0.4s ease;
-        }
-
-        .proximity-target.bright {
-            filter: brightness(1.06);
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            nav {
-                padding: 16px 20px;
-            }
-
-            .nav-links {
-                gap: 20px;
-            }
-
-            .nav-links a {
-                font-size: 0.8rem;
-            }
-
-            .hero {
-                padding-top: 120px;
-                padding-bottom: 80px;
-            }
-
-            .about {
-                padding-bottom: 100px;
-            }
-
-            .concept-block {
-                margin-bottom: 72px;
-            }
-
-            footer {
-                margin-top: 100px;
-            }
-        }
-    </style>
+  @keyframes arrive { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+</style>
 </head>
 <body>
+<div id="cursor"></div>
+<div id="tooltip"></div>
+<div id="drag-hint">drag objects · explore freely</div>
 
-    <!-- Full Page Background Image -->
-    <img src="img/hero-eye.png" alt="" class="hero-bg-image" aria-hidden="true">
+<nav id="nav">
+  <a href="publications.html">Publications</a>
+  <a href="project-page-new.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="resume.html">Resume</a>
+  <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+</nav>
 
-    <!-- Cursor glow effect -->
-    <div class="cursor-glow" id="cursor-glow"></div>
+<div id="space">
+  <div class="obj" id="obj-letter"><span>HBN</span></div>
+  <div class="rule-line obj" id="line-h"></div>
+  <div class="rule-line obj" id="line-v"></div>
+  <div class="obj" id="obj-ring">
+    <svg viewBox="0 0 200 200" fill="none">
+      <circle cx="100" cy="100" r="88" stroke="#1a1a18" stroke-width=".5" stroke-dasharray="4 7"/>
+      <circle cx="100" cy="100" r="60" stroke="#1a1a18" stroke-width=".5"/>
+      <circle cx="100" cy="100" r="30" stroke="#1a1a18" stroke-width=".5" stroke-dasharray="2 5"/>
+    </svg>
+  </div>
 
+  <a href="index.html" id="logo">
+    <img src="logo.png" alt="Hong B. Nguyen">
+    <div id="logo-name">H B N</div>
+  </a>
 
-    <!-- Navigation -->
-    <nav id="nav">
-        <a href="index.html" class="nav-name">Hong B. Nguyen</a>
-        <div class="nav-links">
-            <a href="publications.html">Publications</a>
-            <a href="project-page.html">Projects</a>
-            <a href="resume.html">Resume</a>
-            <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
-        </div>
-    </nav>
+  <div class="obj" id="obj-name">
+    <a href="about.html">
+      <h1>Hong B.<br><em>Nguyen</em></h1>
+      <p class="role">Cognitive Scientist · New York</p>
+      <p class="hint">about me ↗</p>
+    </a>
+  </div>
 
-    <main>
-        <!-- About Section -->
-        <section class="about" id="about">
-            
-            <div class="about-layout">
-                <div class="about-photo-wrapper">
-                    <img src="img/profile/HN1.png" alt="Hong B. Nguyen" class="about-photo">
-                </div>
-                
-                <div class="about-content">
-                    <p class="proximity-target">Hi, I’m Hong B. Nguyen —  a cognitive scientist studying how surprisingly sophisticated implicit knowledge is woven into ordinary perception.</p>
-                   
-                    <p class="proximity-target">My research shows that the visual system makes rapid, unconscious assumptions about invisible physical forces like <a href="project-gravity.html" class="inline-link">gravity</a> and <a href="project-friction.html" class="inline-link">friction</a> in order to predict how objects will move. I study how we automatically extract social meaning from others’ faces and movements — for example, instantly seeing another person’s smile as subtly <a href="project-page-new.html#minds" class="inline-link">mischievous</a>, or their movements as intended to reach a <a href="project-page-new.html#minds" class="inline-link">goal</a>. A third line of my work examines how visual attention and information sampling shape higher-level tasks, from navigating <a href="project-page-new.html#interactive" class="inline-link">digital spaces</a> to engaging with <a href="project-page-new.html#interactive" class="inline-link">art</a>.</p>
-                   
-                    <p class="proximity-target">Across these projects, I argue that fast visual processing is far “smarter” than we typically give it credit for — and that seeing is already doing much of the work we call thinking.</p>
-                    
-                </div>
-            </div>
-        </section>
+  <div class="obj research-node" id="node-gravity" data-tip="JEP:HPP 2023">
+    <div class="node-label">Seeing Forces</div>
+    <div class="node-line"></div>
+    <a href="project-gravity.html" class="node-title">Gravity &amp; motion prediction</a>
+  </div>
+  <div class="obj research-node" id="node-friction" data-tip="Cognition 2024">
+    <div class="node-label">Seeing Forces</div>
+    <div class="node-line"></div>
+    <a href="project-friction.html" class="node-title">Friction &amp; spatial attention</a>
+  </div>
+  <div class="obj research-node" id="node-gaze" data-tip="Attentional dynamics">
+    <div class="node-label">Attention</div>
+    <div class="node-line"></div>
+    <a href="project-page-new.html#interactive" class="node-title">Gaze transplants &amp; aesthetics</a>
+  </div>
+  <div class="obj research-node" id="node-minds" data-tip="Social perception">
+    <div class="node-label">Seeing Minds</div>
+    <div class="node-line"></div>
+    <a href="project-page-new.html#minds" class="node-title">Mischief, goals, &amp; faces</a>
+  </div>
+  <div class="obj research-node" id="node-games" data-tip="Research platform">
+    <div class="node-label">Interaction</div>
+    <div class="node-line"></div>
+    <a href="project-page-new.html#interactive" class="node-title">Games as laboratories</a>
+  </div>
 
-       
-    </main>
+  <div class="obj" id="obj-status">
+    <p><span class="status-dot"></span>PhD Candidate · The New School · 2026</p>
+    <p style="padding-left:12px;">Available for research &amp; industry roles</p>
+  </div>
+  <div class="obj" id="obj-coords">
+    <p>40.7128° N, 74.0060° W</p>
+    <p>perception · cognition · design</p>
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© Hong B. Nguyen · New York</p>
-    </footer>
-
-    <!-- Cursor hint -->
-    <div class="cursor-hint" id="cursor-hint">
-        This page quietly responds to where you move your cursor.
-    </div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Navigation scroll effect
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Floating words parallax on scroll
-        const floatingWords = document.querySelectorAll('.floating-word');
-        let scrollY = 0;
-
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-            floatingWords.forEach(word => {
-                const speed = parseFloat(word.dataset.speed) || 0.3;
-                const yOffset = scrollY * speed * 0.1;
-                word.style.transform = `translateY(${yOffset}px)`;
-            });
-        });
-
-        // Cursor proximity effect
-        const proximityTargets = document.querySelectorAll('.proximity-target');
-        const cursorGlow = document.getElementById('cursor-glow');
-        let mouseX = 0, mouseY = 0;
-        let cursorHintShown = false;
-        let glowActive = false;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Update cursor glow position
-            if (!glowActive) {
-                cursorGlow.classList.add('active');
-                glowActive = true;
-            }
-            cursorGlow.style.setProperty('--mouse-x', mouseX + 'px');
-            cursorGlow.style.setProperty('--mouse-y', mouseY + 'px');
-
-            // Floating words drift
-            floatingWords.forEach((word, i) => {
-                const rect = word.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                const distX = (mouseX - centerX) * 0.01;
-                const distY = (mouseY - centerY) * 0.01;
-                const baseY = scrollY * (parseFloat(word.dataset.speed) || 0.3) * 0.1;
-                word.style.transform = `translate(${distX}px, ${baseY + distY}px)`;
-            });
-
-            // Proximity brightness for text
-            proximityTargets.forEach(target => {
-                const rect = target.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
-                
-                if (distance < 300) {
-                    target.classList.add('bright');
-                } else {
-                    target.classList.remove('bright');
-                }
-            });
-
-            // Show cursor hint after some movement
-            if (!cursorHintShown && (mouseX > 100 || mouseY > 100)) {
-                setTimeout(() => {
-                    document.getElementById('cursor-hint').classList.add('visible');
-                    setTimeout(() => {
-                        document.getElementById('cursor-hint').classList.remove('visible');
-                    }, 4000);
-                }, 3000);
-                cursorHintShown = true;
-            }
-        });
-
-        // Hide glow when mouse leaves window
-        document.addEventListener('mouseleave', () => {
-            cursorGlow.classList.remove('active');
-            glowActive = false;
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if
+<script>
+  const cur = document.getElementById('cursor');
+  const tip = document.getElementById('tooltip');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+    tip.style.left = e.clientX+'px'; tip.style.top = e.clientY+'px';
+  });
+  document.querySelectorAll('.research-node,#obj-name').forEach(el => {
+    el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+  });
+  document.querySelectorAll('.research-node[data-tip]').forEach(el => {
+    el.addEventListener('mouseenter', () => { tip.textContent = el.dataset.tip; tip.classList.add('show'); });
+    el.addEventListener('mouseleave', () => tip.classList.remove('show'));
+  });
+  let dragging=null,ox=0,oy=0;
+  document.querySelectorAll('#obj-name,#obj-tagline,#node-gravity,#node-friction,#node-gaze,#node-minds,#node-games').forEach(el => {
+    el.addEventListener('mousedown', e => {
+      if(e.target.tagName==='A') return;
+      dragging=el; const r=el.getBoundingClientRect();
+      ox=e.clientX-r.left; oy=e.clientY-r.top;
+      el.classList.add('dragging'); e.preventDefault();
+    });
+  });
+  document.addEventListener('mousemove', e => { if(dragging){ dragging.style.left=(e.clientX-ox)+'px'; dragging.style.top=(e.clientY-oy)+'px'; } });
+  document.addEventListener('mouseup', () => { if(dragging){dragging.classList.remove('dragging');dragging=null;} });
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  const px=[{el:document.getElementById('obj-letter'),d:.007},{el:document.getElementById('obj-ring'),d:.011}];
+  document.addEventListener('mousemove', e => {
+    const dx=e.clientX-cx, dy=e.clientY-cy;
+    px.forEach(({el,d})=>{ if(el&&!el.classList.contains('dragging')) el.style.transform=`translate(${dx*d}px,${dy*d}px)`; });
+  });
+</script>
+</body>
+</html>
