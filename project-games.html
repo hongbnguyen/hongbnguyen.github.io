@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games as Laboratories — Hong B. Nguyen</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --white:#fafaf8; --ink:#1a1a18; --ink-faint:rgba(26,26,24,0.15); --ink-mid:rgba(26,26,24,0.55); --red:#c04a1a; --serif:'EB Garamond',Georgia,serif; --mono:'DM Mono',monospace; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html,body{direction:ltr;background:var(--white);color:var(--ink);font-family:var(--serif);}
+  .main-header{position:fixed;top:50px;right:48px;z-index:100;}
+  .main-header nav{display:flex;gap:36px;}
+  .main-header nav a{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.55;transition:opacity .2s;}
+  .main-header nav a:hover,.main-header nav a.active{opacity:1;}
+  .project-page{max-width:860px;margin:0 auto;padding:130px 4% 6rem;}
+  .back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.38;transition:opacity .2s;margin-bottom:3rem;}
+  .back-link:hover{opacity:1;}
+  .project-eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red);opacity:.8;margin-bottom:1rem;}
+  .project-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.2;margin-bottom:1.2rem;}
+  .pub-ref{font-family:var(--serif);font-size:1rem;color:var(--ink);opacity:.6;margin-bottom:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--ink-faint);line-height:1.7;}
+  .pub-ref a{color:var(--red);text-decoration:none;margin-left:6px;}
+  .project-body p{font-family:var(--serif);font-size:1.15rem;line-height:1.8;margin-bottom:1.4rem;}
+  .project-body h2{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);opacity:.4;margin:3rem 0 1.2rem;}
+  .project-body h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--red);margin:2.5rem 0 .75rem;}
+  .findings-list{list-style:none;margin:1rem 0 2rem;}
+  .findings-list li{font-family:var(--serif);font-size:1.1rem;line-height:1.7;padding:.55rem 0;border-bottom:1px solid var(--ink-faint);}
+  .findings-list li::before{content:"→";margin-right:12px;color:var(--red);opacity:.6;}
+  .experiment-text{font-family:var(--serif);font-size:1.1rem;line-height:1.75;margin-bottom:1rem;}
+  .gaze-videos{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1rem 0 2rem;}
+  @media(max-width:640px){.gaze-videos{grid-template-columns:1fr;}}
+  .gaze-video-item{position:relative;border-radius:6px;overflow:hidden;background:#000;min-height:320px;cursor:pointer;}
+  .gaze-video-item video{width:100%;height:100%;min-height:320px;object-fit:contain;display:block;background:#000;}
+  .gaze-label{position:absolute;bottom:14px;left:14px;padding:6px 16px;border-radius:3px;font-family:var(--serif);font-size:1rem;z-index:2;}
+  .gaze-label.best{background:rgba(76,175,80,.9);color:#fff;}
+  .gaze-label.worst{background:rgba(211,47,47,.9);color:#fff;}
+  .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);transition:background .3s;z-index:1;}
+  .play-overlay:hover{background:rgba(0,0,0,.38);}
+  .play-overlay.hidden{display:none;}
+  .play-btn{width:72px;height:72px;background:rgba(255,255,255,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+  .play-btn:hover{transform:scale(1.08);}
+  .play-btn svg{width:28px;height:28px;margin-left:4px;fill:#1a1a18;}
+  .demo-container{position:relative;width:100%;height:65vh;min-height:460px;border-radius:8px;overflow:hidden;background:#0f0f1a;border:1px solid var(--ink-faint);margin:1rem 0 2rem;}
+  .demo-iframe{width:100%;height:100%;border:none;}
+  .demo-controls{position:absolute;top:14px;right:14px;z-index:10;}
+  .demo-btn{padding:8px 14px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.2);border-radius:3px;color:#fff;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:6px;}
+  .demo-btn:hover{background:rgba(0,212,255,.15);border-color:#00d4ff;}
+  .demo-btn svg{width:13px;height:13px;}
+  .demo-overlay{position:absolute;bottom:0;left:0;right:0;padding:14px 20px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);text-align:center;pointer-events:none;}
+  .demo-overlay span{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+  .demo-container:fullscreen{width:100vw;height:100vh;border-radius:0;}
+  .chart-container{margin:1.5rem 0 2rem;background:#f5f9fc;border-radius:6px;padding:1rem;border:1px solid rgba(0,80,150,.1);}
+  .chart{width:100%;min-height:320px;}
+  .cta-btn{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;background:var(--ink);color:var(--white);font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s;margin-top:.75rem;}
+  .cta-btn:hover{opacity:.7;}
+  .video-modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:1000;display:none;align-items:center;justify-content:center;}
+  .video-modal.active{display:flex;}
+  .video-modal-content{background:#111;border-radius:8px;padding:1.5rem;max-width:580px;width:90%;position:relative;}
+  .video-modal .close-modal{position:absolute;top:-38px;right:0;font-size:1.8rem;color:#fff;cursor:pointer;opacity:.6;background:none;border:none;}
+  .video-modal h4{font-family:var(--serif);font-size:1.1rem;color:#fff;margin-bottom:.75rem;}
+  .video-modal video{width:100%;border-radius:6px;}
+  .video-modal .video-instruction{font-family:var(--mono);font-size:.68rem;color:rgba(255,255,255,.4);margin-bottom:.75rem;letter-spacing:.06em;}
+  footer{border-top:1px solid var(--ink-faint);padding:32px 4%;}
+  footer p{color:var(--ink);opacity:.25;text-align:center;font-size:.65rem;font-family:var(--mono);letter-spacing:.08em;}
+  .fade-in{opacity:0;transform:translateY(12px);transition:all .6s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+<header class="main-header">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="publications.html">Publications</a>
+    <a href="project-page.html" class="active">Projects</a>
+    <a href="resume.html">Resume</a>
+    <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+  </nav>
+</header>
+<div class="project-page">
+  <a href="project-page.html" class="back-link">← All Projects</a>
+  <div class="project-eyebrow">Attention &amp; Interaction · Research Platform</div>
+  <h1 class="project-title">Games as Laboratories for Visual Cognition Research</h1>
+  <p class="pub-ref">Curriculum development · <em>Perception in Virtual Worlds</em> · In development</p>
+  <div class="project-body fade-in">
+
+    <p>I helped develop <em>Perception in Virtual Worlds</em>, a curriculum using game environments as a platform for perception research and teaching experimental design. Below are case studies — not completed experiments, but examples of how classic arcade games can isolate perceptual variables in dynamic, embodied contexts.</p>
+    <h2>Case Studies</h2>
+    <h3>Tailed Pac-Man</h3>
+    <p class="experiment-text"><strong>Can a single visual appendage change how vulnerable an agent appears — and how long it survives?</strong> I added a simple "tail" to Pac-Man to test whether minimal visual structure alters perceived vulnerability. The tailed agent was caught faster and elicited more abrupt movement patterns from the ghost AI.</p>
+    <a href="https://hbnguyen.itch.io/pacman-sh" target="_blank" class="cta-btn">▶ Play Tailed Pac-Man</a>
+    <h3>Color Pong</h3>
+    <p class="experiment-text"><strong>Does color alter not only how a game feels — but how we play it?</strong> Identical Pong environments differing only in background color. Color influenced time spent playing, movement patterns, and performance. Red environments produced faster, more erratic paddle movement.</p>
+    <a href="https://hbnguyen.itch.io/pong-hs" target="_blank" class="cta-btn">▶ Play Color Pong</a>
+    <h3>Maze Width Illusion</h3>
+    <p class="experiment-text"><strong>If two paths are the same length, can width alone determine which one we choose?</strong> In a virtual maze, participants chose between identical-length routes that differed only in width. Wider paths were perceived as shorter and chosen significantly more often — a spatial judgment bias with real navigational consequences.</p>
+    <a href="https://hbnguyen.itch.io/maze-dots" target="_blank" class="cta-btn">▶ Play Maze Width Illusion</a>
+  </div>
+</div>
+<footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+<script>
+
+  const fadeObs = new IntersectionObserver(e => { e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); }); }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(e => fadeObs.observe(e));
+
+
+</script>
+</body>
+</html>
