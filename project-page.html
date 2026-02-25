@@ -110,8 +110,82 @@
         }
         .group-desc { display: none !important; }
 
-        /* Cards area */
-        .section-content {
+        /* ── SUB-CHOOSER ── */
+        .sub-chooser {
+            display: none;
+            background: var(--white);
+            border: 1px solid var(--ink-faint);
+            border-radius: 4px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+            padding: 1.6rem 1.5rem;
+            margin: 0.8rem 0 0;
+            animation: slideDown 0.3s ease;
+        }
+        .sub-chooser.active { display: block; }
+        @keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+
+        .sub-chooser-heading {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1.2rem;
+            opacity: 0.8;
+        }
+        .sub-chooser-close {
+            float: right;
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            color: var(--ink-mid);
+            cursor: pointer;
+            background: none;
+            border: none;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .sub-chooser-close:hover { color: var(--ink); }
+
+        .sub-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .sub-option {
+            border: 1px solid var(--ink-faint);
+            border-radius: 3px;
+            padding: 1.2rem 1.3rem;
+            cursor: pointer;
+            background: var(--white);
+            transition: background 0.2s, box-shadow 0.2s;
+            text-align: left;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .sub-option:hover { background: #f0ede8; box-shadow: 0 3px 16px rgba(0,0,0,0.06); }
+        .sub-option-tag {
+            font-family: var(--mono);
+            font-size: 0.63rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            opacity: 0.7;
+        }
+        .sub-option-title {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+        }
+        .sub-option-desc {
+            font-family: var(--serif);
+            font-size: 0.88rem;
+            color: var(--ink-mid);
+            line-height: 1.6;
+        }
             display: flex !important;
             flex-direction: column !important;
             gap: 1rem;
@@ -123,10 +197,8 @@
             gap: 2rem !important;
             width: 100% !important;
         }
-        .cards-grid.three-col {
-            grid-template-columns: repeat(3, 1fr) !important;
-        }
-        /* two-col: 2 columns at same width as three-col columns, centered */
+        .cards-grid.three-col { grid-template-columns: repeat(3, 1fr) !important; }
+        /* two-col: same card width as three-col, centered */
         .cards-grid.two-col {
             grid-template-columns: repeat(2, 1fr) !important;
             width: calc(66.666% - 0.667rem) !important;
@@ -423,17 +495,16 @@
 
         /* Responsive */
         @media (max-width: 1000px) {
-            .cards-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+            .cards-grid.three-col { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media (max-width: 700px) {
-            .cards-grid.three-col { grid-template-columns: repeat(2, 1fr); }
-            .cards-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+            .cards-grid.three-col { grid-template-columns: repeat(2, 1fr) !important; }
+            .cards-grid.two-col { grid-template-columns: repeat(2, 1fr) !important; width: 100% !important; }
         }
         @media (max-width: 480px) {
             .cards-grid.three-col,
-            .cards-grid.two-col { grid-template-columns: 1fr; }
+            .cards-grid.two-col { grid-template-columns: 1fr !important; width: 100% !important; }
             .sub-options { grid-template-columns: 1fr; }
-            .study-details { padding: 1.8rem 1.2rem; }
         }
     </style>
 </head>
@@ -461,31 +532,29 @@
                 <h2 class="group-title">Attention &amp; Interaction</h2>
             </div>
 
-            <!-- 3-card row: combined card + museum + games -->
+            <!-- 3-card row -->
             <div class="cards-grid three-col fade-in" id="attention-grid">
 
-                <!-- Attentional guides — links to sub-page chooser or split -->
-                <a href="project-transplants.html" class="project-card" style="text-decoration:none;">
+                <!-- Combined: Transplants + Airport -->
+                <button class="project-card" onclick="toggleCombined()" style="text-align:left;">
                     <div class="card-img-box">
                         <img src="img/projects/landscape23.png_trajectories.png" alt="Attentional guides for digital environments">
                         <span class="card-combined-badge">2 Studies</span>
                     </div>
                     <div class="card-text">
-                        <div class="card-tag">Attentional dynamics · Navigation</div>
                         <div class="card-title">Attentional guides for digital environments</div>
                         <div class="card-desc">Gaze-transplant experiments and data-driven navigation scaffolds — two projects on how attention shapes and can be shaped by digital environments.</div>
                     </div>
-                </a>
+                </button>
 
                 <!-- Material perception / pitch-gloss -->
                 <a href="project-pitchgloss.html" class="project-card" style="text-decoration:none;">
                     <div class="card-img-box">
-                        <span class="card-img-placeholder">Sound × gloss</span>
+                        <img src="img12.png" alt="Material perception — gold necklace" style="object-fit:cover;">
                     </div>
                     <div class="card-text">
-                        <div class="card-tag">Published · Crossmodal perception</div>
                         <div class="card-title">Material perception in an online museum</div>
-                        <div class="card-desc">High-pitched sounds make objects look shinier. Concurrent auditory pitch automatically shifts visual gloss judgments — even when task-irrelevant. Two experiments, 300+ participants.</div>
+                        <div class="card-desc">High-pitched sounds make objects look shinier. Auditory pitch shifts visual gloss judgments automatically.</div>
                     </div>
                 </a>
 
@@ -495,13 +564,30 @@
                         <span class="card-img-placeholder">Games as labs</span>
                     </div>
                     <div class="card-text">
-                        <div class="card-tag">Research platform · In development</div>
                         <div class="card-title">Games UX research instruction</div>
-                        <div class="card-desc">Classic arcade games — Pac-Man, Pong, maze navigation — modified to isolate perceptual variables. Part of the <em>Perception in Virtual Worlds</em> curriculum.</div>
+                        <div class="card-desc">Classic arcade games — Pac-Man, Pong, maze navigation — modified to isolate perceptual variables.</div>
                     </div>
                 </a>
 
             </div><!-- /cards-grid -->
+
+            <!-- Sub-chooser -->
+            <div id="combined-chooser" class="sub-chooser">
+                <button class="sub-chooser-close" onclick="closeCombined()">✕ Close</button>
+                <div class="sub-chooser-heading">Choose a study</div>
+                <div class="sub-options">
+                    <a href="project-transplants.html" class="sub-option">
+                        <div class="sub-option-tag">Published · Gaze &amp; aesthetics</div>
+                        <div class="sub-option-title">Active viewing makes images more memorable</div>
+                        <div class="sub-option-desc">When you choose how to explore an image, you remember it better — and find it more beautiful. Evidence from gaze-transplant experiments.</div>
+                    </a>
+                    <a href="project-airport.html" class="sub-option">
+                        <div class="sub-option-tag">Applied research · Navigation</div>
+                        <div class="sub-option-title">Attentional transplants: a data-driven guide for navigation</div>
+                        <div class="sub-option-desc">By transplanting gaze patterns from expert navigators, we built an attentional scaffold that improves navigation — without a single arrow or sign.</div>
+                    </a>
+                </div>
+            </div>
 
         </section>
 
@@ -531,8 +617,8 @@
 
                 <!-- Mischief -->
                 <a href="project-mischief.html" class="project-card" style="text-decoration:none;">
-                    <div class="card-img-box" style="background: var(--paper);">
-                        <img src="img/projects/Smirk Emoji.png" alt="Mischief Project">
+                    <div class="card-img-box" style="background:#f0ede8;">
+                        <img src="mischief_complete_VSS_001.png" alt="Mischief Project" style="object-fit:contain; width:100%; height:100%; padding:8px;">
                     </div>
                     <div class="card-text">
                         <div class="card-tag">Published · Social perception</div>
@@ -559,8 +645,9 @@
 
                 <!-- Gravity -->
                 <a href="project-gravity.html" class="project-card" style="text-decoration:none;">
-                    <div class="card-img-box" style="background: #fff;">
-                        <img src="img/projects/icon_force2.png" alt="Gravity Study" style="object-fit: contain;">
+                    <div class="card-img-box" style="background:#fff;">
+                        <img src="img/projects/icon_force2.png" alt="Gravity Study" style="object-fit:contain; width:80%; height:80%;">
+                    </div>
                     </div>
                     <div class="card-text">
                         <div class="card-tag">Published · JEP:HPP 2023</div>
@@ -575,8 +662,8 @@
 
                 <!-- Friction -->
                 <a href="project-friction.html" class="project-card" style="text-decoration:none;">
-                    <div class="card-img-box">
-                        <img src="img/projects/wheel.jpg" alt="Friction Study">
+                    <div class="card-img-box" style="background:#fff;">
+                        <img src="img/projects/wheel.jpg" alt="Friction Study" style="object-fit:contain; width:80%; height:80%;">
                     </div>
                     <div class="card-text">
                         <div class="card-tag">Published · Cognition 2024</div>
@@ -598,6 +685,18 @@
     <footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
 
     <script>
+        // Sub-chooser toggle
+        let combinedOpen = false;
+        function toggleCombined() {
+            combinedOpen = !combinedOpen;
+            document.getElementById('combined-chooser').classList.toggle('active', combinedOpen);
+            if (combinedOpen) setTimeout(() => document.getElementById('combined-chooser').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
+        function closeCombined() {
+            combinedOpen = false;
+            document.getElementById('combined-chooser').classList.remove('active');
+        }
+
         // Fade-in on scroll
         const fadeObs = new IntersectionObserver(e => { e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); }); }, { threshold: 0.08 });
         document.querySelectorAll('.fade-in').forEach(e => fadeObs.observe(e));
