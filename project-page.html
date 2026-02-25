@@ -216,8 +216,8 @@
             overflow: visible;
             cursor: pointer;
             transition: opacity 0.2s;
-            display: flex;
-            flex-direction: column;
+            display: flex !important;
+            flex-direction: column !important;
             text-align: left;
             text-decoration: none;
             color: inherit;
@@ -226,6 +226,9 @@
             -webkit-appearance: none;
             font-family: inherit;
             padding: 0;
+            width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
         }
         .project-card:hover { opacity: 0.75; }
         .project-card.selected .card-img-box { box-shadow: 0 0 0 2px var(--navy); }
@@ -533,10 +536,10 @@
             </div>
 
             <!-- 3-card row -->
-            <div class="cards-grid three-col fade-in" id="attention-grid">
+            <div class="cards-grid three-col fade-in" id="attention-grid" style="display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:2rem !important; width:100% !important;">
 
                 <!-- Combined: Transplants + Airport -->
-                <button class="project-card" onclick="toggleCombined()" style="text-align:left;">
+                <button class="project-card" onclick="toggleCombined()" style="text-align:left; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box">
                         <img src="img/projects/landscape23.png_trajectories.png" alt="Attentional guides for digital environments">
                         <span class="card-combined-badge">2 Studies</span>
@@ -548,7 +551,7 @@
                 </button>
 
                 <!-- Material perception / pitch-gloss -->
-                <a href="project-pitchgloss.html" class="project-card" style="text-decoration:none;">
+                <a href="project-pitchgloss.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box">
                         <img src="img12.png" alt="Material perception — gold necklace" style="object-fit:cover;">
                     </div>
@@ -559,7 +562,7 @@
                 </a>
 
                 <!-- Games UX -->
-                <a href="project-games.html" class="project-card" style="text-decoration:none;">
+                <a href="project-games.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box">
                         <span class="card-img-placeholder">Games as labs</span>
                     </div>
@@ -601,10 +604,10 @@
                 <h2 class="group-title">Seeing Minds</h2>
             </div>
 
-            <div class="cards-grid two-col fade-in">
+            <div class="cards-grid two-col fade-in" style="display:grid !important; grid-template-columns:repeat(2,1fr) !important; gap:2rem !important; width:calc(66.666% - 0.667rem) !important; margin-left:auto !important; margin-right:auto !important;">
 
                 <!-- Intentional motion -->
-                <a href="project-intentional.html" class="project-card" style="text-decoration:none;">
+                <a href="project-intentional.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box">
                         <span class="card-img-placeholder">Motion trajectories</span>
                     </div>
@@ -616,7 +619,7 @@
                 </a>
 
                 <!-- Mischief -->
-                <a href="project-mischief.html" class="project-card" style="text-decoration:none;">
+                <a href="project-mischief.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box" style="background:#f0ede8;">
                         <img src="mischief_complete_VSS_001.png" alt="Mischief Project" style="object-fit:contain; width:100%; height:100%; padding:8px;">
                     </div>
@@ -641,38 +644,27 @@
                 <h2 class="group-title">Seeing Forces</h2>
             </div>
 
-            <div class="cards-grid two-col fade-in">
+            <div class="cards-grid two-col fade-in" style="display:grid !important; grid-template-columns:repeat(2,1fr) !important; gap:2rem !important; width:calc(66.666% - 0.667rem) !important; margin-left:auto !important; margin-right:auto !important;">
 
                 <!-- Gravity -->
-                <a href="project-gravity.html" class="project-card" style="text-decoration:none;">
+                <a href="project-gravity.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box" style="background:#fff;">
                         <img src="img/projects/icon_force2.png" alt="Gravity Study" style="object-fit:contain; width:80%; height:80%;">
                     </div>
-                    </div>
                     <div class="card-text">
-                        <div class="card-tag">Published · JEP:HPP 2023</div>
                         <div class="card-title">Gravity: visual prioritization of speed changes opposite gravity</div>
-                        <div class="card-desc">Observers are more sensitive to acceleration in upward-moving objects — because upward acceleration violates what gravity predicts. The visual system imputes gravitational force to anticipate motion, then flags deviations from that prediction.</div>
-                        <div class="card-meta">
-                            <span>Nguyen &amp; van Buren · JEP:HPP 2023</span>
-                            <span class="card-arrow">↗</span>
-                        </div>
+                        <div class="card-desc">Observers are more sensitive to acceleration in upward-moving objects — because upward acceleration violates what gravity predicts.</div>
                     </div>
                 </a>
 
                 <!-- Friction -->
-                <a href="project-friction.html" class="project-card" style="text-decoration:none;">
+                <a href="project-friction.html" class="project-card" style="text-decoration:none; width:100% !important; display:flex !important; flex-direction:column !important; min-width:0 !important;">
                     <div class="card-img-box" style="background:#fff;">
                         <img src="img/projects/wheel.jpg" alt="Friction Study" style="object-fit:contain; width:80%; height:80%;">
                     </div>
                     <div class="card-text">
-                        <div class="card-tag">Published · Cognition 2024</div>
                         <div class="card-title">Friction and attention: contact forces drive spatial orienting</div>
-                        <div class="card-desc">A rotating object touching a surface implies a direction of movement via friction. We show this implied force automatically orients visual attention — even when the object isn't moving. Ceiling contact reverses the effect entirely.</div>
-                        <div class="card-meta">
-                            <span>Nguyen &amp; van Buren · Cognition 2024</span>
-                            <span class="card-arrow">↗</span>
-                        </div>
+                        <div class="card-desc">A rotating object touching a surface implies a direction of movement via friction. This implied force automatically orients visual attention.</div>
                     </div>
                 </a>
 
