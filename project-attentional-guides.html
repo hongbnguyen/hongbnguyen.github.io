@@ -51,11 +51,9 @@
   /* GAZE VIDEOS */
   .gaze-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.4rem 0 1.8rem; }
   @media (max-width: 600px) { .gaze-videos { grid-template-columns: 1fr; } }
-  .gaze-video-item { position: relative; border-radius: 6px; overflow: hidden; background: #000; min-height: 280px; cursor: pointer; }
-  .gaze-video-item video { width: 100%; height: 100%; min-height: 280px; object-fit: contain; display: block; background: #000; }
-  .gaze-label { position: absolute; bottom: 12px; left: 12px; padding: 5px 14px; border-radius: 3px; font-family: var(--serif); font-size: .95rem; z-index: 2; }
-  .gaze-label.best { background: rgba(76,175,80,.9); color: #fff; }
-  .gaze-label.worst { background: rgba(211,47,47,.9); color: #fff; }
+  .gaze-video-item { position: relative; border-radius: 4px; overflow: hidden; background: transparent; min-height: 280px; cursor: pointer; }
+  .gaze-video-item video { width: 100%; height: 100%; min-height: 280px; object-fit: contain; display: block; background: transparent; }
+  .gaze-label { display: none; }
   .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.28); transition: background .2s; z-index: 1; }
   .play-overlay.hidden { display: none; }
   .play-btn { width: 64px; height: 64px; background: rgba(255,255,255,.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
