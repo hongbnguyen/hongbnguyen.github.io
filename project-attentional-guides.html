@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attentional Guides for Digital Environments — Hong B. Nguyen</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #fafaf8;
+    --ink: #1a1a18;
+    --ink-faint: rgba(26,26,24,0.15);
+    --ink-mid: rgba(26,26,24,0.55);
+    --red: #c04a1a;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { direction: ltr; background: var(--white); color: var(--ink); font-family: var(--serif); }
+
+  /* NAV */
+  .main-header { position: fixed; top: 50px; right: 48px; z-index: 100; }
+  .main-header nav { display: flex; gap: 36px; }
+  .main-header nav a { font-family: var(--mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: .55; transition: opacity .2s; }
+  .main-header nav a:hover, .main-header nav a.active { opacity: 1; }
+
+  /* PAGE */
+  .project-page { max-width: 780px; margin: 0 auto; padding: 130px 4% 6rem; }
+
+  /* BACK */
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: .38; transition: opacity .2s; margin-bottom: 3rem; }
+  .back-link:hover { opacity: 1; }
+
+  /* TITLE BLOCK */
+  .project-title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.8rem; color: var(--ink); }
+
+  /* INTRO TEXT */
+  .intro-text { font-family: var(--serif); font-size: 1.15rem; line-height: 1.85; margin-bottom: 2.5rem; color: var(--ink); }
+
+  /* SECTION HEADING (Study I / II) */
+  .study-heading { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--red); margin: 3rem 0 .9rem; }
+
+  /* BODY PARAGRAPHS */
+  p { font-family: var(--serif); font-size: 1.1rem; line-height: 1.82; margin-bottom: 1.2rem; color: var(--ink); }
+  p em { font-style: italic; }
+  p strong { font-weight: 500; }
+
+  /* SCENE IMAGE */
+  .scene-img { width: 100%; max-width: 560px; border-radius: 4px; display: block; margin: 1.4rem auto; }
+
+  /* GAZE VIDEOS */
+  .gaze-videos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.4rem 0 1.8rem; }
+  @media (max-width: 600px) { .gaze-videos { grid-template-columns: 1fr; } }
+  .gaze-video-item { position: relative; border-radius: 6px; overflow: hidden; background: #000; min-height: 280px; cursor: pointer; }
+  .gaze-video-item video { width: 100%; height: 100%; min-height: 280px; object-fit: contain; display: block; background: #000; }
+  .gaze-label { position: absolute; bottom: 12px; left: 12px; padding: 5px 14px; border-radius: 3px; font-family: var(--serif); font-size: .95rem; z-index: 2; }
+  .gaze-label.best { background: rgba(76,175,80,.9); color: #fff; }
+  .gaze-label.worst { background: rgba(211,47,47,.9); color: #fff; }
+  .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.28); transition: background .2s; z-index: 1; }
+  .play-overlay.hidden { display: none; }
+  .play-btn { width: 64px; height: 64px; background: rgba(255,255,255,.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .play-btn svg { width: 24px; height: 24px; margin-left: 4px; fill: #1a1a18; }
+
+  /* RESULT QUOTE */
+  .result-block { border-left: 2px solid var(--red); padding: .8rem 0 .8rem 1.4rem; margin: 1.6rem 0; }
+  .result-block p { font-size: 1.05rem; color: var(--ink); margin: 0; line-height: 1.75; }
+
+  /* DIAGRAM */
+  .diagram-img { width: 100%; max-width: 400px; display: block; margin: 1.4rem auto; border-radius: 4px; }
+
+  /* AIRPORT DEMO */
+  .demo-container { position: relative; width: 100%; height: 60vh; min-height: 420px; border-radius: 8px; overflow: hidden; background: #0f0f1a; border: 1px solid var(--ink-faint); margin: 1.2rem 0 1.8rem; }
+  .demo-iframe { width: 100%; height: 100%; border: none; }
+  .demo-controls { position: absolute; top: 14px; right: 14px; z-index: 10; }
+  .demo-btn { padding: 8px 14px; background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.2); border-radius: 3px; color: #fff; font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .demo-btn:hover { background: rgba(0,212,255,.15); border-color: #00d4ff; }
+  .demo-btn svg { width: 13px; height: 13px; }
+  .demo-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 20px; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); text-align: center; pointer-events: none; }
+  .demo-overlay span { font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .demo-container:fullscreen { width: 100vw; height: 100vh; border-radius: 0; }
+
+  /* DIVIDER */
+  .section-divider { border: none; border-top: 1px solid var(--ink-faint); margin: 3.5rem 0; }
+
+  /* CTA */
+  .cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 11px 22px; background: var(--ink); color: var(--white); font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: opacity .2s; margin-top: .5rem; }
+  .cta-btn:hover { opacity: .7; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--ink-faint); padding: 32px 4%; }
+  footer p { color: var(--ink); opacity: .25; text-align: center; font-size: .65rem; font-family: var(--mono); letter-spacing: .08em; }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(12px); transition: all .6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header class="main-header">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="publications.html">Publications</a>
+    <a href="project-page.html" class="active">Projects</a>
+    <a href="resume.html">Resume</a>
+    <a href="Hong B. Nguyen_CV_teaching 2026.pdf" target="_blank">CV</a>
+  </nav>
+</header>
+
+<div class="project-page">
+
+  <a href="project-page.html" class="back-link">← All Projects</a>
+
+  <h1 class="project-title fade-in">Attentional guides for digital environments</h1>
+
+  <p class="intro-text fade-in">Designers have long struggled with guiding attention on websites and in interactive games. The premise of these projects is simple: instead of relying on our intuition about how people should attend, what if we guided users to attend similarly to past users who interacted optimally with the design?</p>
+
+  <hr class="section-divider">
+
+  <!-- ── STUDY I ─────────────────────────────────────────────────── -->
+  <div class="fade-in">
+    <div class="study-heading">I: Transplanting attention to optimize subjective evaluations of places</div>
+
+    <p>Take a look at this scene. How much do you like the landscape?</p>
+
+    <img src="landscape75.png" alt="Coastal landscape at sunset" class="scene-img">
+
+    <p>How much you liked it might depend on where you attended. Here is the viewing pattern of somebody who gave this scene an especially <em>high</em> aesthetic rating:</p>
+
+    <div class="gaze-videos">
+      <div class="gaze-video-item" onclick="playVideo(this)">
+        <video loop muted playsinline><source src="videos/landscape23.png_best.mp4" type="video/mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="gaze-label best">Liked it best</span>
+      </div>
+    </div>
+
+    <p>Here is the viewing pattern of somebody who gave this scene a relatively low aesthetic rating:</p>
+
+    <div class="gaze-videos">
+      <div class="gaze-video-item" onclick="playVideo(this)">
+        <video loop muted playsinline><source src="videos/landscape23.png_worst.mp4" type="video/mp4"></video>
+        <div class="play-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <span class="gaze-label worst">Liked it least</span>
+      </div>
+    </div>
+
+    <div class="result-block">
+      <p>In a recent preprint, I demonstrate that guiding new participants to attend to an image similarly to a person who particularly liked the image causes the new participants to like it too. Meanwhile, guiding participants to attend similarly to a past viewer who disliked the image caused them to like it less — by almost 2 std!</p>
+    </div>
+
+    <img src="attentional_guides_diagram.png" alt="Results diagram — attentional transplants effect on aesthetic ratings" class="diagram-img">
+
+    <p>As we discuss in this <a href="https://ieeexplore.ieee.org/abstract/document/10536359" target="_blank" style="color:var(--red); text-decoration:none;">conference paper ↗</a>, the beauty of this approach is that you don't need any explicit theory about how exactly attention drives user experience. Instead, you leverage "the wisdom of the crowd" to find the way of attending that optimizes for any outcome.</p>
+
+    <p>Let's see another case study of how this works.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ── STUDY II ────────────────────────────────────────────────── -->
+  <div class="fade-in">
+    <div class="study-heading">II: Transplanting attention to speed up navigation</div>
+
+    <p>I have also used this principle to design a new system to guide users' attention in virtual and mixed reality environments. Click the 'airport navigation' game below, and use WASD and your cursor to try to move to your gate as quickly as possible.</p>
+
+    <div class="demo-container" id="demo-container-1">
+      <div class="demo-controls">
+        <button class="demo-btn" onclick="toggleFullscreen('demo-container-1')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          Fullscreen
+        </button>
+      </div>
+      <iframe src="ar-airport-unguided.html" class="demo-iframe" allowfullscreen></iframe>
+      <div class="demo-overlay"><span>Click to interact · WASD to move · Mouse to look</span></div>
+    </div>
+
+    <p>Pretty hard, right? Maybe you can benefit from seeing the path of the person who navigated fastest to your destination — click the left button to reveal the attentional guide.</p>
+
+    <div class="demo-container" id="demo-container-2">
+      <div class="demo-controls">
+        <button class="demo-btn" onclick="toggleFullscreen('demo-container-2')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          Fullscreen
+        </button>
+      </div>
+      <iframe src="ar-airport-guided.html" class="demo-iframe" allowfullscreen></iframe>
+      <div class="demo-overlay"><span>Click to interact · WASD to move · Mouse to look · Left-click to reveal guide</span></div>
+    </div>
+
+    <p>There are countless ways in which understanding visual perception and attention can aid interface design — my work demonstrates that this understanding is not always necessary to build a powerful attentional guidance system for any outcome.</p>
+
+    <a href="https://ieeexplore.ieee.org/abstract/document/10536359" target="_blank" class="cta-btn">↗ Read the conference paper</a>
+  </div>
+
+</div>
+
+<footer><p>© 2024 Hong B. Nguyen. All rights reserved.</p></footer>
+
+<script>
+  function playVideo(container) {
+    const video = container.querySelector('video');
+    const overlay = container.querySelector('.play-overlay');
+    if (video.paused) { video.play(); overlay.classList.add('hidden'); }
+    else { video.pause(); overlay.classList.remove('hidden'); }
+  }
+
+  function toggleFullscreen(id) {
+    const c = document.getElementById(id);
+    if (!document.fullscreenElement) { c.requestFullscreen?.(); }
+    else { document.exitFullscreen?.(); }
+  }
+
+  const fadeObs = new IntersectionObserver(e => {
+    e.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade-in').forEach(e => fadeObs.observe(e));
+</script>
+</body>
+</html>
