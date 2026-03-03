@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Airport Navigation - Expert Ghost</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: #0f0f1a; color: white; overflow: hidden; cursor: crosshair; }
+        #container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+        .hud { position: fixed; top: 0; left: 0; right: 0; padding: 20px 30px; display: flex; justify-content: space-between; z-index: 100; background: linear-gradient(to bottom, rgba(15,15,26,0.95), transparent); pointer-events: none; }
+        .title h1 { font-size: 18px; font-weight: 800; }
+        .title span { font-size: 11px; color: #00d4ff; letter-spacing: 2px; }
+        .gate-box { background: rgba(0,0,0,0.5); border: 2px solid #ff7744; border-radius: 16px; padding: 12px 24px; text-align: center; }
+        .gate-label { font-size: 10px; color: #888; }
+        .gate-num { font-size: 42px; font-weight: 800; color: #ff7744; }
+        .bubble { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); z-index: 200; background: rgba(0,0,0,0.9); padding: 14px 28px; border-radius: 30px; font-size: 18px; font-weight: 700; border: 2px solid #00d4ff; color: #00d4ff; }
+        .info { position: fixed; left: 30px; top: 50%; transform: translateY(-50%); z-index: 100; pointer-events: none; }
+        .info-card { background: rgba(0,0,0,0.6); border-radius: 16px; padding: 16px; margin-bottom: 10px; max-width: 180px; }
+        .info-title { font-size: 10px; color: #00d4ff; letter-spacing: 1px; margin-bottom: 6px; }
+        .info-text { font-size: 12px; color: #888; line-height: 1.6; }
+        .key { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: white; }
+        .minimap { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; background: rgba(0,0,0,0.7); border-radius: 16px; padding: 12px; pointer-events: none; }
+        .minimap-title { font-size: 10px; color: #666; letter-spacing: 1px; text-align: center; margin-bottom: 8px; }
+        .stats { position: fixed; bottom: 30px; right: 30px; z-index: 100; background: rgba(0,0,0,0.7); padding: 14px 20px; border-radius: 20px; }
+        .stat-val { font-size: 28px; font-weight: 800; color: #00d4ff; }
+        .stat-label { font-size: 10px; color: #666; }
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); z-index: 300; background: rgba(0,0,0,0.95); border: 2px solid #00ff9d; border-radius: 30px; padding: 40px 50px; text-align: center; opacity: 0; visibility: hidden; transition: all 0.4s; }
+        .modal.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+        .modal-icon { font-size: 50px; margin-bottom: 10px; }
+        .modal-title { font-size: 28px; font-weight: 800; }
+        .modal-time { font-size: 36px; font-weight: 800; color: #00d4ff; margin: 15px 0; }
+        .modal-btn { padding: 14px 30px; background: linear-gradient(135deg, #00ff9d, #00d4ff); border: none; border-radius: 25px; color: #000; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer; }
+        .ghost-label { position: fixed; top: 150px; left: 50%; transform: translateX(-50%); z-index: 180; background: rgba(0,0,0,0.8); padding: 8px 16px; border-radius: 15px; font-size: 13px; font-weight: 600; color: #00d4ff; border: 1px solid #00d4ff; }
+        .condition-badge { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0,212,255,0.2); border: 2px solid #00d4ff; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; color: #00d4ff; z-index: 150; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div class="condition-badge">👻 EXPERT GHOST CONDITION</div>
+    <div class="bubble" id="bubble">Follow the expert!</div>
+    <div class="ghost-label" id="ghost-label">👻 Following: Expert Navigator</div>
+    
+    <div class="hud">
+        <div class="title">
+            <h1>🔬 AR Navigation Study</h1>
+            <span>EXPERT NAVIGATOR</span>
+        </div>
+        <div class="gate-box">
+            <div class="gate-label">FIND GATE</div>
+            <div class="gate-num">B24</div>
+        </div>
+    </div>
+    
+    <div class="info">
+        <div class="info-card">
+            <div class="info-title">CONTROLS</div>
+            <div class="info-text">
+                <span class="key">WASD</span> move<br>
+                <span class="key">MOUSE</span> look<br>
+                <span class="key">SHIFT</span> run
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-title">EXPERT GHOST</div>
+            <div class="info-text">
+                Follow the ghost of an<br>
+                efficient navigator!
+            </div>
+        </div>
+    </div>
+    
+    <div class="minimap">
+        <div class="minimap-title">TERMINAL MAP</div>
+        <canvas id="minimap" width="180" height="200"></canvas>
+    </div>
+    
+    <div class="stats">
+        <div><div class="stat-val" id="time">0:00</div><div class="stat-label">TIME</div></div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-icon">🎉</div>
+        <div class="modal-title">Gate Found!</div>
+        <div class="modal-time" id="final-time">0:00</div>
+        <button class="modal-btn" onclick="restart()">Try Again</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let pos = { x: 0, y: 1.7, z: 0 };
+        let rot = { x: 0, y: 0 };
+        let keys = {};
+        let startTime = Date.now();
+        let complete = false;
+        let focusObjs = [], blurObjs = [];
+        let ghost = null;
+        let ghostProgress = 0;
+        let ghostIsWaiting = false;
+        let ghostWaitTime = 0;
+        
+        const GATE = { x: 100, z: -60 };
+        const GHOST_COLOR = 0x00d4ff;
+        
+        const walkableAreas = [
+            { minX: -40, maxX: 40, minZ: -30, maxZ: 10 },
+            { minX: 35, maxX: 110, minZ: -30, maxZ: 10 },
+            { minX: 70, maxX: 110, minZ: -70, maxZ: -25 },
+            { minX: -80, maxX: -35, minZ: -30, maxZ: 10 },
+            { minX: -30, maxX: 30, minZ: -70, maxZ: -25 },
+            { minX: -60, maxX: -25, minZ: -70, maxZ: -40 },
+            { minX: -90, maxX: -55, minZ: -90, maxZ: -50 },
+            { minX: -60, maxX: 30, minZ: -100, maxZ: -65 },
+            { minX: 25, maxX: 110, minZ: -100, maxZ: -65 }
+        ];
+        
+        // Expert path - efficient direct route
+        const ghostPath = [
+            {x:0, z:0}, {x:20, z:-10}, {x:50, z:-10},
+            {x:80, z:-10}, {x:90, z:-30}, {x:90, z:-50}, {x:100, z:-60}
+        ];
+        
+        const guideMsg = ["Follow me! →", "B Gates this way!", "Almost there!", "Gate found! ✈️"];
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);
+            scene.fog = new THREE.Fog(0x0a0a15, 8, 35);
+            
+            camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 300);
+            camera.position.set(0, 1.7, 0);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(innerWidth, innerHeight);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            document.getElementById('container').appendChild(renderer.domElement);
+            
+            setupLights();
+            buildEnvironment();
+            buildTerminal();
+            ghost = createGhost();
+            setupEvents();
+            animate();
+        }
+        
+        function createGhost() {
+            const g = new THREE.Group();
+            const mat = new THREE.MeshStandardMaterial({ color: GHOST_COLOR, transparent: true, opacity: 0.6, emissive: GHOST_COLOR, emissiveIntensity: 0.3 });
+            
+            const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.45, 1.0, 8), mat);
+            torso.position.y = 1.0;
+            g.add(torso);
+            
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 12), mat);
+            head.position.y = 1.75;
+            g.add(head);
+            
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const eyeL = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), eyeMat);
+            eyeL.position.set(-0.1, 1.78, 0.22);
+            g.add(eyeL);
+            const eyeR = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), eyeMat);
+            eyeR.position.set(0.1, 1.78, 0.22);
+            g.add(eyeR);
+            
+            const wispMat = new THREE.MeshStandardMaterial({ color: GHOST_COLOR, transparent: true, opacity: 0.3, emissive: GHOST_COLOR, emissiveIntensity: 0.2 });
+            const wisp = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.8, 8), wispMat);
+            wisp.position.y = 0.2;
+            wisp.rotation.x = Math.PI;
+            g.add(wisp);
+            
+            g.userData.particles = [];
+            const pMat = new THREE.MeshBasicMaterial({ color: GHOST_COLOR, transparent: true, opacity: 0.5 });
+            for (let i = 0; i < 8; i++) {
+                const p = new THREE.Mesh(new THREE.SphereGeometry(0.05, 6, 6), pMat.clone());
+                p.userData = { angle: (i/8)*Math.PI*2, speed: 0.5+Math.random()*0.5, radius: 0.5+Math.random()*0.3, yOffset: Math.random()*1.5 };
+                g.add(p);
+                g.userData.particles.push(p);
+            }
+            
+            scene.add(g);
+            return g;
+        }
+        
+        function setupLights() {
+            scene.add(new THREE.AmbientLight(0x606080, 0.5));
+            const sun = new THREE.DirectionalLight(0xffffff, 0.4);
+            sun.position.set(50, 80, 50);
+            scene.add(sun);
+            [[0,0],[0,-20],[0,-45],[0,-85],[40,-10],[70,-10],[90,-10],[90,-40],[90,-60],[-40,-10],[-60,-10],[-40,-55],[-70,-70],[-40,-85],[30,-85],[60,-85]].forEach(([x,z]) => {
+                const l = new THREE.PointLight(0xffffee, 0.7, 35);
+                l.position.set(x, 4.5, z);
+                scene.add(l);
+            });
+        }
+        
+        function buildEnvironment() {
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 250), new THREE.MeshStandardMaterial({ color: 0x2a2a3e }));
+            floor.rotation.x = -Math.PI/2;
+            floor.position.set(20, 0, -45);
+            scene.add(floor);
+            
+            const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(300, 250), new THREE.MeshStandardMaterial({ color: 0x1a1a2e }));
+            ceiling.rotation.x = Math.PI/2;
+            ceiling.position.set(20, 5.5, -45);
+            scene.add(ceiling);
+            
+            const wallMat = new THREE.MeshStandardMaterial({ color: 0x3d3d5c });
+            [[0,12,90,0.5],[-92,-40,0.5,110],[112,-40,0.5,120],[10,-105,210,0.5]].forEach(([x,z,w,d]) => {
+                const wall = new THREE.Mesh(new THREE.BoxGeometry(w, 5.5, d), wallMat);
+                wall.position.set(x, 2.75, z);
+                scene.add(wall);
+            });
+            
+            const pillarMat = new THREE.MeshStandardMaterial({ color: 0x4a4a6a });
+            [[-30,-10],[30,-10],[-30,-60],[30,-60],[60,-10],[60,-60],[90,-30]].forEach(([x,z]) => {
+                const p = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 5.5, 8), pillarMat);
+                p.position.set(x, 2.75, z);
+                scene.add(p);
+            });
+        }
+        
+        function buildTerminal() {
+            // Food court (blurred - distraction)
+            const fc = new THREE.Group();
+            [[-0.4, 0xff6a4a], [0, 0xffaa00], [0.4, 0x66ff66]].forEach(([angle, color]) => {
+                const x = Math.sin(angle)*15, z = -Math.cos(angle)*8-8;
+                const counter = new THREE.Mesh(new THREE.BoxGeometry(8, 1.2, 2), new THREE.MeshStandardMaterial({ color: 0x5a4a3a }));
+                counter.position.set(x, 0.6, z);
+                counter.rotation.y = -angle;
+                fc.add(counter);
+                const menu = new THREE.Mesh(new THREE.BoxGeometry(6, 2, 0.2), new THREE.MeshStandardMaterial({ color: 0x1a1a1a, emissive: color, emissiveIntensity: 0.1 }));
+                menu.position.set(x, 3.5, z-1.5);
+                menu.rotation.y = -angle;
+                fc.add(menu);
+            });
+            fc.position.set(0, 0, -45);
+            scene.add(fc);
+            blurObjs.push(fc);
+            
+            // Shops (blurred)
+            const shops = new THREE.Group();
+            [[0, 0xff69b4], [-15, 0x6a4aff]].forEach(([x, color]) => {
+                const f = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.3), new THREE.MeshStandardMaterial({ color: 0x2a2a4a, emissive: color, emissiveIntensity: 0.08 }));
+                f.position.set(x, 2, -5);
+                shops.add(f);
+            });
+            shops.position.set(-40, 0, -50);
+            scene.add(shops);
+            blurObjs.push(shops);
+            
+            // Duty free (blurred)
+            const df = new THREE.Group();
+            const sf = new THREE.Mesh(new THREE.BoxGeometry(25, 4.5, 0.3), new THREE.MeshStandardMaterial({ color: 0x1a1a2e, emissive: 0xffaa4a, emissiveIntensity: 0.08 }));
+            sf.position.set(0, 2.25, -8);
+            df.add(sf);
+            df.position.set(-72, 0, -62);
+            scene.add(df);
+            blurObjs.push(df);
+            
+            // Gate (focused)
+            const gate = new THREE.Group();
+            const desk = new THREE.Mesh(new THREE.BoxGeometry(14, 1.2, 3), new THREE.MeshStandardMaterial({ color: 0x4a4a6a }));
+            desk.position.set(0, 0.6, 5);
+            gate.add(desk);
+            const signBg = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.3), new THREE.MeshStandardMaterial({ color: 0x1a1a2e, emissive: 0xff7744, emissiveIntensity: 0.5 }));
+            signBg.position.set(0, 4.5, 8);
+            gate.add(signBg);
+            const canvas = document.createElement('canvas');
+            canvas.width = 500; canvas.height = 180;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0,0,500,180);
+            ctx.fillStyle = '#ff7744'; ctx.font = 'bold 100px Arial'; ctx.textAlign = 'center';
+            ctx.fillText('B24', 250, 85);
+            ctx.fillStyle = '#00ff00'; ctx.font = '28px Arial';
+            ctx.fillText('✈ NOW BOARDING', 250, 140);
+            const tex = new THREE.CanvasTexture(canvas);
+            const txt = new THREE.Mesh(new THREE.PlaneGeometry(11.8, 3.9), new THREE.MeshBasicMaterial({ map: tex }));
+            txt.position.set(0, 4.5, 8.16);
+            gate.add(txt);
+            const seatMat = new THREE.MeshStandardMaterial({ color: 0x3a5a7a });
+            for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) {
+                const seat = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.55, 1.1), seatMat);
+                seat.position.set(-6 + c*2.4, 0.5, -3 - r*2.5);
+                gate.add(seat);
+            }
+            gate.position.set(GATE.x, 0, GATE.z);
+            scene.add(gate);
+            focusObjs.push(gate);
+            
+            // Signs (focused)
+            [["← A Gates | B Gates →", 0, -5], ["B10-B20 →", 65, -10], ["↓ B21-B30", 85, -25], ["B24 →", 90, -50]].forEach(([text, x, z]) => {
+                const sign = createSign(text, GHOST_COLOR, x, 4.2, z);
+                focusObjs.push(sign);
+            });
+            
+            // Apply visibility
+            blurObjs.forEach(o => setVis(o, 0.1, 0.02));
+            focusObjs.forEach(o => setVis(o, 1, 0.5));
+            
+            // People (blurred)
+            [[5,-5],[-10,-8],[30,-12],[60,-8],[85,-15],[95,-45],[5,-40],[-15,-52],[-60,-68],[-30,-82],[40,-80],[70,-82]].forEach(([x,z]) => {
+                const p = new THREE.Group();
+                const body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.38, 1.3, 8), new THREE.MeshStandardMaterial({ color: [0x4a5568,0x5a4a68,0x4a6858][Math.floor(Math.random()*3)], transparent: true, opacity: 0.15 }));
+                body.position.y = 1.15;
+                p.add(body);
+                const head = new THREE.Mesh(new THREE.SphereGeometry(0.25, 12, 12), new THREE.MeshStandardMaterial({ color: 0xd4a574, transparent: true, opacity: 0.15 }));
+                head.position.y = 2;
+                p.add(head);
+                p.position.set(x, 0, z);
+                p.rotation.y = Math.random() * Math.PI * 2;
+                scene.add(p);
+            });
+        }
+        
+        function createSign(text, color, x, y, z) {
+            const grp = new THREE.Group();
+            const board = new THREE.Mesh(new THREE.BoxGeometry(10, 2, 0.2), new THREE.MeshStandardMaterial({ color: 0x1a1a2e, emissive: color, emissiveIntensity: 0.3 }));
+            grp.add(board);
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#1a1a2e'; ctx.fillRect(0,0,512,100);
+            ctx.fillStyle = '#' + color.toString(16).padStart(6,'0');
+            ctx.font = 'bold 48px Arial'; ctx.textAlign = 'center';
+            ctx.fillText(text, 256, 65);
+            const tex = new THREE.CanvasTexture(canvas);
+            const front = new THREE.Mesh(new THREE.PlaneGeometry(9.8, 1.9), new THREE.MeshBasicMaterial({ map: tex }));
+            front.position.z = 0.11;
+            grp.add(front);
+            const back = new THREE.Mesh(new THREE.PlaneGeometry(9.8, 1.9), new THREE.MeshBasicMaterial({ map: tex }));
+            back.position.z = -0.11; back.rotation.y = Math.PI;
+            grp.add(back);
+            grp.position.set(x, y, z);
+            scene.add(grp);
+            return grp;
+        }
+        
+        function setVis(obj, opacity, emissive) {
+            obj.traverse(c => {
+                if (c.material) {
+                    c.material.transparent = true;
+                    c.material.opacity = opacity;
+                    if (c.material.emissiveIntensity !== undefined) c.material.emissiveIntensity = emissive;
+                }
+            });
+        }
+        
+        function getPathPosition(progress) {
+            let totalLen = 0;
+            const segs = [];
+            for (let i = 0; i < ghostPath.length-1; i++) {
+                const len = Math.hypot(ghostPath[i+1].x - ghostPath[i].x, ghostPath[i+1].z - ghostPath[i].z);
+                segs.push({ start: ghostPath[i], end: ghostPath[i+1], length: len });
+                totalLen += len;
+            }
+            let target = progress * totalLen, acc = 0;
+            for (const seg of segs) {
+                if (acc + seg.length >= target) {
+                    const t = (target - acc) / seg.length;
+                    return { x: seg.start.x + (seg.end.x - seg.start.x)*t, z: seg.start.z + (seg.end.z - seg.start.z)*t, dirX: seg.end.x - seg.start.x, dirZ: seg.end.z - seg.start.z };
+                }
+                acc += seg.length;
+            }
+            return { x: ghostPath[ghostPath.length-1].x, z: ghostPath[ghostPath.length-1].z, dirX: 0, dirZ: -1 };
+        }
+        
+        function getPlayerProgress() {
+            let totalLen = 0;
+            const segs = [];
+            for (let i = 0; i < ghostPath.length-1; i++) {
+                const len = Math.hypot(ghostPath[i+1].x - ghostPath[i].x, ghostPath[i+1].z - ghostPath[i].z);
+                segs.push({ start: ghostPath[i], end: ghostPath[i+1], length: len, startDist: totalLen });
+                totalLen += len;
+            }
+            let minD = Infinity, prog = 0;
+            for (const seg of segs) {
+                const dx = seg.end.x - seg.start.x, dz = seg.end.z - seg.start.z, len = seg.length;
+                if (len === 0) continue;
+                let t = ((pos.x - seg.start.x)*dx + (pos.z - seg.start.z)*dz) / (len*len);
+                t = Math.max(0, Math.min(1, t));
+                const cx = seg.start.x + t*dx, cz = seg.start.z + t*dz;
+                const d = Math.hypot(pos.x - cx, pos.z - cz);
+                if (d < minD) { minD = d; prog = (seg.startDist + t*seg.length) / totalLen; }
+            }
+            return prog;
+        }
+        
+        function animateGhost(time, dt) {
+            const pathPos = getPathPosition(ghostProgress);
+            const distToPlayer = Math.hypot(pathPos.x - pos.x, pathPos.z - pos.z);
+            const playerProg = getPlayerProgress();
+            const progAhead = ghostProgress - playerProg;
+            
+            let speed = 0;
+            // Adjusted distances: ghost stays closer (3-6 units ahead)
+            if (distToPlayer > 12 || progAhead > 0.10) { speed = 0; ghostIsWaiting = true; ghostWaitTime += dt; }
+            else if (distToPlayer > 10) { speed = 0.008; ghostIsWaiting = true; }
+            else if (distToPlayer < 2.5) { speed = 0.07; ghostIsWaiting = false; ghostWaitTime = 0; }
+            else if (distToPlayer < 5) { speed = 0.04; ghostIsWaiting = false; ghostWaitTime = 0; }
+            else { speed = 0.04 * Math.max(0.3, 1 - (distToPlayer-5)/7); ghostIsWaiting = false; ghostWaitTime = 0; }
+            
+            if (ghostProgress >= 0.98) { ghostProgress = 0.98; speed = 0; }
+            ghostProgress = Math.min(0.98, ghostProgress + speed * dt * 60);
+            
+            const newPos = getPathPosition(ghostProgress);
+            const floatY = Math.sin(time * (ghostIsWaiting ? 1.5 : 2)) * (ghostIsWaiting ? 0.25 : 0.15);
+            ghost.position.set(newPos.x, floatY, newPos.z);
+            
+            if (ghostIsWaiting && ghostWaitTime > 0.5) {
+                const toPlayer = Math.atan2(pos.x - newPos.x, pos.z - newPos.z);
+                ghost.rotation.y += (toPlayer - ghost.rotation.y) * 0.05;
+            } else if (newPos.dirX || newPos.dirZ) {
+                const target = Math.atan2(newPos.dirX, newPos.dirZ);
+                ghost.rotation.y += (target - ghost.rotation.y) * 0.1;
+            }
+            
+            ghost.userData.particles.forEach(p => {
+                const a = p.userData.angle + time * p.userData.speed * (ghostIsWaiting ? 1.5 : 1);
+                const r = p.userData.radius * (ghostIsWaiting ? 1.3 : 1);
+                p.position.set(Math.cos(a)*r, p.userData.yOffset + Math.sin(time*2 + p.userData.angle)*0.2, Math.sin(a)*r);
+                p.material.opacity = 0.3 + Math.sin(time*3 + p.userData.angle)*0.2;
+            });
+            
+            const label = document.getElementById('ghost-label');
+            if (ghostIsWaiting) label.textContent = ghostWaitTime > 2 ? "👻 Waiting... Come this way!" : "👻 Waiting for you...";
+            else if (ghostProgress >= 0.97) label.textContent = "👻 We made it! Gate B24!";
+            else label.textContent = "👻 Following: Expert Navigator";
+            
+            const bubble = document.getElementById('bubble');
+            const idx = Math.min(Math.floor(ghostProgress * guideMsg.length), guideMsg.length-1);
+            bubble.textContent = guideMsg[idx];
+        }
+        
+        function validPos(x, z) {
+            for (const a of walkableAreas) if (x >= a.minX+0.6 && x <= a.maxX-0.6 && z >= a.minZ+0.6 && z <= a.maxZ-0.6) return true;
+            return false;
+        }
+        
+        function setupEvents() {
+            document.addEventListener('keydown', e => { keys[e.code] = true; if (['KeyW','KeyA','KeyS','KeyD','ShiftLeft'].includes(e.code)) e.preventDefault(); });
+            document.addEventListener('keyup', e => keys[e.code] = false);
+            document.addEventListener('mousemove', e => { if (complete) return; rot.y -= e.movementX*0.002; rot.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, rot.x - e.movementY*0.002)); });
+            renderer.domElement.addEventListener('click', () => renderer.domElement.requestPointerLock());
+            window.addEventListener('resize', () => { camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+        }
+        
+        function updatePlayer(dt) {
+            if (complete) return;
+            const speed = keys['ShiftLeft'] ? 16 : 8;
+            let fwd = 0, strafe = 0;
+            if (keys['KeyW']) fwd++; if (keys['KeyS']) fwd--;
+            if (keys['KeyD']) strafe++; if (keys['KeyA']) strafe--;
+            if (fwd || strafe) {
+                let dx = (-Math.sin(rot.y)*fwd + Math.cos(rot.y)*strafe) * speed * dt;
+                let dz = (-Math.cos(rot.y)*fwd - Math.sin(rot.y)*strafe) * speed * dt;
+                if (fwd && strafe) { dx *= 0.707; dz *= 0.707; }
+                const nx = pos.x+dx, nz = pos.z+dz;
+                if (validPos(nx, nz)) { pos.x = nx; pos.z = nz; }
+                else if (validPos(nx, pos.z)) pos.x = nx;
+                else if (validPos(pos.x, nz)) pos.z = nz;
+            }
+            camera.position.set(pos.x, pos.y, pos.z);
+            camera.rotation.order = 'YXZ';
+            camera.rotation.y = rot.y;
+            camera.rotation.x = rot.x;
+        }
+        
+        function checkWin() {
+            if (complete) return;
+            if (Math.hypot(pos.x-GATE.x, pos.z-GATE.z) < 8) {
+                complete = true;
+                document.getElementById('final-time').textContent = document.getElementById('time').textContent;
+                document.getElementById('modal').classList.add('show');
+                document.exitPointerLock?.();
+            }
+        }
+        
+        function updateTime() {
+            if (complete) return;
+            const sec = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('time').textContent = `${Math.floor(sec/60)}:${(sec%60).toString().padStart(2,'0')}`;
+        }
+        
+        function drawMinimap() {
+            const c = document.getElementById('minimap'), ctx = c.getContext('2d');
+            ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(0,0,180,200);
+            const mx = x => 90 + x*0.8, mz = z => 20 - z*1.6;
+            ctx.strokeStyle = '#333'; ctx.lineWidth = 8; ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.moveTo(mx(-35),mz(5)); ctx.lineTo(mx(35),mz(5)); ctx.lineTo(mx(35),mz(-25)); ctx.lineTo(mx(-35),mz(-25)); ctx.closePath(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(mx(35),mz(-10)); ctx.lineTo(mx(105),mz(-10)); ctx.lineTo(mx(105),mz(-65)); ctx.lineTo(mx(75),mz(-65)); ctx.lineTo(mx(75),mz(-25)); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(mx(0),mz(-25)); ctx.lineTo(mx(0),mz(-65)); ctx.lineTo(mx(-55),mz(-65)); ctx.lineTo(mx(-85),mz(-85)); ctx.lineTo(mx(25),mz(-85)); ctx.lineTo(mx(75),mz(-85)); ctx.lineTo(mx(75),mz(-65)); ctx.stroke();
+            
+            // Ghost path
+            ctx.strokeStyle = '#00d4ff'; ctx.lineWidth = 2; ctx.globalAlpha = 0.3;
+            ctx.beginPath(); ctx.moveTo(mx(ghostPath[0].x), mz(ghostPath[0].z));
+            ghostPath.forEach(p => ctx.lineTo(mx(p.x), mz(p.z))); ctx.stroke();
+            ctx.globalAlpha = 1;
+            
+            // Ghost position
+            const gp = getPathPosition(ghostProgress);
+            ctx.fillStyle = '#00d4ff'; ctx.globalAlpha = 0.6 + Math.sin(Date.now()/200)*0.4;
+            ctx.beginPath(); ctx.arc(mx(gp.x), mz(gp.z), 6, 0, Math.PI*2); ctx.fill();
+            ctx.globalAlpha = 1;
+            
+            ctx.fillStyle = '#ff7744'; ctx.beginPath(); ctx.arc(mx(GATE.x), mz(GATE.z), 6, 0, Math.PI*2); ctx.fill();
+            const px = mx(pos.x), pz = mz(pos.z);
+            ctx.strokeStyle = '#00ff9d'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(px, pz); ctx.lineTo(px + Math.sin(rot.y)*10, pz + Math.cos(rot.y)*10); ctx.stroke();
+            ctx.fillStyle = '#00ff9d'; ctx.beginPath(); ctx.arc(px, pz, 5, 0, Math.PI*2); ctx.fill();
+        }
+        
+        function restart() {
+            pos = {x:0, y:1.7, z:0}; rot = {x:0, y:0};
+            complete = false; startTime = Date.now(); ghostProgress = 0;
+            document.getElementById('modal').classList.remove('show');
+        }
+        
+        let lastT = performance.now();
+        function animate() {
+            requestAnimationFrame(animate);
+            const now = performance.now(), dt = (now-lastT)/1000, time = now/1000;
+            lastT = now;
+            updatePlayer(dt);
+            animateGhost(time, dt);
+            checkWin(); updateTime(); drawMinimap();
+            renderer.render(scene, camera);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
